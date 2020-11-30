@@ -5,8 +5,9 @@ import Themes from '/src/themes'
 import DateTimePicker from '/src/components/UI/dateTimePicker'
 import { withTranslation } from 'react-i18next'
 import ButtonBack from '/src/components/UI/buttonBack'
+import AwesomeAlert from 'react-native-awesome-alerts';
 function BirthDay(props) {
-    const { t, onPressBackButton, onPressNextButton, onGetDate } = props
+    const { t, onPressBackButton, onPressNextButton, onGetDate, isShowAlert, changeShowAlert } = props
 
     const onPressBack = () => {
         onPressBackButton && onPressBackButton()
@@ -40,11 +41,40 @@ function BirthDay(props) {
             <ButtonNext isGradient={true}
                 onPress={onPressNext}
             />
-
+            <AwesomeAlert
+                show={isShowAlert}
+                title="FBI Warning !"
+                message="Only users who are 18 or older can use our app"
+                closeOnTouchOutside={true}
+                closeOnHardwareBackPress={false}
+                showConfirmButton={true}
+                contentStyle={{ width: 300, height: 120, }}
+                confirmText="Yes, i agree"
+                messageStyle={styles.txtMessageAlert}
+                confirmButtonColor="#DD6B55"
+                confirmButtonTextStyle={styles.txtConfirm}
+                titleStyle={styles.titleAlert}
+                onConfirmPressed={() => {
+                    changeShowAlert();
+                }}
+            />
         </View>
     )
 }
 const styles = StyleSheet.create({
+    txtConfirm: {
+        fontSize: 15,
+        fontFamily: Themes.FontFamily.FontMediumDefault
+    },
+    titleAlert: {
+        fontSize: 17,
+        fontFamily: Themes.FontFamily.FontBoldSemi
+    },
+    txtMessageAlert: {
+        textAlign: 'center',
+        fontSize: 15,
+        fontFamily: Themes.FontFamily.FontThinDefault
+    },
     txtDetail: {
         ...Themes.Styles.txtDetail
     },

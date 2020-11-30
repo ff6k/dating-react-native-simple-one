@@ -4,11 +4,12 @@ import Const from '/src/const'
 import Utils from '/src/utils'
 
 const DATE_ADULT = 18
+let dateSave = ""
 export default function BirthdayController(props) {
 
     const { navigation } = props
+    const [isShowAlert, setIsShowAlert] = useState(false)
 
-    let dateSave = ""
 
     const onPressBackButton = () => {
         navigation.goBack()
@@ -21,7 +22,7 @@ export default function BirthdayController(props) {
                 navigation.navigate(Const.NameScreens.Gender, { date: dateTemp })
             }
             else {
-
+                setIsShowAlert(true)
             }
         }
     }
@@ -34,11 +35,17 @@ export default function BirthdayController(props) {
     const onGetDate = (date) => {
         dateSave = date
     }
+
+    const changeShowAlert = () => {
+        setIsShowAlert(false)
+    }
     return (
         <Birthday
             onPressBackButton={onPressBackButton}
             onPressNextButton={onPressNextButton}
             onGetDate={onGetDate}
+            isShowAlert={isShowAlert}
+            changeShowAlert={changeShowAlert}
         />
     )
 }
