@@ -5,8 +5,8 @@ import DropDownContent from '/src/components/UI/dropDownContent'
 export default function InformationContent(props) {
     return (
         <View>
-            <ItemContent title={"Bio"} content={""} isMultiline={true} />
-            <ItemContent title={"Interest"} content={""} isMultiline={true} />
+            <ItemContent title={"Bio"} content={""} isTextExpand={true} />
+            <ItemContent title={"Interest"} content={""} />
             <ItemContent title={"Name"} content={"Trần Long"} />
             <ItemContent title={"Age"} content={"21"} keyboardType={'number-pad'} />
             <ItemContent title={"Gender"} content={"Male"}
@@ -21,4 +21,6 @@ export default function InformationContent(props) {
     )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+
+})

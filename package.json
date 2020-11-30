@@ -43,6 +43,7 @@
     "react-native": "0.63.2",
     "react-native-animatable": "^1.3.3",
     "react-native-animated-image-list": "git+https://github.com/tqlong1609/react-native-animated-image-list.git",
+    "react-native-autogrow-textinput": "git+https://github.com/tqlong1609/react-native-autogrow-textinput.git",
     "react-native-awesome-alerts": "^1.4.2",
     "react-native-collapsible": "^1.5.3",
     "react-native-crypto-js": "^1.0.0",
