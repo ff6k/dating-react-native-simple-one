@@ -10,5 +10,6 @@ export const URL_GET_USER_DETAIL = URL_NETWORK + "/api/users"
 export const URL_POST_MARK_MESSAGES = URL_NETWORK + "/api/users"
 export const URL_GET_PROFILE = URL_NETWORK + "/api/users"
 export const URL_PUT_PROFILE = URL_NETWORK + "/api/users"
+export const URL_POST_PHOTOS = URL_NETWORK + "/api/users"
 
 //http://localhost:5000/api/users/3/messages/16/read

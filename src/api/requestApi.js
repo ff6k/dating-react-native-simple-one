@@ -1,6 +1,6 @@
 import {
     URL_GET_IMAGE_SWIPE, URL_POST_LIKE_IMAGE_SWIPE, URL_GET_MESSAGES,
-    URL_GET_USER_DETAIL, URL_GET_PROFILE, URL_PUT_PROFILE
+    URL_GET_USER_DETAIL, URL_GET_PROFILE, URL_PUT_PROFILE, URL_POST_PHOTOS
 } from './url'
 import axios from 'axios';
 
@@ -71,11 +71,27 @@ export const getProfileApiRequest = async (params) => {
 }
 
 export const putProfileApiRequest = async (params) => {
-    const { id, token, gender, dateOfBirth } = params
+    const { id, token, gender, dateOfBirth, urlPhoto } = params
     const Url = URL_PUT_PROFILE + `/${id}`
+    const UrlPhoto = `${URL_POST_PHOTOS}/${id}/photos`
     const client = getAxios('Bearer ' + token)
-    return client.put(Url, {
-        "gender": gender,
-        "dateOfBirth": dateOfBirth
-    })
+    // axios.all([
+    //     client.put(Url, {
+    //         "gender": gender,
+    //         "dateOfBirth": dateOfBirth
+    //     })
+    //     client.post(UrlPhoto, {
+
+    //     })
+    // ])
+    // .then(axios.spread((res1, res2) => {
+    //     console.log(`res2: ${res2}`);
+    //     console.log(`res1: ${res1}`);
+    // }))
+    // const Url = URL_PUT_PROFILE + `/${id}`
+    // const client = getAxios('Bearer ' + token)
+    // return client.put(Url, {
+    //     "gender": gender,
+    //     "dateOfBirth": dateOfBirth
+    // })
 }

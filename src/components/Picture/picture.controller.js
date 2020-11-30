@@ -83,19 +83,21 @@ export default function PictureController(props) {
             })
     };
 
-    const saveDataInfoLogin = async (data) => {
+    //TODO: request api info login if fix api server
+    const saveDataInfoLogin = (data) => {
         const { urlPhoto, date, gender } = data
 
         const params = {
             id: idUser,
             token: token,
             gender: gender,
-            dateOfBirth: date
+            dateOfBirth: date,
+            urlPhoto: urlPhoto
         }
-        const resApi = await Api.RequestApi.putProfileApiRequest(params)
-        resApi.then(response => {
-            console.log(response)
-        }).catch(err => console.log(err))
+        // Api.RequestApi.putProfileApiRequest(params)
+        //     .then(response => {
+        //         console.log(response)
+        //     }).catch(err => console.log(err))
     }
 
     const onPressNext = () => {
