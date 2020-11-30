@@ -66,9 +66,10 @@ export default function screensNavigation() {
                     headerShown: false
                 }}
             >
-
-
-
+                <Stack.Screen
+                    name={Const.NameScreens.MyProfile}
+                    component={MyProfile}
+                />
                 <Stack.Screen
                     name={Const.NameScreens.Splash}
                     component={Splash}
@@ -139,10 +140,10 @@ export default function screensNavigation() {
                     name={Const.NameScreens.CodePhone}
                     component={CodePhone}
                 />
-                <Stack.Screen
+                {/* <Stack.Screen
                     name={Const.NameScreens.MyProfile}
                     component={MyProfile}
-                />
+                /> */}
                 <Stack.Screen
                     name={Const.NameScreens.Drinking}
                     component={Drinking}
