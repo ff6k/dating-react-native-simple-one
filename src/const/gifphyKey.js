@@ -1,0 +1,1 @@
+export const GIFPHY_KEY = "Uu53YzemD5Yv2UaNfvER8cCxp15aR9nf"

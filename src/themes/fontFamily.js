@@ -1,0 +1,6 @@
+export const FontBoldDefault = 'Montserrat-Black'
+// export const FontBoldDefault = 'Cerebrisans-Semibold'
+export const FontThinDefault = 'Montserrat-Light'
+export const FontMediumDefault = 'Montserrat-Medium'
+export const FontBoldSemi = 'Montserrat-SemiBold'
+export const FontBoldExtra = 'Montserrat-ExtraBold'
