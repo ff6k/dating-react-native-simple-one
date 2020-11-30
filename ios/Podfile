@@ -24,6 +24,8 @@ target 'DatingAppRN' do
 
   pod 'react-native-document-picker', :path => '../node_modules/react-native-document-picker'
 
+  pod 'RNFastImage', :path => '../node_modules/react-native-fast-image'
+
   target 'DatingAppRNTests' do
     inherit! :complete
     # Pods for testing
