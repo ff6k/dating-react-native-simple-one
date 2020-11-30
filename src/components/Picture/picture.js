@@ -6,9 +6,10 @@ import ImagePicker from '/src/components/UI/imagePicker'
 import BottomHalfModel from '/src/components/Model/bottomHalfModel'
 import { withTranslation } from 'react-i18next'
 import ButtonBack from '/src/components/UI/buttonBack'
+import SpinnerLoading from '/src/components/UI/spinnerLoading'
 function Picture(props) {
     const { t, onPressBack, pressUploadPhoto, pressTakePhoto,
-        uri, onPressNext, isVisible, setVisibleModel, onPressAddButton } = props
+        uri, onPressNext, isVisible, setVisibleModel, onPressAddButton, isLoading } = props
 
 
     const onChangeImage = () => {
@@ -29,6 +30,9 @@ function Picture(props) {
 
     return (
         <View style={{ flex: 1 }}>
+            <SpinnerLoading isLoading={isLoading}
+                source={require('/src/assets/lotties/9844-loading-40-paperplane.json')}
+            />
             <ButtonBack
                 name="arrow-back-outline"
                 onPress={() => onPressBack && onPressBack()}

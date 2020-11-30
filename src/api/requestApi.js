@@ -1,6 +1,6 @@
 import {
     URL_GET_IMAGE_SWIPE, URL_POST_LIKE_IMAGE_SWIPE, URL_GET_MESSAGES,
-    URL_GET_USER_DETAIL, URL_GET_PROFILE
+    URL_GET_USER_DETAIL, URL_GET_PROFILE, URL_PUT_PROFILE
 } from './url'
 import axios from 'axios';
 
@@ -31,14 +31,12 @@ export const postLikeImageSwipe = async (params) => {
     const { idLiker, idLiked, token } = params
     const Url = URL_POST_LIKE_IMAGE_SWIPE + `/${idLiker}/likes/${idLiked}`
     const client = getAxios('Bearer ' + token)
-    console.log("Url", Url)
     return client.post(Url)
 }
 
 
 export const getRequestImageSwipe = async (params) => {
     const { gender, pageNumber, pageSize, token } = params
-    console.log("token", token)
     const Url = URL_GET_IMAGE_SWIPE + `?gender=${gender}&pageNumber=${pageNumber}&pageSize=${pageSize}`
     const client = getAxios('Bearer ' + token)
     return client.get(Url)
@@ -70,4 +68,14 @@ export const getProfileApiRequest = async (params) => {
     const Url = URL_GET_PROFILE + `/${id}`
     const client = getAxios('Bearer ' + token)
     return client.get(Url)
+}
+
+export const putProfileApiRequest = async (params) => {
+    const { id, token, gender, dateOfBirth } = params
+    const Url = URL_PUT_PROFILE + `/${id}`
+    const client = getAxios('Bearer ' + token)
+    return client.put(Url, {
+        "gender": gender,
+        "dateOfBirth": dateOfBirth
+    })
 }

@@ -1,14 +1,35 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Picture from './picture'
 import { launchCamera, launchImageLibrary } from '/src/configs/Camera'
+import Api from '/src/api'
 import Const from '/src/const'
 import { useSelector } from 'react-redux'
 
+
+let token
+let idUser
 export default function PictureController(props) {
     const { route, navigation } = props
     const [isVisible, setIsVisible] = useState(false)
     const [uriImage, setUriImage] = useState(null)
+    const [isLoading, setIsLoading] = useState(false);
     const [dataImage, setDataImage] = useState(null)
+
+    const dataStore = useSelector(state => state.login)
+    const getDataStore = () => {
+        if (dataStore.length > 0) {
+            const { jwtToken, id } = dataStore[0]
+            token = jwtToken
+            idUser = id
+        }
+        else {
+            return null // empty data
+        }
+    }
+
+    useEffect(() => {
+        getDataStore()
+    }, [])
 
     const setVisibleModel = () => {
         setIsVisible(!isVisible)
@@ -23,6 +44,7 @@ export default function PictureController(props) {
         launchImageLibrary(res => {
             const { uri, fileName, type } = res
             const name = fileName
+            setUriImage(uri)
             setDataImage({ uri, name, type })
         })
     }
@@ -52,17 +74,31 @@ export default function PictureController(props) {
             .then(
                 data => {
                     const { date, gender } = route.params
-                    const dataSave = { date, gender, data: data.url }
+                    const dataSave = { date, gender, urlPhoto: data.url }
                     saveDataInfoLogin(dataSave)
                 }
             ).catch(err => console.log(err))
+            .finally(() => {
+                setIsLoading(false)
+            })
     };
 
-    const saveDataInfoLogin = (data) => {
-        console.log(data)
+    const saveDataInfoLogin = async (data) => {
+        const { urlPhoto, date, gender } = data
+        // const params = {
+        //     id: ,
+        //     token: ,
+        //     gender: gender,
+        //     dateOfBirth: date
+        // }
+        // const resApi = await Api.RequestApi.putProfileApiRequest(params)
+        // resApi.then(response => {
+        //     console.log(response)
+        // }).catch(err => console.log(err))
     }
 
     const onPressNext = () => {
+        setIsLoading(true)
         uploadImage()
     }
 
@@ -76,6 +112,7 @@ export default function PictureController(props) {
             isVisible={isVisible}
             setVisibleModel={setVisibleModel}
             onPressAddButton={onPressAdd}
+            isLoading={isLoading}
         />
     )
 }

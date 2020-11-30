@@ -5,7 +5,6 @@ import Icon from '/src/components/UI/icon'
 
 export default function imagePicker(props) {
     const { onPressAdd, t, urlImage } = props;
-    console.log("imagePicker -> urlImage", urlImage)
 
     return (
         <View style={styles.containerViewImage}>
