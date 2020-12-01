@@ -32,6 +32,8 @@ import Ethnicity from '/src/components/Ethnicity/ethnicity.controller'
 import EditKids from '/src/components/EditKids/editKids.controller'
 import InterestInfomation from '/src/components/InterestInformation/interestInfomation.controller'
 import EditFamilyPlan from '/src/components/EditFamilyPlan/editFamilyPlan.controller'
+import EditDrinking from '/src/components/EditDrinking/editDrinking.controller'
+import EditSmoking from '/src/components/EditSmoking/editSmoking.controller'
 import Const from '/src/const'
 
 const Stack = createStackNavigator();
@@ -72,30 +74,6 @@ export default function screensNavigation() {
                 }}
             >
                 <Stack.Screen
-                    name={Const.NameScreens.MyProfile}
-                    component={MyProfile}
-                />
-                <Stack.Screen
-                    name={Const.NameScreens.InterestInfomation}
-                    component={InterestInfomation}
-                />
-                <Stack.Screen
-                    name={Const.NameScreens.EditGender}
-                    component={EditGender}
-                />
-                <Stack.Screen
-                    name={Const.NameScreens.Ethnicity}
-                    component={Ethnicity}
-                />
-                <Stack.Screen
-                    name={Const.NameScreens.EditKids}
-                    component={EditKids}
-                />
-                <Stack.Screen
-                    name={Const.NameScreens.EditFamilyPlan}
-                    component={EditFamilyPlan}
-                />
-                <Stack.Screen
                     name={Const.NameScreens.Splash}
                     component={Splash}
                 />
@@ -131,7 +109,6 @@ export default function screensNavigation() {
                     name={Const.NameScreens.Religious}
                     component={Religious}
                 />
-
                 <Stack.Screen
                     name={Const.NameScreens.Job}
                     component={Job}
@@ -165,14 +142,38 @@ export default function screensNavigation() {
                     name={Const.NameScreens.CodePhone}
                     component={CodePhone}
                 />
-                {/* <Stack.Screen
+                <Stack.Screen
                     name={Const.NameScreens.MyProfile}
                     component={MyProfile}
-                /> */}
-                {/* <Stack.Screen
+                />
+                <Stack.Screen
                     name={Const.NameScreens.InterestInfomation}
                     component={InterestInfomation}
-                /> */}
+                />
+                <Stack.Screen
+                    name={Const.NameScreens.EditGender}
+                    component={EditGender}
+                />
+                <Stack.Screen
+                    name={Const.NameScreens.Ethnicity}
+                    component={Ethnicity}
+                />
+                <Stack.Screen
+                    name={Const.NameScreens.EditKids}
+                    component={EditKids}
+                />
+                <Stack.Screen
+                    name={Const.NameScreens.EditFamilyPlan}
+                    component={EditFamilyPlan}
+                />
+                <Stack.Screen
+                    name={Const.NameScreens.EditSmoking}
+                    component={EditSmoking}
+                />
+                <Stack.Screen
+                    name={Const.NameScreens.EditDrinking}
+                    component={EditDrinking}
+                />
                 <Stack.Screen
                     name={Const.NameScreens.Drinking}
                     component={Drinking}

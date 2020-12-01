@@ -32,6 +32,9 @@ export const EditGender = "EditGender"
 export const Ethnicity = "Ethnicity"
 export const EditKids = "EditKids"
 export const EditFamilyPlan = "EditFamilyPlan"
+export const EditSmoking = "EditSmoking"
+export const EditDrinking = "EditDrinking"
+
 
 
 

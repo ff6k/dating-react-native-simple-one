@@ -92,7 +92,7 @@ export default function MyPreferences(props) {
 const FONT_SIZE = 18
 const styles = StyleSheet.create({
     txtHeader: {
-        fontSize: FONT_SIZE + 2,
+        fontSize: FONT_SIZE,
         marginLeft: 15,
         marginVertical: 10,
         fontFamily: Themes.FontFamily.FontBoldSemi

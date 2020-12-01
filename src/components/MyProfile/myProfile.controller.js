@@ -56,13 +56,6 @@ export default function MyProfileController(props) {
         // .finally(() => setIsLoading(false))
     }, [])
 
-    const onPressDrinking = () => {
-        navigation.navigate(Const.NameScreens.Work)
-    }
-    const onPressSmoking = () => {
-        console.log('smoking')
-    }
-
     const onPressBack = () => {
         navigation.goBack()
     }
@@ -89,6 +82,14 @@ export default function MyProfileController(props) {
 
     const onPressFamilyPlans = () => {
         navigation.navigate(Const.NameScreens.EditFamilyPlan)
+    }
+
+    const onPressSmoking = () => {
+        navigation.navigate(Const.NameScreens.EditSmoking)
+    }
+
+    const onPressDrinking = () => {
+        navigation.navigate(Const.NameScreens.EditDrinking)
     }
     return (
         <MyProfile

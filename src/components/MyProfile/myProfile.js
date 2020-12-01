@@ -26,7 +26,7 @@ const headerComponent = (props) => {
 }
 const footerComponent = (props) => {
     const { onPressInterest, onPressGender, onPressReligious, onPressEthnicity,
-        onPressKids, onPressFamilyPlans } = props
+        onPressKids, onPressFamilyPlans, onPressSmoking, onPressDrinking } = props
     return (
         <View>
             <Text style={styles.headerText}>Your Information</Text>
@@ -45,7 +45,10 @@ const footerComponent = (props) => {
                 onPressFamilyPlans={onPressFamilyPlans}
             />
             <Text style={styles.headerText}>Your Vices</Text>
-            <MyVicesContent />
+            <MyVicesContent
+                onPressDrinking={onPressDrinking}
+                onPressSmoking={onPressSmoking}
+            />
         </View>
     )
 }
@@ -105,7 +108,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: Themes.Colors.PINK,
         fontFamily: Themes.FontFamily.FontBoldDefault,
-        marginLeft: 10,
+        // backgroundColor: 'white',
+        paddingLeft: 10,
         marginTop: 10,
         marginBottom: 10
     },

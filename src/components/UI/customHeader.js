@@ -32,7 +32,7 @@ export default function CustomHeader(props) {
     )
 }
 
-const FONT_SIZE = 18
+const FONT_SIZE = 15
 const SIZE_RADIUS = 4
 const styles = StyleSheet.create({
     btnRight: {

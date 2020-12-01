@@ -77,7 +77,7 @@ export const BtnBottomContent = {
 }
 
 export const TitleCard = {
-    fontSize: 18,
+    fontSize: 17,
     // fontWeight: 'bold',
     color: Colors.PINK,
     fontFamily: FontFamily.FontBoldSemi
@@ -243,7 +243,7 @@ export const linearGradientCircleAdd = {
 }
 
 export const itemContent = {
-    backgroundColor: Colors.GRAY_BRIGHT_V,
+    // backgroundColor: Colors.GRAY_BRIGHT_V,
     // height: ConstDevices.HEIGHT_HEADER
 }
 

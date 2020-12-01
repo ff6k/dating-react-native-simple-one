@@ -19,9 +19,6 @@ export default function MyVitalsContent(props) {
                 typeContent={TYPE_CONTENT.Button}
                 onPressItem={onPressFamilyPlans}
             />
-            <ItemContent title={"Height"} content={"NA"}
-                typeContent={TYPE_CONTENT.Button}
-            />
         </View>
     )
 }

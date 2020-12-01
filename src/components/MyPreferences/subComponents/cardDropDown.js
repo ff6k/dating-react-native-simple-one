@@ -28,11 +28,13 @@ export default function cardDropDown(props) {
             <DropDownPicker
                 items={data}
                 defaultValue={item}
-                labelStyle={{ fontFamily: Themes.FontFamily.FontMediumDefault }}
+                labelStyle={{
+                    fontFamily: Themes.FontFamily.FontMediumDefault, color: Themes.Colors.GRAY_BRIGHT_I,
+                    paddingLeft: 5
+                }}
                 containerStyle={{ height: 40 }}
                 style={{
                     backgroundColor: '#fafafa', width: Const.Common.deviceWidth - 50,
-
                 }}
                 itemStyle={{
                     justifyContent: 'flex-start',

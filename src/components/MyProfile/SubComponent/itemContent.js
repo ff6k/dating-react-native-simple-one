@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
     containContent: {
         paddingLeft: 15,
         // marginTop: 10
+        backgroundColor: Themes.Colors.GRAY_BRIGHT_V
     },
     txtCountTxt: {
         alignSelf: 'flex-end',
