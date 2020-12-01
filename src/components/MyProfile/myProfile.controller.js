@@ -65,12 +65,17 @@ export default function MyProfileController(props) {
         navigation.goBack()
     }
 
+    const onPressInterest = () => {
+        navigation.navigate(Const.NameScreens.InterestInfomation)
+    }
+
     return (
         <MyProfile
             onPressDrinking={onPressDrinking}
             onPressSmoking={onPressSmoking}
             onPressBack={onPressBack}
             data={dataProfile}
+            onPressInterest={onPressInterest}
         />
     )
 }

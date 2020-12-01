@@ -6377,7 +6377,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.4"
 
-prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -6471,6 +6471,17 @@ react-native-animatable@1.3.3, react-native-animatable@^1.3.3:
 "react-native-animated-image-list@git+https://github.com/tqlong1609/react-native-animated-image-list.git":
   version "1.0.0"
   resolved "git+https://github.com/tqlong1609/react-native-animated-image-list.git#6f728e5de8dc7de20a401e658d208a0356447e87"
+
+"react-native-autogrow-textinput@git+https://github.com/tqlong1609/react-native-autogrow-textinput.git":
+  version "5.4.0"
+  resolved "git+https://github.com/tqlong1609/react-native-autogrow-textinput.git#3c60ce41e761a55dfda4651573dfa90b2576b170"
+
+react-native-awesome-alerts@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/react-native-awesome-alerts/-/react-native-awesome-alerts-1.4.2.tgz#197c61a403bbe0bda8d4ddf7c9eaf41bba03f321"
+  integrity sha512-yKdah2rp6rTFaF0IlKU6U0TvhOVGpOQ2E50sFcPe2i6XzwjgBIhB6kNXunQDuvzBRCTgWkEjbd+TC30dmbNWvw==
+  dependencies:
+    prop-types "^15.7.2"
 
 react-native-collapsible@^1.5.3:
   version "1.5.3"
@@ -6870,6 +6881,13 @@ react-native-tab-view@^2.15.1:
   version "2.15.2"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.15.2.tgz#4bc7832d33a119306614efee667509672a7ee64e"
   integrity sha512-2hxLkBnZtEKFDyfvNO5EUywhy3f/EiLOBO8SWqKj4BMBTO0QwnybaPE5MVF00Fhz+VA4+h/iI40Dkrrtq70dGg==
+
+react-native-tag-select@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-tag-select/-/react-native-tag-select-2.0.0.tgz#b02766526a5b2663a3392478dc500616f019cbf1"
+  integrity sha512-ys0A2MKZ8CLQ6QYBnnuyg1/MIsNVmRSSJpPFD3E+tTR4FTaLYNRiTIaBy1Wy77feBaYeDfN7UG2K5jr31+Iq0A==
+  dependencies:
+    prop-types "^15.6.0"
 
 react-native-vector-icons@^7.0.0:
   version "7.0.0"

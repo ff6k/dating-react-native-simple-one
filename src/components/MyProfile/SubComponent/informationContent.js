@@ -3,10 +3,14 @@ import { StyleSheet, Text, View } from 'react-native'
 import ItemContent from './itemContent'
 import DropDownContent from '/src/components/UI/dropDownContent'
 export default function InformationContent(props) {
+    const { onPressInterest } = props
     return (
         <View>
             <ItemContent title={"Bio"} content={""} isTextExpand={true} />
-            <ItemContent title={"Interest"} content={""} />
+            <ItemContent title={"Interest"} content={""}
+                isButtonType={true}
+                onPressItem={onPressInterest}
+            />
             <ItemContent title={"Name"} content={"Trần Long"} />
             <ItemContent title={"Age"} content={"21"} keyboardType={'number-pad'} />
             <ItemContent title={"Gender"} content={"Male"}

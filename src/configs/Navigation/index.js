@@ -27,6 +27,7 @@ import Education from '/src/components/Education/education.controller'
 import Politics from '/src/components/Politics/politics.controller'
 import MyVicesContent from '/src/components/MyProfile/SubComponent/myVicesContent'
 import Drinking from '/src/components/Drinking/drinking.controller'
+import InterestInfomation from '/src/components/UI/interestInfomation'
 import Const from '/src/const'
 
 const Stack = createStackNavigator();
@@ -66,9 +67,14 @@ export default function screensNavigation() {
                     headerShown: false
                 }}
             >
+
                 <Stack.Screen
                     name={Const.NameScreens.MyProfile}
                     component={MyProfile}
+                />
+                <Stack.Screen
+                    name={Const.NameScreens.InterestInfomation}
+                    component={InterestInfomation}
                 />
                 <Stack.Screen
                     name={Const.NameScreens.Splash}
@@ -143,6 +149,10 @@ export default function screensNavigation() {
                 {/* <Stack.Screen
                     name={Const.NameScreens.MyProfile}
                     component={MyProfile}
+                /> */}
+                {/* <Stack.Screen
+                    name={Const.NameScreens.InterestInfomation}
+                    component={InterestInfomation}
                 /> */}
                 <Stack.Screen
                     name={Const.NameScreens.Drinking}

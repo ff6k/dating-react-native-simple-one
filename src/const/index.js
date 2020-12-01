@@ -11,6 +11,7 @@ import * as StorageKey from './storageKey'
 import * as GifPhyKey from './gifphyKey'
 import * as DateFormat from './dateFormat'
 import * as Languages from './languages'
+import * as Interests from './interests'
 const Const = {
     Common,
     PhoneAreas,
@@ -24,7 +25,8 @@ const Const = {
     StorageKey,
     GifPhyKey,
     DateFormat,
-    Languages
+    Languages,
+    Interests
 }
 
 export default Const;

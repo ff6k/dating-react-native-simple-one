@@ -73,6 +73,7 @@ export default function PictureController(props) {
         }).then(res => res.json())
             .then(
                 data => {
+                    console.log(`data: ${JSON.stringify(data)}`);
                     const { date, gender } = route.params
                     const dataSave = { date, gender, urlPhoto: data.url }
                     saveDataInfoLogin(dataSave)

@@ -10,9 +10,11 @@ import MyVitalsContent from './SubComponent/myVitalsContent'
 import ImageItem from '/src/components/UI/imageItem'
 import AnimLottieView from '/src/components/UI/animLottieView'
 
-const headerComponent = (onPressBack) => {
+const headerComponent = (props) => {
+    const { onPressBack } = props
     return (
         <View>
+
             <ButtonBack
                 onPress={onPressBack}
                 title={"Edit Profile"}
@@ -22,11 +24,14 @@ const headerComponent = (onPressBack) => {
         </View>
     )
 }
-const footerComponent = () => {
+const footerComponent = (props) => {
+    const { onPressInterest } = props
     return (
         <View>
             <Text style={styles.headerText}>Your Information</Text>
-            <InformationContent />
+            <InformationContent
+                onPressInterest={onPressInterest}
+            />
             <Text style={styles.headerText}>Your Virtues</Text>
             <MyVirtuesContent />
             <Text style={styles.headerText}>Your Vitals</Text>
@@ -58,7 +63,7 @@ const emptyComponent = () => {
 }
 
 export default function myProfile(props) {
-    const { onPressBack, data } = props
+    const { onPressBack, data, onPressInterest } = props
     return (
         <FlatList
             showsVerticalScrollIndicator={false}
@@ -68,8 +73,8 @@ export default function myProfile(props) {
             ListEmptyComponent={emptyComponent}
             keyExtractor={item => item.id.toString()}
             numColumns={3}
-            ListFooterComponent={footerComponent}
-            ListHeaderComponent={() => headerComponent(onPressBack)}
+            ListFooterComponent={() => footerComponent(props)}
+            ListHeaderComponent={() => headerComponent(props)}
         />
     )
 }
@@ -96,4 +101,5 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 10
     },
+
 })
