@@ -1,15 +1,58 @@
-import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native'
 import ButtonBack from '/src/components/UI/buttonBack'
 import Themes from '/src/themes'
 import Icon from '/src/components/UI/icon'
-export default function editGender() {
+const data = [
+    { id: 1, label: 'Male' },
+    { id: 2, label: 'Female' },
+    { id: 3, label: 'Other' },
+]
+
+
+export default function editGender(props) {
+    const { onPressBack } = props
+
+    const [idSelected, setIdSelected] = useState(data[0].id)
+
+    const onPressItem = (id) => {
+        setIdSelected(id)
+    }
+
+    const ItemGender = ({ item }) => {
+        const { label, id } = item
+        let isCheck = false
+        if (id === idSelected) {
+            isCheck = true
+        }
+
+        return (
+            <TouchableOpacity style={styles.containContent}
+                onPress={() => onPressItem(id)}>
+                <Text style={styles.txtContent}>{label}</Text>
+                {
+                    isCheck && <Icon
+                        name={'checkmark'}
+                        size={25}
+                        color={Themes.Colors.PINK_DARK}
+                    />
+                }
+            </TouchableOpacity>
+        )
+    }
     return (
         <View>
             <ButtonBack
                 title={'I Am'}
+                onPress={onPressBack}
             />
-            <TouchableOpacity style={[styles.containContent, { marginTop: 20 }]}>
+            <FlatList
+                keyExtractor={item => item.id.toString()}
+                data={data}
+                style={styles.flatList}
+                renderItem={ItemGender}
+            />
+            {/* <TouchableOpacity style={[styles.containContent, { marginTop: 20 }]}>
                 <Text style={styles.txtContent}>Man</Text>
                 <Icon
                     name={'checkmark'}
@@ -22,13 +65,16 @@ export default function editGender() {
             </TouchableOpacity>
             <TouchableOpacity style={[styles.containContent, styles.btnBottom]}>
                 <Text style={styles.txtContent}>Other</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             {/* </View> */}
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    flatList: {
+        marginTop: 20
+    },
     btnBottom: {
         // ...Themes.Styles.shadowButton
     },

@@ -25,7 +25,7 @@ const headerComponent = (props) => {
     )
 }
 const footerComponent = (props) => {
-    const { onPressInterest, onPressGender } = props
+    const { onPressInterest, onPressGender, onPressReligious } = props
     return (
         <View>
             <Text style={styles.headerText}>Your Information</Text>
@@ -34,7 +34,9 @@ const footerComponent = (props) => {
                 onPressGender={onPressGender}
             />
             <Text style={styles.headerText}>Your Virtues</Text>
-            <MyVirtuesContent />
+            <MyVirtuesContent
+                onPressReligious={onPressReligious}
+            />
             <Text style={styles.headerText}>Your Vitals</Text>
             <MyVitalsContent />
             <Text style={styles.headerText}>Your Vices</Text>

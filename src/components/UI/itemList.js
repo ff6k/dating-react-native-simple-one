@@ -1,7 +1,7 @@
 import React from 'react'
 import Themes from '/src/themes'
 import { StyleSheet, TouchableOpacity, Text, View } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import Icon from '/src/components/UI/icon'
 
 export default function ItemsReligious(props) {
     const { item, onPressItem, isCheck } = props;
@@ -18,7 +18,10 @@ export default function ItemsReligious(props) {
             ]}>
                 {name}
             </Text>
-            {isCheck && <Ionicons name="checkmark-outline" style={styles.icoCheck} />}
+            {isCheck && <Icon
+                size={25}
+                color={Themes.Colors.PINK_DARK}
+                name="checkmark"></Icon>}
         </TouchableOpacity>
     )
 };

@@ -69,11 +69,6 @@ export default function screensNavigation() {
                 }}
             >
                 <Stack.Screen
-                    name={Const.NameScreens.EditGender}
-                    component={EditGender}
-                />
-
-                <Stack.Screen
                     name={Const.NameScreens.MyProfile}
                     component={MyProfile}
                 />
@@ -81,10 +76,10 @@ export default function screensNavigation() {
                     name={Const.NameScreens.InterestInfomation}
                     component={InterestInfomation}
                 />
-                {/* <Stack.Screen
+                <Stack.Screen
                     name={Const.NameScreens.EditGender}
                     component={EditGender}
-                /> */}
+                />
                 <Stack.Screen
                     name={Const.NameScreens.Splash}
                     component={Splash}

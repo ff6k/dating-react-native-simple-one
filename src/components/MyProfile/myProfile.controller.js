@@ -72,6 +72,10 @@ export default function MyProfileController(props) {
     const onPressGender = () => {
         navigation.navigate(Const.NameScreens.EditGender)
     }
+
+    const onPressReligious = () => {
+        navigation.navigate(Const.NameScreens.Religious)
+    }
     return (
         <MyProfile
             onPressDrinking={onPressDrinking}
@@ -80,6 +84,7 @@ export default function MyProfileController(props) {
             data={dataProfile}
             onPressInterest={onPressInterest}
             onPressGender={onPressGender}
+            onPressReligious={onPressReligious}
         />
     )
 }

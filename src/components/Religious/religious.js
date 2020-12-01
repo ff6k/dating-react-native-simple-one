@@ -4,7 +4,7 @@ import MyVirtues from '/src/components/UI/myVirtues'
 import { withTranslation } from 'react-i18next'
 
 function Religious(props) {
-    const { t, i18n, onPressNext } = props
+    const { i18n, onPressBack, t } = props
     const { language } = i18n
     let dataList
     switch (language) {
@@ -16,8 +16,8 @@ function Religious(props) {
     }
 
     return (
-        <MyVirtues title={t("Religious Beliefs")} dataList={dataList} t={t}
-            onPressNext={onPressNext}
+        <MyVirtues dataList={dataList}
+            onPressBack={onPressBack}
         />
     )
 }
