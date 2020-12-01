@@ -70,7 +70,7 @@ const TagSelectComponent = (props) => {
 }
 
 export default function interestInfomation(props) {
-    const { onPress } = props
+    const { onPressBack } = props
 
     const [isRender, setIsRender] = useState(false)
 
@@ -95,7 +95,7 @@ export default function interestInfomation(props) {
             showsVerticalScrollIndicator={false}>
             <ButtonBack
                 title={'Edit Interest'}
-                onPress={onPress}
+                onPress={onPressBack}
             />
             <Text style={styles.txtDetail}>Select interests that you'd like to share, choose a minimum of 3 interests.</Text>
             <View style={styles.containContent}>

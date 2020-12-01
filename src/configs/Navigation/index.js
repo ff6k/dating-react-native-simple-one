@@ -27,7 +27,7 @@ import Education from '/src/components/Education/education.controller'
 import Politics from '/src/components/Politics/politics.controller'
 import MyVicesContent from '/src/components/MyProfile/SubComponent/myVicesContent'
 import Drinking from '/src/components/Drinking/drinking.controller'
-import InterestInfomation from '/src/components/UI/interestInfomation'
+import InterestInfomation from '/src/components/InterestInformation/interestInfomation.controller'
 import Const from '/src/const'
 
 const Stack = createStackNavigator();
