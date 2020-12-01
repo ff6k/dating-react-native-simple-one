@@ -25,12 +25,13 @@ const headerComponent = (props) => {
     )
 }
 const footerComponent = (props) => {
-    const { onPressInterest } = props
+    const { onPressInterest, onPressGender } = props
     return (
         <View>
             <Text style={styles.headerText}>Your Information</Text>
             <InformationContent
                 onPressInterest={onPressInterest}
+                onPressGender={onPressGender}
             />
             <Text style={styles.headerText}>Your Virtues</Text>
             <MyVirtuesContent />
@@ -63,7 +64,7 @@ const emptyComponent = () => {
 }
 
 export default function myProfile(props) {
-    const { onPressBack, data, onPressInterest } = props
+    const { data } = props
     return (
         <FlatList
             showsVerticalScrollIndicator={false}

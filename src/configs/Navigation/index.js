@@ -27,6 +27,7 @@ import Education from '/src/components/Education/education.controller'
 import Politics from '/src/components/Politics/politics.controller'
 import MyVicesContent from '/src/components/MyProfile/SubComponent/myVicesContent'
 import Drinking from '/src/components/Drinking/drinking.controller'
+import EditGender from '/src/components/EditGender/editGender.controller'
 import InterestInfomation from '/src/components/InterestInformation/interestInfomation.controller'
 import Const from '/src/const'
 
@@ -67,6 +68,10 @@ export default function screensNavigation() {
                     headerShown: false
                 }}
             >
+                <Stack.Screen
+                    name={Const.NameScreens.EditGender}
+                    component={EditGender}
+                />
 
                 <Stack.Screen
                     name={Const.NameScreens.MyProfile}
@@ -76,6 +81,10 @@ export default function screensNavigation() {
                     name={Const.NameScreens.InterestInfomation}
                     component={InterestInfomation}
                 />
+                {/* <Stack.Screen
+                    name={Const.NameScreens.EditGender}
+                    component={EditGender}
+                /> */}
                 <Stack.Screen
                     name={Const.NameScreens.Splash}
                     component={Splash}

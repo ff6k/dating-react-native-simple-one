@@ -5,14 +5,13 @@ import { TYPE_CONTENT } from '../typeContent'
 
 
 export default function InformationContent(props) {
-    const { onPressInterest } = props
+    const { onPressInterest, onPressGender } = props
     return (
         <View>
             <ItemContent title={"Bio"} content={""} isTextExpand={true}
                 typeContent={TYPE_CONTENT.TextExpand}
             />
             <ItemContent title={"Interest"} content={""}
-                isButtonType={true}
                 onPressItem={onPressInterest}
                 typeContent={TYPE_CONTENT.TagSelect}
             />
@@ -24,7 +23,7 @@ export default function InformationContent(props) {
                 typeContent={TYPE_CONTENT.TextInput}
             />
             <ItemContent title={"Gender"} content={"Male"}
-                isButtonType={true}
+                onPressItem={onPressGender}
                 typeContent={TYPE_CONTENT.Button}
             />
             <ItemContent title={"Phone"} content={"+84966712391"} keyboardType={'phone-pad'}
@@ -34,7 +33,6 @@ export default function InformationContent(props) {
                 typeContent={TYPE_CONTENT.View}
             />
             <ItemContent title={"Location"} content={"Ho Chi Minh, VietNam"}
-                isButtonType={true}
                 typeContent={TYPE_CONTENT.Button}
             />
         </View>

@@ -28,6 +28,8 @@ export const Politics = "Politics"
 export const MyVicesContent = "MyVicesContent"
 export const Drinking = "Drinking"
 export const InterestInfomation = "InterestInfomation"
+export const EditGender = "EditGender"
+
 
 
 

@@ -69,6 +69,9 @@ export default function MyProfileController(props) {
         navigation.navigate(Const.NameScreens.InterestInfomation)
     }
 
+    const onPressGender = () => {
+        navigation.navigate(Const.NameScreens.EditGender)
+    }
     return (
         <MyProfile
             onPressDrinking={onPressDrinking}
@@ -76,6 +79,7 @@ export default function MyProfileController(props) {
             onPressBack={onPressBack}
             data={dataProfile}
             onPressInterest={onPressInterest}
+            onPressGender={onPressGender}
         />
     )
 }
