@@ -1,16 +1,22 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import ItemContent from './itemContent'
+import { TYPE_CONTENT } from '../typeContent'
+
 export default function MyVirtuesContent(props) {
     return (
         <View>
             <ItemContent title={"Religious beliefs"} content={"Hindu"}
-                isButtonType={true}
+                typeContent={TYPE_CONTENT.Button}
             />
-            <ItemContent title={"Work"} content={"Appscrip"} />
+            <ItemContent title={"Work"} content={"Appscrip"}
+                typeContent={TYPE_CONTENT.TextInput}
+            />
             <ItemContent title={"Job"} content={"Ceo"}
+                typeContent={TYPE_CONTENT.TextInput}
             />
             <ItemContent title={"Education"} content={"Engineer"}
+                typeContent={TYPE_CONTENT.TextInput}
             />
         </View>
     )

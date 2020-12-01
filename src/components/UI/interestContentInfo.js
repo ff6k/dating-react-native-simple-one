@@ -4,9 +4,7 @@ import Themes from '/src/themes'
 const TagInterest = (props) => {
     const { label } = props
     return (
-        // <View style={styles.containInterest}>
         <Text style={styles.txtLabel}>{label}</Text>
-        // </View>
     )
 }
 
@@ -39,13 +37,9 @@ const styles = StyleSheet.create({
     txtLabel: {
         marginBottom: 10,
         marginRight: 10,
-        // paddingHorizontal: 15,
-        // paddingVertical: 6,
         padding: 10,
         borderWidth: 1,
         borderRadius: 20,
-        // borderWidth: 1,
-        // borderRadius: 20,
         color: Themes.Colors.GRAY_BRIGHT_I,
         borderColor: Themes.Colors.GRAY_BRIGHT_II,
         fontFamily: Themes.FontFamily.FontMediumDefault

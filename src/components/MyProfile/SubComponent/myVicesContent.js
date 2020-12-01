@@ -1,19 +1,21 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import ItemContent from './itemContent'
-import Const from '/src/const'
+import { TYPE_CONTENT } from '../typeContent'
+
 export default function MyVicesContent(props) {
     const { onPressDrinking, onPressSmoking } = props
 
     return (
         <View>
             <ItemContent
-                isButtonType={true}
+                typeContent={TYPE_CONTENT.Button}
                 title={"Drinking"} content={"NA"}
                 onPressItem={onPressDrinking}
+
             />
             <ItemContent
-                isButtonType={true}
+                typeContent={TYPE_CONTENT.Button}
                 title={"Smoking"} content={"NA"}
                 onPressItem={onPressSmoking}
             />

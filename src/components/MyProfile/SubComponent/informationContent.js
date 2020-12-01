@@ -1,38 +1,41 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import ItemContent from './itemContent'
-import InterestContentInfo from '/src/components/UI/interestContentInfo'
-const data = [
-    { id: 31, label: 'Mountain Biking' },
-    { id: 32, label: 'Snowmobiling' },
-    { id: 33, label: 'Painting' },
-    { id: 34, label: 'Grilling' },
-    { id: 35, label: 'Surf Fishing' },
-    { id: 36, label: 'Bartending' },
-    { id: 37, label: 'Stamp Collecting' },
-    { id: 38, label: 'Helping The Homeless' },
-]
+import { TYPE_CONTENT } from '../typeContent'
+
+
 export default function InformationContent(props) {
     const { onPressInterest } = props
     return (
         <View>
-            <ItemContent title={"Bio"} content={""} isTextExpand={true} />
+            <ItemContent title={"Bio"} content={""} isTextExpand={true}
+                typeContent={TYPE_CONTENT.TextExpand}
+            />
             <ItemContent title={"Interest"} content={""}
                 isButtonType={true}
                 onPressItem={onPressInterest}
+                typeContent={TYPE_CONTENT.TagSelect}
             />
-            <InterestContentInfo
-                data={data}
+
+            <ItemContent title={"Name"} content={"Trần Long"}
+                typeContent={TYPE_CONTENT.TextInput}
             />
-            <ItemContent title={"Name"} content={"Trần Long"} />
-            <ItemContent title={"Age"} content={"21"} keyboardType={'number-pad'} />
+            <ItemContent title={"Age"} content={"21"} keyboardType={'number-pad'}
+                typeContent={TYPE_CONTENT.TextInput}
+            />
             <ItemContent title={"Gender"} content={"Male"}
                 isButtonType={true}
+                typeContent={TYPE_CONTENT.Button}
             />
-            <ItemContent title={"Phone"} content={"+84966712391"} keyboardType={'phone-pad'} />
-            <ItemContent title={"Email"} content={"Tqlong1609@gmail.com"} keyboardType={'email-address'} />
+            <ItemContent title={"Phone"} content={"+84966712391"} keyboardType={'phone-pad'}
+                typeContent={TYPE_CONTENT.TextInput}
+            />
+            <ItemContent title={"Email"} content={"Tqlong1609@gmail.com"} keyboardType={'email-address'}
+                typeContent={TYPE_CONTENT.View}
+            />
             <ItemContent title={"Location"} content={"Ho Chi Minh, VietNam"}
                 isButtonType={true}
+                typeContent={TYPE_CONTENT.Button}
             />
         </View>
     )

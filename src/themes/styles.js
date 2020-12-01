@@ -79,7 +79,6 @@ export const TextHeader = {
 
 export const TextContent = {
     justifyContent: 'center',
-    marginLeft: 15,
     height: 50,
 }
 export const TextInput = {
@@ -221,7 +220,7 @@ export const linearGradientCircleAdd = {
 
 export const itemContent = {
     backgroundColor: Colors.GRAY_BRIGHT_V,
-    height: ConstDevices.HEIGHT_HEADER
+    // height: ConstDevices.HEIGHT_HEADER
 }
 
 export const circleAddImageSmall = {
