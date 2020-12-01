@@ -1,7 +1,17 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import ItemContent from './itemContent'
-import DropDownContent from '/src/components/UI/dropDownContent'
+import InterestContentInfo from '/src/components/UI/interestContentInfo'
+const data = [
+    { id: 31, label: 'Mountain Biking' },
+    { id: 32, label: 'Snowmobiling' },
+    { id: 33, label: 'Painting' },
+    { id: 34, label: 'Grilling' },
+    { id: 35, label: 'Surf Fishing' },
+    { id: 36, label: 'Bartending' },
+    { id: 37, label: 'Stamp Collecting' },
+    { id: 38, label: 'Helping The Homeless' },
+]
 export default function InformationContent(props) {
     const { onPressInterest } = props
     return (
@@ -10,6 +20,9 @@ export default function InformationContent(props) {
             <ItemContent title={"Interest"} content={""}
                 isButtonType={true}
                 onPressItem={onPressInterest}
+            />
+            <InterestContentInfo
+                data={data}
             />
             <ItemContent title={"Name"} content={"Trần Long"} />
             <ItemContent title={"Age"} content={"21"} keyboardType={'number-pad'} />
