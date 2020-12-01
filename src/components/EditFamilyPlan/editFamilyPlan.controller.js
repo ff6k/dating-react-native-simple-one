@@ -1,12 +1,13 @@
 import React from 'react'
-import CheckOneItem from './editGender'
-export default function EditGenderController(props) {
+import EditFamilyPlan from './editFamilyPlan'
+export default function EditFamilyPlanController(props) {
     const { navigation } = props
+
     const onPressBack = () => {
         navigation.goBack()
     }
     return (
-        <CheckOneItem
+        <EditFamilyPlan
             onPressBack={onPressBack}
         />
     )

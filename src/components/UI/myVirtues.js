@@ -6,15 +6,13 @@ import PreferNotSay from '/src/components/UI/preferNotSay'
 import ItemList from '/src/components/UI/itemList'
 import PropTypes from 'prop-types'
 import ButtonBack from '/src/components/UI/buttonBack'
-const ID_CHECK = -1
-
 const FooterComponent = () => {
     return (
-        <View style={{ height: 20 }}></View>
+        <View style={{ height: 140 }}></View>
     )
 }
 export default function myVirtues(props) {
-    const { dataList, onPressBack } = props;
+    const { dataList, onPressBack, title, content, detail } = props;
     const [idSelect, setIdSelect] = useState(null)
 
 
@@ -39,9 +37,13 @@ export default function myVirtues(props) {
 
     return (
         <View style={{ flex: 1 }}>
-            <ButtonBack title={'My Religious'}
+            <ButtonBack title={title}
                 onPress={onPressBack}
             />
+            <Text style={styles.txtDetail}>{detail}</Text>
+            <View style={styles.containContent}>
+                <Text style={styles.txtContent}>{content}</Text>
+            </View>
             <View style={styles.containerContent}>
                 <FlatList
                     style={styles.listReligious}
@@ -65,6 +67,15 @@ myVirtues.defaultProps = {
 }
 
 const styles = StyleSheet.create({
+    txtContent: {
+        ...Themes.Styles.txtContentInfo
+    },
+    containContent: {
+        ...Themes.Styles.containContentInfo
+    },
+    txtDetail: {
+        ...Themes.Styles.txtDetailInfo
+    },
     listReligious: {
         // height: Themes.Const.SIZE_CONTENT_INSIDE,
     },
@@ -75,7 +86,6 @@ const styles = StyleSheet.create({
         ...Themes.Styles.txtTitle2
     },
     containerContent: {
-        marginHorizontal: Themes.Const.MARGIN_HORIZONTAL_INPUT,
     },
     txtSkip: {
         fontSize: 20,

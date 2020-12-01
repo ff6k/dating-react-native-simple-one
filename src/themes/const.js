@@ -27,7 +27,7 @@ export const FONT_SIZE_V4 = 18
 export const BORDER_TEXT_INPUT = 0.5;
 export const BORDER_IMAGE = 7;
 
-export const SIZE_TEXT_ITEM = 20;
+export const SIZE_TEXT_ITEM = 15;
 export const SIZE_ICON = 30;
 export const SIZE_ICON_I = 50;
 export const SIZE_ICON_II = 25;

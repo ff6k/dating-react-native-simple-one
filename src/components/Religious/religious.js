@@ -16,8 +16,12 @@ function Religious(props) {
     }
 
     return (
-        <MyVirtues dataList={dataList}
+        <MyVirtues
+            title={'My Religious'}
+            dataList={dataList}
             onPressBack={onPressBack}
+            content={'RELIGIOUS'}
+            detail={`Select your religious that you'd like to share`}
         />
     )
 }

@@ -29,6 +29,14 @@ export const MyVicesContent = "MyVicesContent"
 export const Drinking = "Drinking"
 export const InterestInfomation = "InterestInfomation"
 export const EditGender = "EditGender"
+export const Ethnicity = "Ethnicity"
+export const EditKids = "EditKids"
+export const EditFamilyPlan = "EditFamilyPlan"
+
+
+
+
+
 
 
 

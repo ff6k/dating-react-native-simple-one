@@ -3,7 +3,6 @@ import { StyleSheet, Text, View } from 'react-native'
 import ItemContent from './itemContent'
 import { TYPE_CONTENT } from '../typeContent'
 
-
 export default function InformationContent(props) {
     const { onPressInterest, onPressGender } = props
     return (

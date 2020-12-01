@@ -14,6 +14,30 @@ export const shadowButton = {
     elevation: 6,
 }
 
+export const txtDetailInfo = {
+    fontSize: 15,
+    fontFamily: FontFamily.FontThinDefault,
+    color: Colors.GRAY_BRIGHT_I,
+    marginLeft: 10,
+    marginTop: 15
+}
+
+export const containContentInfo = {
+    flexDirection: 'row',
+    paddingHorizontal: 10,
+    paddingBottom: 10,
+    marginTop: 15,
+    borderBottomWidth: 0.5,
+    borderBottomColor: Colors.GRAY_BRIGHT_II,
+    justifyContent: 'space-between',
+}
+
+export const txtContentInfo = {
+    fontSize: 14,
+    fontFamily: FontFamily.FontBoldSemi,
+    color: Colors.GRAY_BRIGHT_I,
+}
+
 export const BtnBetweenContent = {
     height: 60,
     backgroundColor: Const.COLOR_MODAL,

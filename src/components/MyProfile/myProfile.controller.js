@@ -4,6 +4,8 @@ import Const from '/src/const'
 import Api from '/src/api'
 import { useSelector } from 'react-redux'
 
+
+
 let token
 let idUser
 export default function MyProfileController(props) {
@@ -76,6 +78,18 @@ export default function MyProfileController(props) {
     const onPressReligious = () => {
         navigation.navigate(Const.NameScreens.Religious)
     }
+
+    const onPressEthnicity = () => {
+        navigation.navigate(Const.NameScreens.Ethnicity)
+    }
+
+    const onPressKids = () => {
+        navigation.navigate(Const.NameScreens.EditKids)
+    }
+
+    const onPressFamilyPlans = () => {
+        navigation.navigate(Const.NameScreens.EditFamilyPlan)
+    }
     return (
         <MyProfile
             onPressDrinking={onPressDrinking}
@@ -85,6 +99,9 @@ export default function MyProfileController(props) {
             onPressInterest={onPressInterest}
             onPressGender={onPressGender}
             onPressReligious={onPressReligious}
+            onPressEthnicity={onPressEthnicity}
+            onPressKids={onPressKids}
+            onPressFamilyPlans={onPressFamilyPlans}
         />
     )
 }

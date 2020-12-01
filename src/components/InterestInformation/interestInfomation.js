@@ -100,7 +100,6 @@ export default function interestInfomation(props) {
             <Text style={styles.txtDetail}>Select interests that you'd like to share, choose a minimum of 3 interests.</Text>
             <View style={styles.containContent}>
                 <Text style={styles.txtContent}>INTERESTS</Text>
-                {/* <Text style={styles.txtContent}>{`(5/5)`}</Text> */}
             </View>
             <TagSelectComponent isRender={isRender}
                 selectedItem={selectedItem}
@@ -111,25 +110,13 @@ export default function interestInfomation(props) {
 
 const styles = StyleSheet.create({
     txtContent: {
-        fontSize: 14,
-        fontFamily: Themes.FontFamily.FontBoldSemi,
-        color: Themes.Colors.GRAY_BRIGHT_I,
+        ...Themes.Styles.txtContentInfo
     },
     containContent: {
-        flexDirection: 'row',
-        paddingHorizontal: 10,
-        paddingBottom: 10,
-        marginTop: 15,
-        borderBottomWidth: 0.5,
-        borderBottomColor: Themes.Colors.GRAY_BRIGHT_II,
-        justifyContent: 'space-between',
+        ...Themes.Styles.containContentInfo
     },
     txtDetail: {
-        fontSize: 15,
-        fontFamily: Themes.FontFamily.FontThinDefault,
-        color: Themes.Colors.GRAY_BRIGHT_I,
-        marginLeft: 10,
-        marginTop: 15
+        ...Themes.Styles.txtDetailInfo
     },
     item: {
         borderWidth: 1,

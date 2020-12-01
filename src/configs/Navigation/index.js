@@ -28,7 +28,10 @@ import Politics from '/src/components/Politics/politics.controller'
 import MyVicesContent from '/src/components/MyProfile/SubComponent/myVicesContent'
 import Drinking from '/src/components/Drinking/drinking.controller'
 import EditGender from '/src/components/EditGender/editGender.controller'
+import Ethnicity from '/src/components/Ethnicity/ethnicity.controller'
+import EditKids from '/src/components/EditKids/editKids.controller'
 import InterestInfomation from '/src/components/InterestInformation/interestInfomation.controller'
+import EditFamilyPlan from '/src/components/EditFamilyPlan/editFamilyPlan.controller'
 import Const from '/src/const'
 
 const Stack = createStackNavigator();
@@ -79,6 +82,18 @@ export default function screensNavigation() {
                 <Stack.Screen
                     name={Const.NameScreens.EditGender}
                     component={EditGender}
+                />
+                <Stack.Screen
+                    name={Const.NameScreens.Ethnicity}
+                    component={Ethnicity}
+                />
+                <Stack.Screen
+                    name={Const.NameScreens.EditKids}
+                    component={EditKids}
+                />
+                <Stack.Screen
+                    name={Const.NameScreens.EditFamilyPlan}
+                    component={EditFamilyPlan}
                 />
                 <Stack.Screen
                     name={Const.NameScreens.Splash}

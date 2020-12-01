@@ -1,18 +1,17 @@
 import React from 'react'
 const data = [
-    { id: 1, label: 'Male' },
-    { id: 2, label: 'Female' },
-    { id: 3, label: 'Other' }
+    { id: 1, label: `Don't want kids` },
+    { id: 2, label: 'Want kids' },
+    { id: 3, label: 'Open to kids' }
 ]
 import EditContentList from '/src/components/UI/editContentList'
-export default function editGender(props) {
+export default function editFamilyPlan(props) {
     const { onPressBack } = props
     return (
         <EditContentList
             data={data}
             onPressBack={onPressBack}
-            title={'I Am'}
+            title={'My Family Plan'}
         />
     )
 }
-

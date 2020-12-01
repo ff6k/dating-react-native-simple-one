@@ -19,7 +19,7 @@ export default function ItemsReligious(props) {
                 {name}
             </Text>
             {isCheck && <Icon
-                size={25}
+                size={23}
                 color={Themes.Colors.PINK_DARK}
                 name="checkmark"></Icon>}
         </TouchableOpacity>
@@ -29,14 +29,15 @@ export default function ItemsReligious(props) {
 const styles = StyleSheet.create({
     containerReligious: {
         paddingVertical: 10,
+        paddingHorizontal: 10,
         flexDirection: 'row',
+        backgroundColor: 'white',
+        marginTop: 1.3,
         justifyContent: 'space-between'
     },
     txtReligious: {
         fontSize: Themes.Const.SIZE_TEXT_ITEM,
-    },
-    icoCheck: {
-        color: Themes.Colors.PINK_DARK,
-        fontSize: 30
+        color: Themes.Colors.GRAY_BRIGHT_I,
+        fontFamily: Themes.FontFamily.FontMediumDefault
     },
 })
