@@ -3,9 +3,9 @@ import { StyleSheet, TouchableOpacity, Image, Text, View } from 'react-native'
 import Themes from '/src/themes'
 import ButtonNext from '/src/components/UI/buttonNext'
 import ImagePicker from '/src/components/UI/imagePicker'
-import BottomHalfModel from '/src/components/Model/bottomHalfModel'
 import { withTranslation } from 'react-i18next'
 import ButtonBack from '/src/components/UI/buttonBack'
+import UploadImageModal from '/src/components/UI/uploadImageModal'
 import SpinnerLoading from '/src/components/UI/spinnerLoading'
 function Picture(props) {
     const { t, onPressBack, pressUploadPhoto, pressTakePhoto,
@@ -53,33 +53,21 @@ function Picture(props) {
             <ButtonNext isGradient={true}
                 onPress={() => onPressNext && onPressNext()}
             />
-            <BottomHalfModel
-                numberRow={3}
-                isVisible={isVisible} setVisibleModel={setVisibleModel}
-            >
-                <TouchableOpacity style={styles.btnBetweenContent}
-                    onPress={() => onUploadPhoto()}>
-                    <Text style={styles.txtContentButton}>{t("Upload photo from gallery")}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.btnBottomContent}
-                    onPress={() => onTakePhoto()}>
-                    <Text style={styles.txtContentButton}>{t('Take photo with camera')}</Text>
-                </TouchableOpacity>
-            </BottomHalfModel>
+            <UploadImageModal
+                isVisible={isVisible}
+                setVisibleModel={setVisibleModel}
+                t={t}
+                onUploadPhoto={onUploadPhoto}
+                onTakePhoto={onTakePhoto}
+            />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    btnBetweenContent: {
-        ...Themes.Styles.BtnBetweenContent
-    },
-    txtContentButton: {
-        ...Themes.Styles.TxtContentButton
-    },
-    btnBottomContent: {
-        ...Themes.Styles.BtnBottomContent
-    },
+
+
+
     btnChange: {
         position: 'absolute',
         left: Themes.Const.ABSOLUTE_BOTTOM,

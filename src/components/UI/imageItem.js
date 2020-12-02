@@ -6,7 +6,7 @@ import Icon from '/src/components/UI/icon'
 import Const from '/src/const'
 
 export default function ImageItem(props) {
-    const { uri } = props
+    const { uri, onPressAddImage, index } = props
     return (
         <View style={{ width: Const.Common.deviceWidth / 3 - 15 }}>
             {uri ? <Image source={{ uri: uri }} style={styles.containImageItem} /> :
@@ -18,13 +18,9 @@ export default function ImageItem(props) {
                 }]}>
                 </View>
             }
-            <LinearGradientCircleButton
-                style={{ ...Themes.Styles.circleAddImageSmall }}
-            >
-                <Icon name="plus" color={'white'} size={20}></Icon>
-            </LinearGradientCircleButton>
             {!uri
                 ? <LinearGradientCircleButton
+                    onPress={() => onPressAddImage(index)}
                     style={{ ...Themes.Styles.circleAddImageSmall }}
                 >
                     <Icon name="plus" color={'white'} size={20}></Icon>

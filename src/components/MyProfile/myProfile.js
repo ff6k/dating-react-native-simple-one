@@ -1,7 +1,6 @@
 
 import React from 'react'
 import { StyleSheet, FlatList, View, Text } from 'react-native'
-import ButtonBack from '/src/components/UI/buttonBack'
 import Themes from '/src/themes'
 import InformationContent from './SubComponent/informationContent'
 import MyVicesContent from './SubComponent/myVicesContent'
@@ -12,6 +11,7 @@ import Utils from '/src/utils'
 import Const from '/src/const'
 import HeaderSave from '/src/components/UI/headerSave'
 import AnimLottieView from '/src/components/UI/animLottieView'
+import UploadImageModal from '/src/components/UI/uploadImageModal'
 
 const headerComponent = (props) => {
     const { onPressBack } = props
@@ -29,7 +29,8 @@ const headerComponent = (props) => {
 }
 const footerComponent = (props) => {
     const { onPressInterest, onPressGender, onPressReligious, onPressEthnicity,
-        onPressKids, onPressFamilyPlans, onPressSmoking, onPressDrinking, data } = props
+        onPressKids, onPressFamilyPlans, onPressSmoking, onPressDrinking, data,
+    } = props
     let [name, dateOfBirth, location, religion, company, jobTitle, school, ethnicity,
         children, smoking, interests, drinking, bio, gender, phone, email] = []
     if (data !== null) {
@@ -87,18 +88,24 @@ const footerComponent = (props) => {
                 drinking={drinking}
                 smoking={smoking}
             />
+
         </View>
     )
 }
 
-const imageList = (item) => {
+const imageList = (item, index, onPressAddImage) => {
     if (item !== undefined) {
         const { url } = item
         if (url === undefined) {
-            return <ImageItem />
+            return <ImageItem
+                onPressAddImage={onPressAddImage}
+                index={index}
+            />
         }
         else {
-            return <ImageItem uri={url} />
+            return <ImageItem uri={url}
+                index={index}
+            />
         }
     }
 }
@@ -112,21 +119,34 @@ const emptyComponent = () => {
 }
 
 export default function myProfile(props) {
-    const { data } = props
+    const { data, onPressAddImage, dataPhotos,
+        isVisible, setVisibleModel,
+        onUploadPhoto, onTakePhoto
+    } = props
 
     // console.log(name)
     return (
-        <FlatList
-            showsVerticalScrollIndicator={false}
-            data={data !== null ? data.photos : undefined}
-            renderItem={({ item }) => imageList(item)}
-            columnWrapperStyle={{ justifyContent: 'space-evenly' }}
-            ListEmptyComponent={emptyComponent}
-            keyExtractor={item => item.id.toString()}
-            numColumns={3}
-            ListFooterComponent={() => footerComponent(props)}
-            ListHeaderComponent={() => headerComponent(props)}
-        />
+        <View>
+            <FlatList
+                showsVerticalScrollIndicator={false}
+                data={dataPhotos !== null ? dataPhotos : undefined}
+                renderItem={({ item, index }) => imageList(item, index, onPressAddImage)}
+                columnWrapperStyle={{ justifyContent: 'space-evenly' }}
+                ListEmptyComponent={emptyComponent}
+                keyExtractor={item => item.id.toString()}
+                numColumns={3}
+                ListFooterComponent={() => footerComponent(props)}
+                ListHeaderComponent={() => headerComponent(props)}
+            />
+            <UploadImageModal
+                isVisible={isVisible}
+                setVisibleModel={setVisibleModel}
+                // t={t}
+                onUploadPhoto={onUploadPhoto}
+                onTakePhoto={onTakePhoto}
+            />
+        </View>
+
     )
 }
 

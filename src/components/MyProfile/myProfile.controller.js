@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import MyProfile from './myProfile'
-import { StyleSheet, FlatList, View, Text } from 'react-native'
 
 import Const from '/src/const'
 import Api from '/src/api'
+import Utils from '/src/utils'
 import { useSelector } from 'react-redux'
 
-
-
 let token
+let indexPhoto
 let idUser
 export default function MyProfileController(props) {
     const { navigation } = props
     const [dataProfile, setDataProfile] = useState(null)
+    const [dataPhotos, setDataPhotos] = useState(null)
+    const [isVisible, setIsVisible] = useState(false)
     const dataStore = useSelector(state => state.login)
 
     const getDataStore = () => {
@@ -47,10 +48,10 @@ export default function MyProfileController(props) {
             return Api.RequestApi.getProfileApiRequest(params)
         }
         getApiProfile().then(res => {
-            const data = res.data
-            const dataPhotos = checkAndFillPhotos(res.data.photos, 9)
-            data.photos = dataPhotos
-            setDataProfile(data)
+            const photos = res.data.photos
+            const dataPhotos = checkAndFillPhotos(photos, 9)
+            setDataPhotos(dataPhotos)
+            setDataProfile(res.data)
         })
             .catch(err => console.log(err))
         // .finally(() => setIsLoading(false))
@@ -91,18 +92,53 @@ export default function MyProfileController(props) {
     const onPressDrinking = () => {
         navigation.navigate(Const.NameScreens.EditDrinking)
     }
+
+    const setVisibleModel = () => {
+        setIsVisible(!isVisible)
+    }
+
+    const onPressAddImage = (index) => {
+        indexPhoto = index
+        setVisibleModel()
+    }
+
+    const onTakePhoto = () => {
+        setVisibleModel()
+        Utils.Images.openCameraCropImage()
+            .then(res => handleDataImage(res.path, indexPhoto))
+            .catch(err => console.log(err))
+    }
+
+    const handleDataImage = (url, index) => {
+        const data = [...dataPhotos]
+        data[index].url = url
+        setDataPhotos(data)
+    }
+
+    const onUploadPhoto = () => {
+        setVisibleModel()
+        Utils.Images.openPickerCropImage()
+            .then(res => handleDataImage(res.path, indexPhoto))
+            .catch(err => console.log(err))
+    }
     return (
         <MyProfile
             onPressDrinking={onPressDrinking}
             onPressSmoking={onPressSmoking}
             onPressBack={onPressBack}
             data={dataProfile}
+            dataPhotos={dataPhotos}
             onPressInterest={onPressInterest}
             onPressGender={onPressGender}
             onPressReligious={onPressReligious}
             onPressEthnicity={onPressEthnicity}
             onPressKids={onPressKids}
             onPressFamilyPlans={onPressFamilyPlans}
+            isVisible={isVisible}
+            setVisibleModel={setVisibleModel}
+            onPressAddImage={onPressAddImage}
+            onUploadPhoto={onUploadPhoto}
+            onTakePhoto={onTakePhoto}
         />
     )
 }
