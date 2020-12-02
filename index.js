@@ -10,16 +10,17 @@ LogBox.ignoreLogs([
     'Animated: `useNativeDriver` was not specified. This is a required option and must be explicitly set to `true` or `false`',
 ])
 
-import Navigation from '/src/configs/Navigation'
-import { Provider } from 'react-redux'
-import store from './src/store'
+// import Navigation from '/src/configs/Navigation'
+// import { Provider } from 'react-redux'
+// import store from './src/store'
 
-function Main() {
-    return (
-        <Provider store={store}>
-            <Navigation />
-        </Provider>
-    )
-}
+// function Main() {
+//     return (
+//         <Provider store={store}>
+//             <Navigation />
+//         </Provider>
+//     )
+// }
+import BottomModalTest from '/test/bottomModalTest'
 // import DocumentPickerTest from '/test/DocumentPickerTest'
-AppRegistry.registerComponent(appName, () => Main);
+AppRegistry.registerComponent(appName, () => BottomModalTest);
