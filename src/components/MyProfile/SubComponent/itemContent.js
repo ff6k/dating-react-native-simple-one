@@ -9,40 +9,55 @@ import Icon from '/src/components/UI/icon'
 const MAX_LENGTH_TEXT = 500
 
 const data = [
-    // { id: 31, label: 'Mountain Biking' },
-    // { id: 32, label: 'Snowmobiling' },
-    // { id: 33, label: 'Painting' },
-    // { id: 34, label: 'Grilling' },
-    // { id: 35, label: 'Surf Fishing' },
-    // { id: 36, label: 'Bartending' },
-    // { id: 37, label: 'Stamp Collecting' },
-    // { id: 38, label: 'Helping The Homeless' },
+    { id: 31, label: 'Mountain Biking' },
+    { id: 32, label: 'Snowmobiling' },
+    { id: 33, label: 'Painting' },
+    { id: 34, label: 'Grilling' },
+    { id: 35, label: 'Surf Fishing' },
+    { id: 36, label: 'Bartending' },
+    { id: 37, label: 'Stamp Collecting' },
+    { id: 38, label: 'Helping The Homeless' },
 ]
 const RenderTypeContent = (props) => {
     const { content, onPressItem, keyboardType, typeContent } = props
     const [contentState, setContentState] = useState(() => {
-        return content
+        return content ? content : ''
     });
     switch (typeContent) {
         case TYPE_CONTENT.Button:
             return (
                 <TouchableOpacity
-                    style={styles.containText}
+                    style={[styles.containText, styles.containView]}
                     onPress={() => onPressItem && onPressItem()}>
-                    <Text style={styles.txtInside}>{content}</Text>
+                    <Text style={[styles.txtInside, !content && { color: '#939093' }]}>{content ? content : 'NA'}</Text>
+                    <Icon
+                        name={'arrow-right-outline'}
+                        size={27}
+                        color={Themes.Colors.GRAY_BRIGHT_I}
+                    />
                 </TouchableOpacity>
             )
         case TYPE_CONTENT.TextInput:
             return (
-                <TextInput
-                    style={[{
-                        color: '#939093', fontSize: 16,
-                        fontFamily: Themes.FontFamily.FontThinDefault,
-                    }]}
-                    value={contentState}
-                    keyboardType={keyboardType}
-                    onChangeText={(value) => setContentState(value)}
-                />
+                <View style={styles.containView}>
+                    <TextInput
+                        style={[{
+                            color: 'black', fontSize: 16,
+                            fontFamily: Themes.FontFamily.FontThinDefault,
+                            width: '95%'
+                        }]}
+                        placeholder={"NA"}
+                        value={contentState}
+                        keyboardType={keyboardType}
+                        onChangeText={(value) => setContentState(value)}
+                    />
+                    <Icon
+                        name={'edit-2-outline'}
+                        size={20}
+                        color={Themes.Colors.GRAY_BRIGHT_I}
+                    />
+                </View>
+
             )
         case TYPE_CONTENT.TextExpand:
             return (
@@ -50,6 +65,7 @@ const RenderTypeContent = (props) => {
                     <AutoGrowingTextInput style={styles.textInput} placeholder={'Your bio'}
                         onChangeText={(value) => setContentState(value)}
                         maxLength={MAX_LENGTH_TEXT}
+                        value={contentState}
                     />
                     <Text style={styles.txtCountTxt}>{`${contentState.length}/500`}</Text>
                 </View>
@@ -57,11 +73,13 @@ const RenderTypeContent = (props) => {
         case TYPE_CONTENT.TagSelect:
             return (
                 <View>
-                    {data.length > 0 ? <View style={styles.containTag}>
+                    {data.length > 0 ? <TouchableOpacity style={styles.containTag}
+                        onPress={() => onPressItem && onPressItem()}
+                    >
                         <InterestContentInfo
                             data={data}
                         />
-                    </View> :
+                    </TouchableOpacity> :
                         <TouchableOpacity
                             style={styles.containText}
                             onPress={() => onPressItem && onPressItem()}>
@@ -114,7 +132,7 @@ const styles = StyleSheet.create({
         marginTop: 15
     },
     txtInside: {
-        color: '#939093', fontSize: 16,
+        color: 'black', fontSize: 16,
         fontFamily: Themes.FontFamily.FontThinDefault,
     },
     containText: {
@@ -134,7 +152,8 @@ const styles = StyleSheet.create({
         fontFamily: Themes.FontFamily.FontBoldSemi
     },
     textInput: {
-        fontFamily: Themes.FontFamily.FontMediumDefault,
+        fontFamily: Themes.FontFamily.FontThinDefault,
+        fontSize: 16,
         ...Themes.Styles.TextContent
     },
     containerTitle: {

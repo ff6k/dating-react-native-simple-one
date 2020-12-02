@@ -1,8 +1,8 @@
 import React from 'react'
 const data = [
-    { id: 1, label: 'Male' },
-    { id: 2, label: 'Female' },
-    { id: 3, label: 'Other' }
+    { id: 1, label: 'male' },
+    { id: 2, label: 'female' },
+    { id: 3, label: 'other' }
 ]
 import EditContentList from '/src/components/UI/editContentList'
 export default function editGender(props) {

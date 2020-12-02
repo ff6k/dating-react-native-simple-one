@@ -4,19 +4,19 @@ import ItemContent from './itemContent'
 import { TYPE_CONTENT } from '../typeContent'
 
 export default function MyVicesContent(props) {
-    const { onPressDrinking, onPressSmoking } = props
+    const { onPressDrinking, onPressSmoking, drinking, smoking } = props
 
     return (
         <View>
             <ItemContent
                 typeContent={TYPE_CONTENT.Button}
-                title={"Drinking"} content={"NA"}
+                title={"Drinking"} content={drinking}
                 onPressItem={onPressDrinking}
 
             />
             <ItemContent
                 typeContent={TYPE_CONTENT.Button}
-                title={"Smoking"} content={"NA"}
+                title={"Smoking"} content={smoking}
                 onPressItem={onPressSmoking}
             />
         </View>

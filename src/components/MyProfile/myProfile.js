@@ -8,6 +8,9 @@ import MyVicesContent from './SubComponent/myVicesContent'
 import MyVirtuesContent from './SubComponent/myVirtuesContent'
 import MyVitalsContent from './SubComponent/myVitalsContent'
 import ImageItem from '/src/components/UI/imageItem'
+import Utils from '/src/utils'
+import Const from '/src/const'
+import HeaderSave from '/src/components/UI/headerSave'
 import AnimLottieView from '/src/components/UI/animLottieView'
 
 const headerComponent = (props) => {
@@ -15,8 +18,8 @@ const headerComponent = (props) => {
     return (
         <View>
 
-            <ButtonBack
-                onPress={onPressBack}
+            <HeaderSave
+                onPressBack={onPressBack}
                 title={"Edit Profile"}
             />
             <Text style={styles.headerText}>Photos Show</Text>
@@ -26,28 +29,63 @@ const headerComponent = (props) => {
 }
 const footerComponent = (props) => {
     const { onPressInterest, onPressGender, onPressReligious, onPressEthnicity,
-        onPressKids, onPressFamilyPlans, onPressSmoking, onPressDrinking } = props
+        onPressKids, onPressFamilyPlans, onPressSmoking, onPressDrinking, data } = props
+    let [name, dateOfBirth, location, religion, company, jobTitle, school, ethnicity,
+        children, smoking, interests, drinking, bio, gender, phone, email] = []
+    if (data !== null) {
+        name = data.name
+        dateOfBirth = Utils.Calculator.getOldYear(data.dateOfBirth).toString()
+        location = data.location
+        religion = data.religion
+        company = data.company
+        jobTitle = data.jobTitle
+        school = data.school
+        ethnicity = data.ethnicity
+        children = data.children
+        smoking = data.smoking
+        bio = data.bio
+        drinking = data.drinking
+        gender = data.gender
+        phone = data.phone
+        email = data.email
+    }
     return (
         <View>
             <Text style={styles.headerText}>Your Information</Text>
             <InformationContent
                 onPressInterest={onPressInterest}
                 onPressGender={onPressGender}
+                name={name}
+                bio={bio}
+                dateOfBirth={dateOfBirth}
+                gender={gender}
+                phone={phone}
+                email={email}
+                location={location}
             />
             <Text style={styles.headerText}>Your Virtues</Text>
             <MyVirtuesContent
                 onPressReligious={onPressReligious}
+                religion={religion}
+                job={jobTitle}
+                work={company}
+                education={school}
             />
             <Text style={styles.headerText}>Your Vitals</Text>
             <MyVitalsContent
                 onPressEthnicity={onPressEthnicity}
                 onPressKids={onPressKids}
                 onPressFamilyPlans={onPressFamilyPlans}
+                ethnicity={ethnicity}
+                kids={children}
+                familyPlans={null}
             />
             <Text style={styles.headerText}>Your Vices</Text>
             <MyVicesContent
                 onPressDrinking={onPressDrinking}
                 onPressSmoking={onPressSmoking}
+                drinking={drinking}
+                smoking={smoking}
             />
         </View>
     )
@@ -75,6 +113,8 @@ const emptyComponent = () => {
 
 export default function myProfile(props) {
     const { data } = props
+
+    // console.log(name)
     return (
         <FlatList
             showsVerticalScrollIndicator={false}

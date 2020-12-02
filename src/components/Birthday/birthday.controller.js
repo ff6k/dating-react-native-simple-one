@@ -28,8 +28,7 @@ export default function BirthdayController(props) {
     }
 
     const checkDateAdult = (date) => {
-        const now = new Date()
-        const yearOld = now.getUTCFullYear() - new Date(date).getUTCFullYear()
+        const yearOld = Utils.Calculator.getOldYear(date)
         return yearOld >= DATE_ADULT ? true : false
     }
     const onGetDate = (date) => {

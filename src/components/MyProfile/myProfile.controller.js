@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import MyProfile from './myProfile'
+import { StyleSheet, FlatList, View, Text } from 'react-native'
+
 import Const from '/src/const'
 import Api from '/src/api'
 import { useSelector } from 'react-redux'
@@ -46,8 +48,6 @@ export default function MyProfileController(props) {
         }
         getApiProfile().then(res => {
             const data = res.data
-            const { name, dateOfBirth, location, religion, company, jobTitle, school, ethnicity,
-                children, smoking, interests, drinking, bio } = data
             const dataPhotos = checkAndFillPhotos(res.data.photos, 9)
             data.photos = dataPhotos
             setDataProfile(data)
