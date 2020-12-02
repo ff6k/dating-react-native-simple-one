@@ -65,7 +65,9 @@ export const postMarkMessagesApiRequest = async (params) => {
 
 export const getProfileApiRequest = async (params) => {
     const { id, token } = params
+    console.log(`token: ${token}`);
     const Url = URL_GET_PROFILE + `/${id}`
+    console.log(`Url: ${Url}`);
     const client = getAxios('Bearer ' + token)
     return client.get(Url)
 }

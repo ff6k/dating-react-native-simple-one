@@ -5,6 +5,7 @@ import { LoginManager, AccessToken } from "react-native-fbsdk";
 import { useDispatch, useSelector } from 'react-redux'
 import { pushDataLoginFB, pushDataLoginEmail } from '/src/slice/loginSlice'
 import Api from '/src/api'
+import jwt_decode from "jwt-decode";
 import { saveStorage, saveDataUserStorage } from '/src/configs/AsyncStorage'
 
 /**
@@ -68,7 +69,7 @@ export default function LoginController(props) {
      */
     const requestApiFacebookSuccess = (json) => {
         const { jwtToken, id } = json
-        saveDataUserStorage(Const.StorageKey.CODE_LOGIN_TOKEN, [jwtToken, id])
+        handleBeforeLogin(jwtToken, id)
         dispatch(pushDataLoginFB(json))
         switchNavigationScreen(json)
     }
@@ -92,10 +93,15 @@ export default function LoginController(props) {
         }
     }
 
+    const handleBeforeLogin = (jwtToken, id) => {
+        const dataToken = jwt_decode(jwtToken)
+        saveDataUserStorage(Const.StorageKey.CODE_LOGIN_TOKEN, [jwtToken, id, dataToken.exp])
+    }
+
     const requestApiSuccess = (json) => {
         if (json.status === "Active") {
             const { jwtToken, id } = json
-            saveDataUserStorage(Const.StorageKey.CODE_LOGIN_TOKEN, [jwtToken, id])
+            handleBeforeLogin(jwtToken, id)
             dispatch(pushDataLoginEmail(json))
             navigation.navigate(Const.NameScreens.Birthday)
         } else {

@@ -14,14 +14,20 @@ export default function SplashController(props) {
     useEffect(() => {
         const checkNavigationScreen = (dataLogin, codeApp) => {
             if (dataLogin !== undefined) {
-                const [jwtToken, id] = JSON.parse(dataLogin)
-
-                const data = {
-                    jwtToken: jwtToken,
-                    id: id
+                const [jwtToken, id, exp] = JSON.parse(dataLogin)
+                const timeNow = Math.round(new Date().getTime() / 1000)
+                if (timeNow < exp) {
+                    const data = {
+                        jwtToken: jwtToken,
+                        id: id
+                    }
+                    dispatch(pushDataLoginEmail(data))
+                    navigation.replace(Const.NameScreens.BottomNavigation)
+                } else {
+                    removeKeyStorage(Const.StorageKey.CODE_LOGIN_TOKEN)
+                    navigation.replace(Const.NameScreens.SingInOrUp)
                 }
-                dispatch(pushDataLoginEmail(data))
-                navigation.replace(Const.NameScreens.BottomNavigation)
+
             } else {
                 if (codeApp !== undefined) {
                     navigation.replace(Const.NameScreens.SingInOrUp)
