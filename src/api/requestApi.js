@@ -72,28 +72,11 @@ export const getProfileApiRequest = async (params) => {
     return client.get(Url)
 }
 
-export const putProfileApiRequest = async (params) => {
-    const { id, token, gender, dateOfBirth, urlPhoto } = params
+export const putProfileBirthdayApiRequest = async (params) => {
+    const { id, token, dateOfBirth } = params
     const Url = URL_PUT_PROFILE + `/${id}`
-    const UrlPhoto = `${URL_POST_PHOTOS}/${id}/photos`
     const client = getAxios('Bearer ' + token)
-    // axios.all([
-    //     client.put(Url, {
-    //         "gender": gender,
-    //         "dateOfBirth": dateOfBirth
-    //     })
-    //     client.post(UrlPhoto, {
-
-    //     })
-    // ])
-    // .then(axios.spread((res1, res2) => {
-    //     console.log(`res2: ${res2}`);
-    //     console.log(`res1: ${res1}`);
-    // }))
-    // const Url = URL_PUT_PROFILE + `/${id}`
-    // const client = getAxios('Bearer ' + token)
-    // return client.put(Url, {
-    //     "gender": gender,
-    //     "dateOfBirth": dateOfBirth
-    // })
+    return client.put(Url, {
+        "dateOfBirth": dateOfBirth
+    })
 }

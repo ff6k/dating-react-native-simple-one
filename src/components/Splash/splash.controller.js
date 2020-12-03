@@ -15,6 +15,7 @@ export default function SplashController(props) {
         const checkNavigationScreen = (dataLogin, codeApp) => {
             if (dataLogin !== undefined) {
                 const [jwtToken, id, exp] = JSON.parse(dataLogin)
+                console.log(`jwtToken: ${jwtToken}`);
                 const timeNow = Math.round(new Date().getTime() / 1000)
                 if (timeNow < exp) {
                     const data = {

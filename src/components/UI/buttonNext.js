@@ -14,19 +14,20 @@ export default function buttonNext(props) {
     return (
         isGradient ?
             <LinearGradient
+                onTouchEnd={() => onPress && onPress()}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 colors={[Themes.Colors.PINK_DARK, Themes.Colors.RED_DARK]}
                 style={[styles.btnArrowRight]}>
-                <TouchableOpacity style={styles.btnNext}
-                    onPress={() => onPress && onPress()}>
+                <View style={styles.btnNext}
+                >
                     {
                         !isCheck ?
                             <SimpleLineIcons name="arrow-right" size={Themes.Const.SIZE_ICON} color={'white'} style={styles.iconNext} />
                             :
                             <Ionicons name="checkmark-outline" size={Themes.Const.SIZE_ICON + 5} color={'white'} style={styles.iconNext} />
                     }
-                </TouchableOpacity>
+                </View>
             </LinearGradient>
             :
             <TouchableOpacity style={styles.btnArrowRight}

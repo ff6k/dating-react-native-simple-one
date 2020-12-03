@@ -6,15 +6,13 @@ import DateTimePicker from '/src/components/UI/dateTimePicker'
 import { withTranslation } from 'react-i18next'
 import ButtonBack from '/src/components/UI/buttonBack'
 import AwesomeAlert from 'react-native-awesome-alerts';
-function BirthDay(props) {
-    const { t, onPressBackButton, onPressNextButton, onGetDate, isShowAlert, changeShowAlert } = props
+import ConfirmModal from '/src/components/Model/confirmModal'
 
+function BirthDay(props) {
+    const { t, onPressBackButton, onPressNextButton, onGetDate, isShowAlert, changeShowAlert, isShowAlertFail, changeShowAlertFail,
+        isShowConfirmModal, onPressButtonLeft, onPressButtonRight } = props
     const onPressBack = () => {
         onPressBackButton && onPressBackButton()
-    }
-
-    const onPressNext = () => {
-        onPressNextButton && onPressNextButton()
     }
 
     const getDate = (date) => {
@@ -39,12 +37,12 @@ function BirthDay(props) {
                 <Text style={styles.txtDetail}>{t("Your age will be public")}</Text>
             </View>
             <ButtonNext isGradient={true}
-                onPress={onPressNext}
+                onPress={onPressNextButton}
             />
             <AwesomeAlert
                 show={isShowAlert}
-                title="FBI Warning !"
-                message="Only users who are 18 or older can use our app"
+                title={"FBI Warning !"}
+                message={"Only users who are 18 or older can use our app"}
                 closeOnTouchOutside={true}
                 closeOnHardwareBackPress={false}
                 showConfirmButton={true}
@@ -57,6 +55,31 @@ function BirthDay(props) {
                 onConfirmPressed={() => {
                     changeShowAlert();
                 }}
+            />
+            <AwesomeAlert
+                show={isShowAlertFail}
+                title={"Error !"}
+                message={"Save your birthday fail. Try again ?"}
+                closeOnTouchOutside={true}
+                closeOnHardwareBackPress={false}
+                showConfirmButton={true}
+                contentStyle={{ width: 300, height: 120, }}
+                confirmText="Yes, i agree"
+                messageStyle={styles.txtMessageAlert}
+                confirmButtonColor="#DD6B55"
+                confirmButtonTextStyle={styles.txtConfirm}
+                titleStyle={styles.titleAlert}
+                onConfirmPressed={() => {
+                    changeShowAlertFail();
+                }}
+            />
+            <ConfirmModal
+                isVisible={isShowConfirmModal}
+                title={"Are you sure you want to log out?"}
+                textButtonLeft={"Cancel"}
+                txtButtonRight={"Quit"}
+                onPressButtonLeft={onPressButtonLeft}
+                onPressButtonRight={onPressButtonRight}
             />
         </View>
     )
