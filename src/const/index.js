@@ -12,6 +12,7 @@ import * as GifPhyKey from './gifphyKey'
 import * as DateFormat from './dateFormat'
 import * as Languages from './languages'
 import * as Interests from './interests'
+import * as Cloudinary from './cloudinary'
 const Const = {
     Common,
     PhoneAreas,
@@ -26,7 +27,8 @@ const Const = {
     GifPhyKey,
     DateFormat,
     Languages,
-    Interests
+    Interests,
+    Cloudinary
 }
 
 export default Const;

@@ -93,34 +93,32 @@ export default function MyProfileController(props) {
         navigation.navigate(Const.NameScreens.EditDrinking)
     }
 
-    const setVisibleModel = () => {
-        setIsVisible(!isVisible)
-    }
-
     const onPressAddImage = (index) => {
         indexPhoto = index
         refSlideModal.current.open()
     }
 
     const onTakePhoto = () => {
-        setVisibleModel()
+        refSlideModal.current.close()
         Utils.Images.openCameraCropImage()
             .then(res => handleDataImage(res.path, indexPhoto))
             .catch(err => console.log(err))
     }
 
-    const handleDataImage = (url, index) => {
-        const data = [...dataPhotos]
-        data[index].url = url
-        setDataPhotos(data)
-    }
-
     const onUploadPhoto = () => {
-        setVisibleModel()
+        refSlideModal.current.close()
         Utils.Images.openPickerCropImage()
             .then(res => handleDataImage(res.path, indexPhoto))
             .catch(err => console.log(err))
     }
+    const handleDataImage = (url, index) => {
+        const data = [...dataPhotos]
+        data[index].url = url
+        setDataPhotos(data)
+
+    }
+
+
     return (
         <MyProfile
             onPressDrinking={onPressDrinking}

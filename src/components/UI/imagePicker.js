@@ -4,7 +4,7 @@ import Themes from '/src/themes'
 import Icon from '/src/components/UI/icon'
 
 export default function imagePicker(props) {
-    const { onPressAdd, t, urlImage } = props;
+    const { onPressAdd, urlImage } = props;
 
     return (
         <View style={styles.containerViewImage}>
@@ -25,7 +25,7 @@ export default function imagePicker(props) {
                                 color={"#BDB6BB"}
                             />
                         </TouchableOpacity>
-                        <Text style={styles.txtAddPhoto}>{t("Add your photo")}</Text>
+                        <Text style={styles.txtAddPhoto}>{"Add your photo"}</Text>
                     </View>)
             }
         </View>

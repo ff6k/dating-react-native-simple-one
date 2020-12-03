@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { StyleSheet, FlatList, View, Text } from 'react-native'
+import { StyleSheet, FlatList, View, Text, TouchableOpacity } from 'react-native'
 import Themes from '/src/themes'
 import InformationContent from './SubComponent/informationContent'
 import MyVicesContent from './SubComponent/myVicesContent'
@@ -9,6 +9,7 @@ import MyVitalsContent from './SubComponent/myVitalsContent'
 import ImageItem from '/src/components/UI/imageItem'
 import Utils from '/src/utils'
 import Const from '/src/const'
+import CoupleButtonImage from '/src/components/UI/coupleButtonImage'
 import HeaderSave from '/src/components/UI/headerSave'
 import AnimLottieView from '/src/components/UI/animLottieView'
 import BottomModalSlide from '/src/components/UI/bottomModalSlide'
@@ -139,21 +140,21 @@ const MyProfile = React.forwardRef((props, ref) => {
             />
             <BottomModalSlide
                 ref={ref}
+                height={150}
             >
-                <Text>Hello</Text>
+                <CoupleButtonImage
+                    onTakePhoto={onTakePhoto}
+                    onUploadPhoto={onUploadPhoto}
+                />
             </BottomModalSlide>
-            {/* <UploadImageModal
-                isVisible={isVisible}
-                setVisibleModel={setVisibleModel}
-                // t={t}
-                onUploadPhoto={onUploadPhoto}
-                onTakePhoto={onTakePhoto}
-            /> */}
         </View>
     )
 })
 export default MyProfile
+
 const styles = StyleSheet.create({
+
+
     detailHeader: {
         fontSize: 15,
         marginLeft: 10,

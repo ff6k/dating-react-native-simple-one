@@ -4,17 +4,18 @@ import { launchCamera, launchImageLibrary } from '/src/configs/Camera'
 import Api from '/src/api'
 import Const from '/src/const'
 import { useSelector } from 'react-redux'
+import Utils from '/src/utils'
 
 
 let token
 let idUser
 export default function PictureController(props) {
     const { route, navigation } = props
-    const [isVisible, setIsVisible] = useState(false)
     const [uriImage, setUriImage] = useState(null)
     const [isLoading, setIsLoading] = useState(false);
     const [dataImage, setDataImage] = useState(null)
 
+    const refModalSlide = React.createRef()
     const dataStore = useSelector(state => state.login)
     const getDataStore = () => {
         if (dataStore.length > 0) {
@@ -31,46 +32,39 @@ export default function PictureController(props) {
         getDataStore()
     }, [])
 
-    const setVisibleModel = () => {
-        setIsVisible(!isVisible)
-    }
-
     const onPressBack = () => {
         navigation.goBack()
     }
 
+    const handImageData = (res) => {
+        const { path, mime } = res
+        const typeImage = mime.split('/')[1]
+        const nameFile = new Date().getTime().toString() + `.${typeImage}`
+        setUriImage(path)
+        setDataImage({ uri: path, name: nameFile, type: mime })
+    }
+    const pressTakePhoto = () => {
+        onCloseModalSlide()
+        Utils.Images.openCameraCropImage()
+            .then(res => handImageData(res))
+            .catch(err => console.log(err))
+    }
     const pressUploadPhoto = () => {
-        setVisibleModel()
-        launchImageLibrary(res => {
-            const { uri, fileName, type } = res
-            const name = fileName
-            setUriImage(uri)
-            setDataImage({ uri, name, type })
-        })
+        onCloseModalSlide()
+        Utils.Images.openPickerCropImage()
+            .then(res => handImageData(res))
+            .catch(err => console.log(err))
     }
 
     const onPressAdd = () => {
-        setVisibleModel();
-    }
-
-    const pressTakePhoto = async () => {
-        launchCamera(res => setUriImage(res.fileUri))
-        setVisibleModel()
+        onOpenModalSlide()
     }
 
     const uploadImage = async () => {
-        const data = new FormData(dataImage)
-        data.append('file', dataImage)
-        data.append('upload_preset', 'date_app')
-        data.append('cloud_name', 'dating-app-2020')
-        fetch("https://api.cloudinary.com/v1_1/dating-app-2020/image/upload", {
-            method: 'POST',
-            body: data,
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'multipart/form-data'
-            }
-        }).then(res => res.json())
+        console.log(dataImage)
+        setIsLoading(true)
+        Api.CloudinaryApi.postImageApiRequest(dataImage)
+            .then(res => res.json())
             .then(
                 data => {
                     console.log(`data: ${JSON.stringify(data)}`);
@@ -87,14 +81,15 @@ export default function PictureController(props) {
     //TODO: request api info login if fix api server
     const saveDataInfoLogin = (data) => {
         const { urlPhoto, date, gender } = data
+        console.log(`urlPhoto: ${urlPhoto}`);
 
-        const params = {
-            id: idUser,
-            token: token,
-            gender: gender,
-            dateOfBirth: date,
-            urlPhoto: urlPhoto
-        }
+        // const params = {
+        //     id: idUser,
+        //     token: token,
+        //     gender: gender,
+        //     dateOfBirth: date,
+        //     urlPhoto: urlPhoto
+        // }
         // Api.RequestApi.putProfileApiRequest(params)
         //     .then(response => {
         //         console.log(response)
@@ -102,8 +97,15 @@ export default function PictureController(props) {
     }
 
     const onPressNext = () => {
-        setIsLoading(true)
         uploadImage()
+    }
+
+    const onOpenModalSlide = () => {
+        refModalSlide.current.open()
+    }
+
+    const onCloseModalSlide = () => {
+        refModalSlide.current.close()
     }
 
     return (
@@ -113,10 +115,10 @@ export default function PictureController(props) {
             pressTakePhoto={pressTakePhoto}
             uri={uriImage}
             onPressNext={onPressNext}
-            isVisible={isVisible}
-            setVisibleModel={setVisibleModel}
             onPressAddButton={onPressAdd}
             isLoading={isLoading}
+            ref={refModalSlide}
+            onShowModalSlide={onOpenModalSlide}
         />
     )
 }

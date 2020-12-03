@@ -5,15 +5,16 @@ import ButtonNext from '/src/components/UI/buttonNext'
 import ImagePicker from '/src/components/UI/imagePicker'
 import { withTranslation } from 'react-i18next'
 import ButtonBack from '/src/components/UI/buttonBack'
-import UploadImageModal from '/src/components/UI/uploadImageModal'
+import BottomModalSlide from '/src/components/UI/bottomModalSlide'
+import CoupleButtonImage from '/src/components/UI/coupleButtonImage'
 import SpinnerLoading from '/src/components/UI/spinnerLoading'
-function Picture(props) {
-    const { t, onPressBack, pressUploadPhoto, pressTakePhoto,
-        uri, onPressNext, isVisible, setVisibleModel, onPressAddButton, isLoading } = props
+const Picture = React.forwardRef((props, ref) => {
+    const { onPressBack, pressUploadPhoto, pressTakePhoto,
+        uri, onPressNext, onPressAddButton, isLoading, onShowModalSlide } = props
 
 
     const onChangeImage = () => {
-        setVisibleModel()
+        onShowModalSlide && onShowModalSlide()
     }
 
     const onPressAdd = () => {
@@ -38,31 +39,34 @@ function Picture(props) {
                 onPress={() => onPressBack && onPressBack()}
             />
             <View style={styles.containerContent}>
-                <Text style={styles.txtTitle}>{t("My best")}</Text>
-                <Text style={styles.txtTitle2}>{t("Picture")}</Text>
+                <Text style={styles.txtTitle}>{"My best"}</Text>
+                <Text style={styles.txtTitle2}>{"Picture"}</Text>
                 <ImagePicker
                     urlImage={uri}
-                    onPressAdd={onPressAdd} t={t} />
+                    onPressAdd={onPressAdd} />
             </View>
             <TouchableOpacity
                 onPress={() => onChangeImage()}
                 style={styles.btnChange}
             >
-                <Text style={styles.txtChange}>{t("Change")}</Text>
+                <Text style={styles.txtChange}>{"Change"}</Text>
             </TouchableOpacity>
             <ButtonNext isGradient={true}
                 onPress={() => onPressNext && onPressNext()}
             />
-            <UploadImageModal
-                isVisible={isVisible}
-                setVisibleModel={setVisibleModel}
-                t={t}
-                onUploadPhoto={onUploadPhoto}
-                onTakePhoto={onTakePhoto}
-            />
+            <BottomModalSlide
+                ref={ref}
+                height={150}
+            >
+                <CoupleButtonImage
+                    onTakePhoto={onTakePhoto}
+                    onUploadPhoto={onUploadPhoto}
+                />
+            </BottomModalSlide>
         </View>
     )
 }
+)
 
 const styles = StyleSheet.create({
 
@@ -99,4 +103,5 @@ const styles = StyleSheet.create({
 
 })
 
-export default withTranslation()(Picture)
+// export default withTranslation()(Picture)
+export default Picture
