@@ -80,3 +80,12 @@ export const putProfileBirthdayApiRequest = async (params) => {
         "dateOfBirth": dateOfBirth
     })
 }
+
+export const putProfileGenderApiRequest = async (params) => {
+    const { id, token, gender } = params
+    const Url = URL_PUT_PROFILE + `/${id}`
+    const client = getAxios('Bearer ' + token)
+    return client.put(Url, {
+        "gender": gender
+    })
+}

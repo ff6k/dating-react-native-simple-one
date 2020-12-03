@@ -5,6 +5,7 @@ import Const from '/src/const'
 import { changeLanguage } from '/src/translations'
 import { useDispatch } from 'react-redux'
 import { pushDataLoginEmail } from '/src/slice/loginSlice'
+import Api from '/src/api'
 
 export default function SplashController(props) {
     const { navigation } = props
@@ -12,6 +13,29 @@ export default function SplashController(props) {
     const dispatch = useDispatch()
 
     useEffect(() => {
+
+        const setDataStoreReduxProfile = (token, id) => {
+            Api.RequestApi.getProfileApiRequest({ token, id })
+                .then(res => {
+                    const { dateOfBirth, gender, photos } = res.data
+                    if (dateOfBirth === null) {
+                        navigation.replace(Const.NameScreens.Birthday)
+                    }
+                    else if (gender === null) {
+                        navigation.replace(Const.NameScreens.Gender)
+                    }
+                    else if (photos === null | photos.length === 0) {
+                        navigation.replace(Const.NameScreens.Picture)
+                    }
+                    else {
+                        navigation.replace(Const.NameScreens.Picture)
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
+
         const checkNavigationScreen = (dataLogin, codeApp) => {
             if (dataLogin !== undefined) {
                 const [jwtToken, id, exp] = JSON.parse(dataLogin)
@@ -23,7 +47,7 @@ export default function SplashController(props) {
                         id: id
                     }
                     dispatch(pushDataLoginEmail(data))
-                    navigation.replace(Const.NameScreens.BottomNavigation)
+                    setDataStoreReduxProfile(jwtToken, id)
                 } else {
                     removeKeyStorage(Const.StorageKey.CODE_LOGIN_TOKEN)
                     navigation.replace(Const.NameScreens.SingInOrUp)

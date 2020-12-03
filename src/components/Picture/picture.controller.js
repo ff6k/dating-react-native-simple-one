@@ -5,6 +5,7 @@ import Api from '/src/api'
 import Const from '/src/const'
 import { useSelector } from 'react-redux'
 import Utils from '/src/utils'
+import { BackHandler } from 'react-native'
 
 
 let token
@@ -33,7 +34,11 @@ export default function PictureController(props) {
     }, [])
 
     const onPressBack = () => {
-        navigation.goBack()
+        if (navigation.canGoBack()) {
+            navigation.goBack()
+        } else {
+            BackHandler.exitApp()
+        }
     }
 
     const handImageData = (res) => {

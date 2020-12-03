@@ -4,12 +4,10 @@ import Const from '/src/const'
 import Api from '/src/api'
 import Utils from '/src/utils'
 import { useDispatch, useSelector } from 'react-redux'
-
+import { BackHandler } from 'react-native'
 
 const DATE_ADULT = 18
 let dateSave = ""
-
-
 
 let token
 let idUser
@@ -17,9 +15,10 @@ export default function BirthdayController(props) {
 
     const { navigation } = props
     const [isShowAlert, setIsShowAlert] = useState(false)
-    const dataStore = useSelector(state => state.login)
     const [isShowAlertFail, setIsShowAlertFail] = useState(false)
-    const [isShowConfirmModal, setIsShowConfirmModal] = useState(false)
+    // const [isShowConfirmModal, setIsShowConfirmModal] = useState(false)
+
+    const dataStore = useSelector(state => state.login)
 
     const getDataStore = (dataStore) => {
         if (dataStore.length > 0) {
@@ -32,6 +31,9 @@ export default function BirthdayController(props) {
         }
     }
 
+    useEffect(() => {
+        getDataStore(dataStore)
+    }, [])
 
     const saveDataApi = (id, token, dateSave) => {
         const params = {
@@ -49,22 +51,27 @@ export default function BirthdayController(props) {
             })
     }
 
-    useEffect(() => {
-        getDataStore(dataStore)
-    }, [])
-
     const onPressBackButton = () => {
-        setIsShowConfirmModal(true)
+        // setIsShowConfirmModal(true)
+        if (navigation.canGoBack()) {
+            navigation.goBack()
+        } else {
+            BackHandler.exitApp()
+        }
     }
 
-    const onPressButtonLeft = () => {
-        setIsShowConfirmModal(false)
-    }
+    // const onPressButtonLeft = () => {
+    //     setIsShowConfirmModal(false)
+    // }
 
-    const onPressButtonRight = () => {
-        setIsShowConfirmModal(false)
-        navigation.goBack()
-    }
+    // const onPressButtonRight = () => {
+    //     setIsShowConfirmModal(false)
+    //     if (navigation.canGoBack()) {
+    //         navigation.goBack()
+    //     } else {
+    //         BackHandler.exitApp()
+    //     }
+    // }
 
     const onPressNextButton = () => {
         if (dateSave !== "") {
@@ -102,9 +109,6 @@ export default function BirthdayController(props) {
             changeShowAlert={changeShowAlert}
             isShowAlertFail={isShowAlertFail}
             changeShowAlertFail={changeShowAlertFail}
-            onPressButtonRight={onPressButtonRight}
-            onPressButtonLeft={onPressButtonLeft}
-            isShowConfirmModal={isShowConfirmModal}
         />
     )
 }

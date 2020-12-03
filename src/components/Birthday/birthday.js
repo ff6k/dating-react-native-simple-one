@@ -10,7 +10,7 @@ import ConfirmModal from '/src/components/Model/confirmModal'
 
 function BirthDay(props) {
     const { t, onPressBackButton, onPressNextButton, onGetDate, isShowAlert, changeShowAlert, isShowAlertFail, changeShowAlertFail,
-        isShowConfirmModal, onPressButtonLeft, onPressButtonRight } = props
+    } = props
     const onPressBack = () => {
         onPressBackButton && onPressBackButton()
     }
@@ -72,14 +72,6 @@ function BirthDay(props) {
                 onConfirmPressed={() => {
                     changeShowAlertFail();
                 }}
-            />
-            <ConfirmModal
-                isVisible={isShowConfirmModal}
-                title={"Are you sure you want to log out?"}
-                textButtonLeft={"Cancel"}
-                txtButtonRight={"Quit"}
-                onPressButtonLeft={onPressButtonLeft}
-                onPressButtonRight={onPressButtonRight}
             />
         </View>
     )
