@@ -11,7 +11,8 @@ import Utils from '/src/utils'
 import Const from '/src/const'
 import HeaderSave from '/src/components/UI/headerSave'
 import AnimLottieView from '/src/components/UI/animLottieView'
-import UploadImageModal from '/src/components/UI/uploadImageModal'
+import BottomModalSlide from '/src/components/UI/bottomModalSlide'
+// import UploadImageModal from '/src/components/UI/uploadImageModal'
 
 const headerComponent = (props) => {
     const { onPressBack } = props
@@ -118,13 +119,11 @@ const emptyComponent = () => {
     )
 }
 
-export default function myProfile(props) {
+const MyProfile = React.forwardRef((props, ref) => {
     const { data, onPressAddImage, dataPhotos,
-        isVisible, setVisibleModel,
+        // isVisible, setVisibleModel,
         onUploadPhoto, onTakePhoto
     } = props
-
-    // console.log(name)
     return (
         <View>
             <FlatList
@@ -138,18 +137,22 @@ export default function myProfile(props) {
                 ListFooterComponent={() => footerComponent(props)}
                 ListHeaderComponent={() => headerComponent(props)}
             />
-            <UploadImageModal
+            <BottomModalSlide
+                ref={ref}
+            >
+                <Text>Hello</Text>
+            </BottomModalSlide>
+            {/* <UploadImageModal
                 isVisible={isVisible}
                 setVisibleModel={setVisibleModel}
                 // t={t}
                 onUploadPhoto={onUploadPhoto}
                 onTakePhoto={onTakePhoto}
-            />
+            /> */}
         </View>
-
     )
-}
-
+})
+export default MyProfile
 const styles = StyleSheet.create({
     detailHeader: {
         fontSize: 15,

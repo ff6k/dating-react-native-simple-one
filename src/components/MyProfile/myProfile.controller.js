@@ -13,8 +13,8 @@ export default function MyProfileController(props) {
     const { navigation } = props
     const [dataProfile, setDataProfile] = useState(null)
     const [dataPhotos, setDataPhotos] = useState(null)
-    const [isVisible, setIsVisible] = useState(false)
     const dataStore = useSelector(state => state.login)
+    const refSlideModal = React.createRef()
 
     const getDataStore = () => {
         if (dataStore.length > 0) {
@@ -99,7 +99,7 @@ export default function MyProfileController(props) {
 
     const onPressAddImage = (index) => {
         indexPhoto = index
-        setVisibleModel()
+        refSlideModal.current.open()
     }
 
     const onTakePhoto = () => {
@@ -134,11 +134,10 @@ export default function MyProfileController(props) {
             onPressEthnicity={onPressEthnicity}
             onPressKids={onPressKids}
             onPressFamilyPlans={onPressFamilyPlans}
-            isVisible={isVisible}
-            setVisibleModel={setVisibleModel}
             onPressAddImage={onPressAddImage}
             onUploadPhoto={onUploadPhoto}
             onTakePhoto={onTakePhoto}
+            ref={refSlideModal}
         />
     )
 }

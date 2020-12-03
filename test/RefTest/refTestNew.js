@@ -1,9 +1,10 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 
-const BottomModalSlide = React.forwardRef((props, ref) => {
-    const { children } = props
+const RefTestNew = React.forwardRef((props, ref) => {
+    console.log('render refTestNew')
+
     return (
         <View
             style={{
@@ -13,7 +14,6 @@ const BottomModalSlide = React.forwardRef((props, ref) => {
                 backgroundColor: "#000"
             }}
         >
-            {/* <Button title="OPEN BOTTOM SHEET" onPress={() => refRBSheet.current.open()} /> */}
             <RBSheet
                 ref={ref}
                 closeOnDragDown={true}
@@ -27,10 +27,9 @@ const BottomModalSlide = React.forwardRef((props, ref) => {
                     }
                 }}
             >
-                {children}
+                {props.children}
             </RBSheet>
         </View>
-    );
-})
-
-export default BottomModalSlide
+    )
+});
+export default RefTestNew
