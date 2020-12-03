@@ -1,10 +1,11 @@
 import React from 'react'
-import { StyleSheet, TouchableOpacity, Image, Text, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, Image, Text, View, ScrollView } from 'react-native'
 import Themes from '/src/themes'
 import ButtonNext from '/src/components/UI/buttonNext'
 import ImagePicker from '/src/components/UI/imagePicker'
 import { withTranslation } from 'react-i18next'
 import ButtonBack from '/src/components/UI/buttonBack'
+import Const from '/src/const'
 import BottomModalSlide from '/src/components/UI/bottomModalSlide'
 import CoupleButtonImage from '/src/components/UI/coupleButtonImage'
 import SpinnerLoading from '/src/components/UI/spinnerLoading'
@@ -30,7 +31,7 @@ const Picture = React.forwardRef((props, ref) => {
     }
 
     return (
-        <View style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 1 }}>
             <SpinnerLoading isLoading={isLoading}
                 source={require('/src/assets/lotties/9844-loading-40-paperplane.json')}
             />
@@ -45,15 +46,19 @@ const Picture = React.forwardRef((props, ref) => {
                     urlImage={uri}
                     onPressAdd={onPressAdd} />
             </View>
-            <TouchableOpacity
-                onPress={() => onChangeImage()}
-                style={styles.btnChange}
-            >
-                <Text style={styles.txtChange}>{"Change"}</Text>
-            </TouchableOpacity>
-            <ButtonNext isGradient={true}
-                onPress={() => onPressNext && onPressNext()}
-            />
+            <View style={styles.containButton}>
+                {uri ? <TouchableOpacity
+                    onPress={() => onChangeImage()}
+                    style={styles.btnChange}
+                >
+                    <Text style={styles.txtChange}>{"Change"}</Text>
+                </TouchableOpacity> :
+                    <View></View>}
+                <ButtonNext isGradient={uri ? true : false}
+                    onPress={() => onPressNext && onPressNext()}
+                />
+            </View>
+
             <BottomModalSlide
                 ref={ref}
                 height={150}
@@ -63,19 +68,22 @@ const Picture = React.forwardRef((props, ref) => {
                     onUploadPhoto={onUploadPhoto}
                 />
             </BottomModalSlide>
-        </View>
+        </ScrollView>
     )
 }
 )
 
 const styles = StyleSheet.create({
 
-
+    containButton: {
+        flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
+        marginHorizontal: 20, marginBottom: 20
+    },
 
     btnChange: {
-        position: 'absolute',
-        left: Themes.Const.ABSOLUTE_BOTTOM,
-        bottom: Themes.Const.ABSOLUTE_BOTTOM + 20,
+        // position: 'absolute',
+        // left: Themes.Const.ABSOLUTE_BOTTOM,
+        // bottom: Themes.Const.ABSOLUTE_BOTTOM + 20,
     },
     txtChange: {
         fontSize: 22,
@@ -88,6 +96,7 @@ const styles = StyleSheet.create({
     },
     containerContent: {
         marginHorizontal: Themes.Const.MARGIN_HORIZONTAL_INPUT,
+        height: Const.Common.deviceHeight - 150
     },
 
     txtTitle: {

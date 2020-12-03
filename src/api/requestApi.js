@@ -89,3 +89,13 @@ export const putProfileGenderApiRequest = async (params) => {
         "gender": gender
     })
 }
+
+export const putPhotosApiRequest = async (params) => {
+    const { id, token, publicId, url } = params
+    const Url = URL_POST_PHOTOS + `/${id}/photos/url`
+    const client = getAxios('Bearer ' + token)
+    return client.post(Url, {
+        "url": url,
+        "publicId": publicId
+    })
+}

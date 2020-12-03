@@ -28,7 +28,7 @@ export default function SplashController(props) {
                         navigation.replace(Const.NameScreens.Picture)
                     }
                     else {
-                        navigation.replace(Const.NameScreens.Picture)
+                        navigation.replace(Const.NameScreens.BottomNavigation)
                     }
                 })
                 .catch(err => {

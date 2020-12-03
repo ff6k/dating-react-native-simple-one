@@ -11,7 +11,7 @@ import { BackHandler } from 'react-native'
 let token
 let idUser
 export default function PictureController(props) {
-    const { route, navigation } = props
+    const { navigation } = props
     const [uriImage, setUriImage] = useState(null)
     const [isLoading, setIsLoading] = useState(false);
     const [dataImage, setDataImage] = useState(null)
@@ -72,10 +72,7 @@ export default function PictureController(props) {
             .then(res => res.json())
             .then(
                 data => {
-                    console.log(`data: ${JSON.stringify(data)}`);
-                    const { date, gender } = route.params
-                    const dataSave = { date, gender, urlPhoto: data.url }
-                    saveDataInfoLogin(dataSave)
+                    saveDataPhotoApi(data)
                 }
             ).catch(err => console.log(err))
             .finally(() => {
@@ -83,22 +80,18 @@ export default function PictureController(props) {
             })
     };
 
-    //TODO: request api info login if fix api server
-    const saveDataInfoLogin = (data) => {
-        const { urlPhoto, date, gender } = data
-        console.log(`urlPhoto: ${urlPhoto}`);
-
-        // const params = {
-        //     id: idUser,
-        //     token: token,
-        //     gender: gender,
-        //     dateOfBirth: date,
-        //     urlPhoto: urlPhoto
-        // }
-        // Api.RequestApi.putProfileApiRequest(params)
-        //     .then(response => {
-        //         console.log(response)
-        //     }).catch(err => console.log(err))
+    const saveDataPhotoApi = (data) => {
+        const { public_id, url } = data
+        const params = {
+            url: url,
+            publicId: public_id,
+            id: idUser,
+            token: token
+        }
+        Api.RequestApi.putPhotosApiRequest(params)
+            .then(response => {
+                navigation.replace(Const.NameScreens.BottomNavigation)
+            }).catch(err => console.log(err))
     }
 
     const onPressNext = () => {

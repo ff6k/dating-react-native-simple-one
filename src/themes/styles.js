@@ -165,9 +165,9 @@ export const ButtonBottomNext = {
     height: Const.BUTTON_NEXT,
     borderRadius: Const.BUTTON_NEXT / 2,
     justifyContent: 'center',
-    position: 'absolute',
-    right: Const.ABSOLUTE_BOTTOM,
-    bottom: Const.ABSOLUTE_BOTTOM,
+    // position: 'absolute',
+    // right: Const.ABSOLUTE_BOTTOM,
+    // bottom: Const.ABSOLUTE_BOTTOM,
 }
 
 export const IconBack = {
