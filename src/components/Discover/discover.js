@@ -4,8 +4,10 @@ import ImageSwipe from '/src/components/UI/imageSwipe'
 import Themes from '/src/themes'
 import ButtonStatus from '/src/components/UI/buttonStatus'
 // import SwitchGrid from '/src/components/UI/switchGrid'
+import Utils from '/src/utils'
 import SpinnerLoading from '/src/components/UI/spinnerLoading'
 import ImageDetail from '/src/components/UI/imageDetail'
+import Const from '/src/const'
 import { withTranslation } from 'react-i18next'
 
 function Discover(props) {
@@ -13,21 +15,25 @@ function Discover(props) {
         onPressLike, getUserCurrent, isSwipeRight, isSwipeLeft, onPressUnlike,
         dataDetailUser, arrImage
     } = props
-    let name, work, location, religiousBelief, job, education, politics, ethnicity, kids, height, drinking, smoking, familyPlans
+    let name, work, location, religiousBelief, job, education, ethnicity, kids, height, drinking, smoking, familyPlans, gender, oldYear, dateOfBirth, bio
     if (dataDetailUser !== null) {
-        name = dataDetailUser['name']
-        work = dataDetailUser['company']
-        location = dataDetailUser['location']
-        religiousBelief = dataDetailUser['religion']
-        job = dataDetailUser['jobTitle']
-        education = dataDetailUser['school']
+        name = dataDetailUser['name'] ? dataDetailUser['name'] : 'NA'
+        work = dataDetailUser['company'] ? dataDetailUser['company'] : 'NA'
+        location = dataDetailUser['location'] ? dataDetailUser['location'] : 'NA'
+        religiousBelief = dataDetailUser['religion'] ? dataDetailUser['religion'] : 'NA'
+        job = dataDetailUser['jobTitle'] ? dataDetailUser['jobTitle'] : 'NA'
+        education = dataDetailUser['school'] ? dataDetailUser['school'] : 'NA'
         // politics=dataDetailUser['dataDetailUser']
-        ethnicity = dataDetailUser['ethnicity']
-        kids = dataDetailUser['children']
-        height = dataDetailUser['height']
-        drinking = dataDetailUser['drinking']
-        smoking = dataDetailUser['smoking']
-        familyPlans = dataDetailUser['sexualOrientation']
+        ethnicity = dataDetailUser['ethnicity'] ? dataDetailUser['ethnicity'] : 'NA'
+        kids = dataDetailUser['children'] ? dataDetailUser['children'] : 'NA'
+        height = dataDetailUser['height'] ? dataDetailUser['height'] : 'NA'
+        drinking = dataDetailUser['drinking'] ? dataDetailUser['drinking'] : 'NA'
+        smoking = dataDetailUser['smoking'] ? dataDetailUser['smoking'] : 'NA'
+        familyPlans = dataDetailUser['sexualOrientation'] ? dataDetailUser['sexualOrientation'] : 'NA'
+        gender = dataDetailUser['gender'] ? dataDetailUser['gender'] : 'NA'
+        oldYear = dataDetailUser['dateOfBirth'] ? Utils.Calculator.getOldYear(dataDetailUser['dateOfBirth']).toString() : 'NA'
+        dateOfBirth = dataDetailUser['dateOfBirth'] ? Utils.Format.formatDateUTC(dataDetailUser['dateOfBirth'], Const.DateFormat.DATE_LONG) : 'NA'
+        bio = dataDetailUser['bio'] ? dataDetailUser['bio'] : ''
     }
 
     return (
@@ -53,15 +59,17 @@ function Discover(props) {
                         religiousBelief={religiousBelief}
                         job={job}
                         education={education}
-                        politics={politics}
+                        dateOfBirth={dateOfBirth}
+                        oldYear={oldYear}
                         ethnicity={ethnicity}
                         familyPlans={familyPlans}
                         kids={kids}
                         height={height}
                         drinking={drinking}
                         smoking={smoking}
-                        // uriImage={uriImage}
                         arrImage={arrImage}
+                        gender={gender}
+                        bio={bio}
                     />}
             </View>
             {!isModeDetail && <View style={styles.containFooter}>

@@ -5,8 +5,19 @@ import LinearGradient from 'react-native-linear-gradient';
 import Icon from '/src/components/UI/icon'
 import Themes from '/src/themes';
 import Swiper from 'react-native-swiper'
-
-
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
+import InterestContentInfo from '/src/components/UI/interestContentInfo'
+import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome5'
+const data = [
+    { id: 31, label: 'Mountain Biking' },
+    { id: 32, label: 'Snowmobiling' },
+    { id: 33, label: 'Painting' },
+    { id: 34, label: 'Grilling' },
+    { id: 35, label: 'Surf Fishing' },
+    { id: 36, label: 'Bartending' },
+    { id: 37, label: 'Stamp Collecting' },
+    { id: 38, label: 'Helping The Homeless' },
+]
 const ImageSwipeComponent = (props) => {
     const { url } = props
     return (
@@ -33,11 +44,13 @@ const ListImageSwipe = (arrImage) => {
 
 export default function imageDetail(props) {
     const { onPressInfo, name,
-        work, location, religiousBelief, job, education, politics, ethnicity,
-        kids, height, drinking, smoking, familyPlans, arrImage
+        work, location, religiousBelief, job, education, dateOfBirth, ethnicity, oldYear,
+        kids, height, drinking, smoking, familyPlans, arrImage, gender, bio
     } = props
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container}
+            showsVerticalScrollIndicator={false}
+        >
             <View style={styles.containHeader}>
                 <Swiper style={styles.imgShow} showsButtons={true}>
                     {ListImageSwipe(arrImage)}
@@ -48,81 +61,149 @@ export default function imageDetail(props) {
                     end={{ x: 2, y: 0 }}
                     colors={[Themes.Colors.PINK_DARK, 'orange']}
                     style={styles.containIcoDown}>
-                    <Image
-                        style={styles.imgIco}
-                        source={require('/src/assets/images/down_127px.png')} />
+                    <Icon
+                        size={35}
+                        color={'white'}
+                        name={'arrowhead-down'}
+                    />
                 </LinearGradient>
             </View>
             <View style={styles.containFooter}>
                 <View style={styles.containHeaderWrap}>
                     <View style={styles.containContent}>
-                        <Text style={styles.txtName}>{name}</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                            <Text style={[styles.txtName, { marginBottom: 0 }]}>{`${name}, ${oldYear}`}</Text>
+                            {gender === 'male'
+                                ? <SimpleLineIcons name={"symbol-male"} size={18} color={Themes.Colors.PINK_DARK} />
+                                : <SimpleLineIcons name={"symbol-female"} size={18} color={Themes.Colors.PINK_DARK} />}
+                        </View>
                         <View style={styles.containInfo}>
-                            <Icon style={styles.icoInfo}
-                                size={Themes.Const.FONT_SIZE + 10}
-                                color={Themes.Colors.GRAY_BRIGHT_I}
-                                name="briefcase-outline"></Icon>
-                            <Text style={styles.txtInfo}>{work}</Text>
+                            <FontAwesomeIcons
+                                style={[styles.icoInfo, { marginLeft: 5 }]}
+                                name={"birthday-cake"} size={Themes.Const.FONT_SIZE + 3} color={Themes.Colors.GRAY_BRIGHT_I} />
+                            <Text style={styles.txtInfo}>{dateOfBirth}</Text>
                         </View>
                         <View style={styles.containInfo}>
                             <Icon style={styles.icoInfo}
                                 size={Themes.Const.FONT_SIZE + 10}
                                 color={Themes.Colors.GRAY_BRIGHT_I}
-                                name="navigation-2-outline"></Icon>
+                                name="pin-outline"></Icon>
                             <Text style={styles.txtInfo}>{location}</Text>
                         </View>
+                        <InterestContentInfo
+                            data={data}
+                        />
                     </View>
+                </View>
+                <View style={styles.containTextBio}>
+                    <Text style={styles.txtBio}>
+                        {bio}
+                    </Text>
                 </View>
                 <View style={styles.containOther}>
                     <Text style={styles.txtName}>Virtues</Text>
                     <View style={styles.containRow}>
-                        <Text style={styles.txtHeader}>Religious belief</Text>
+                        <View style={styles.containHeaderContent}>
+                            <Icon style={styles.icoInfo}
+                                size={Themes.Const.FONT_SIZE + 10}
+                                color={Themes.Colors.GRAY_BRIGHT_I}
+                                name="star-outline"></Icon>
+                            <Text style={styles.txtHeader}>Religious belief</Text>
+                        </View>
                         <Text style={styles.txtContent}>{religiousBelief}</Text>
                     </View>
                     <View style={styles.containRow}>
-                        <Text style={styles.txtHeader}>Work</Text>
+                        <View style={styles.containHeaderContent}>
+                            <Icon style={styles.icoInfo}
+                                size={Themes.Const.FONT_SIZE + 10}
+                                color={Themes.Colors.GRAY_BRIGHT_I}
+                                name="google-outline"></Icon>
+                            <Text style={styles.txtHeader}>Work</Text>
+                        </View>
                         <Text style={styles.txtContent}>{work}</Text>
                     </View>
                     <View style={styles.containRow}>
-                        <Text style={styles.txtHeader}>Job</Text>
+                        <View style={styles.containHeaderContent}>
+                            <Icon style={styles.icoInfo}
+                                size={Themes.Const.FONT_SIZE + 10}
+                                color={Themes.Colors.GRAY_BRIGHT_I}
+                                name="briefcase-outline"></Icon>
+                            <Text style={styles.txtHeader}>Job</Text>
+                        </View>
                         <Text style={styles.txtContent}>{job}</Text>
                     </View>
                     <View style={styles.containRow}>
-                        <Text style={styles.txtHeader}>Education</Text>
+                        <View style={styles.containHeaderContent}>
+                            <Icon style={styles.icoInfo}
+                                size={Themes.Const.FONT_SIZE + 10}
+                                color={Themes.Colors.GRAY_BRIGHT_I}
+                                name="home-outline"></Icon>
+                            <Text style={styles.txtHeader}>Education</Text>
+                        </View>
                         <Text style={styles.txtContent}>{education}</Text>
-                    </View>
-                    <View style={styles.containRow}>
-                        <Text style={styles.txtHeader}>Politics</Text>
-                        <Text style={styles.txtContent}>{politics}</Text>
                     </View>
                 </View>
                 <View style={styles.containOther}>
                     <Text style={styles.txtName}>Vitals</Text>
                     <View style={styles.containRow}>
-                        <Text style={styles.txtHeader}>Ethnicity</Text>
+                        <View style={styles.containHeaderContent}>
+                            <Icon style={styles.icoInfo}
+                                size={Themes.Const.FONT_SIZE + 10}
+                                color={Themes.Colors.GRAY_BRIGHT_I}
+                                name="people-outline"></Icon>
+                            <Text style={styles.txtHeader}>Ethnicity</Text>
+                        </View>
                         <Text style={styles.txtContent}>{ethnicity}</Text>
                     </View>
                     <View style={styles.containRow}>
-                        <Text style={styles.txtHeader}>Kids</Text>
+                        <View style={styles.containHeaderContent}>
+                            <Icon style={styles.icoInfo}
+                                size={Themes.Const.FONT_SIZE + 10}
+                                color={Themes.Colors.GRAY_BRIGHT_I}
+                                name="smiling-face-outline"></Icon>
+                            <Text style={styles.txtHeader}>Kids</Text>
+                        </View>
                         <Text style={styles.txtContent}>{kids}</Text>
                     </View>
                     <View style={styles.containRow}>
-                        <Text style={styles.txtHeader}>Family Plans</Text>
+                        <View style={styles.containHeaderContent}>
+                            <Icon style={styles.icoInfo}
+                                size={Themes.Const.FONT_SIZE + 10}
+                                color={Themes.Colors.GRAY_BRIGHT_I}
+                                name="clipboard-outline"></Icon>
+                            <Text style={styles.txtHeader}>Family Plans</Text>
+                        </View>
                         <Text style={styles.txtContent}>{familyPlans}</Text>
                     </View>
                     <View style={styles.containRow}>
-                        <Text style={styles.txtHeader}>Height</Text>
+                        <View style={styles.containHeaderContent}>
+                            <Icon style={styles.icoInfo}
+                                size={Themes.Const.FONT_SIZE + 10}
+                                color={Themes.Colors.GRAY_BRIGHT_I}
+                                name="pantone-outline"></Icon>
+                            <Text style={styles.txtHeader}>Height</Text>
+                        </View>
                         <Text style={styles.txtContent}>{height}</Text>
                     </View>
                 </View>
                 <View style={styles.containOther}>
                     <Text style={styles.txtName}>Vices</Text>
                     <View style={styles.containRow}>
-                        <Text style={styles.txtHeader}>Drinking</Text>
+                        <View style={styles.containHeaderContent}>
+                            <FontAwesomeIcons
+                                style={styles.icoInfo}
+                                name={"wine-bottle"} size={Themes.Const.FONT_SIZE + 5} color={Themes.Colors.GRAY_BRIGHT_I} />
+                            <Text style={styles.txtHeader}>Drinking</Text>
+                        </View>
                         <Text style={styles.txtContent}>{drinking}</Text>
                     </View>
                     <View style={styles.containRow}>
-                        <Text style={styles.txtHeader}>Smoking</Text>
+                        <View style={styles.containHeaderContent}>
+                            <FontAwesomeIcons
+                                style={styles.icoInfo}
+                                name={"smoking"} size={Themes.Const.FONT_SIZE + 3} color={Themes.Colors.GRAY_BRIGHT_I} />
+                            <Text style={styles.txtHeader}>Smoking</Text>
+                        </View>
                         <Text style={styles.txtContent}>{smoking}</Text>
                     </View>
                 </View>
@@ -132,12 +213,27 @@ export default function imageDetail(props) {
     )
 }
 
-const FONT_SIZE = 20
-const MARGIN_BOTTOM = 20
+const FONT_SIZE = 16
+const MARGIN_BOTTOM = 10
 const styles = StyleSheet.create({
+    txtBio: {
+        fontSize: FONT_SIZE,
+        color: 'black',
+        fontFamily: Themes.FontFamily.FontThinDefault,
+    },
+    containTextBio: {
+        borderBottomWidth: 0.6, borderColor: Themes.Colors.GRAY_BRIGHT_II,
+        paddingHorizontal: 20,
+        marginTop: 10,
+        marginBottom: 10
+    },
+    containHeaderContent: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
     containHeaderWrap: {
         borderBottomWidth: 0.6, borderColor: Themes.Colors.GRAY_BRIGHT_II,
-        marginBottom: MARGIN_BOTTOM
+        // marginBottom: MARGIN_BOTTOM
     },
     txtContent: {
         fontSize: FONT_SIZE,
@@ -146,8 +242,8 @@ const styles = StyleSheet.create({
     },
     txtHeader: {
         fontSize: FONT_SIZE,
-        color: Themes.Colors.GRAY_BRIGHT_III,
-        fontFamily: Themes.FontFamily.FontThinDefault
+        color: 'black',
+        fontFamily: Themes.FontFamily.FontThinDefault,
     },
     containOther: {
         marginHorizontal: 20,
@@ -165,21 +261,22 @@ const styles = StyleSheet.create({
     containFooter: {
     },
     txtInfo: {
-        fontSize: FONT_SIZE, color: Themes.Colors.GRAY_BRIGHT_I,
+        fontSize: FONT_SIZE, color: 'black',
         fontFamily: Themes.FontFamily.FontThinDefault
     },
     icoInfo: {
-        marginRight: 15
+        marginRight: 8
     },
     containInfo: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: MARGIN_BOTTOM + 5
+        marginBottom: MARGIN_BOTTOM
     },
     txtName: {
-        fontSize: 26,
+        fontSize: 20,
         color: Themes.Colors.GRAY_BRIGHT,
-        marginBottom: MARGIN_BOTTOM,
+        marginRight: 10,
+        marginBottom: 10,
         fontFamily: Themes.FontFamily.FontBoldSemi
     },
     imgIco: {
