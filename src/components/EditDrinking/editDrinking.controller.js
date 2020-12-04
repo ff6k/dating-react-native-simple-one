@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import EditDrinking from './editDrinking'
 import Api from '/src/api'
 import { useSelector } from 'react-redux'
+import Const from '/src/const'
 import Utils from '/src/utils'
 const data = [
     { id: 0, label: `Yes` },

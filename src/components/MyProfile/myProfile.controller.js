@@ -10,12 +10,16 @@ let token
 let indexPhoto
 let idUser
 export default function MyProfileController(props) {
-    const { navigation } = props
+    const { navigation, route } = props
     const [dataProfile, setDataProfile] = useState(null)
     const [dataPhotos, setDataPhotos] = useState(null)
     const refSlideModal = React.createRef()
 
     const dataStore = useSelector(state => state.login)
+
+    // const drinkingUpdate = route.params === undefined ? 'Error' : route.params.drinking
+    // console.log(`drinkingUpdate: ${drinkingUpdate}`);
+    console.log('object')
 
     const getDataStore = () => {
         if (dataStore.length > 0) {
@@ -118,7 +122,6 @@ export default function MyProfileController(props) {
         setDataPhotos(data)
 
     }
-
 
     return (
         <MyProfile

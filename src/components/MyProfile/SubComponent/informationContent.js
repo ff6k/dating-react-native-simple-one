@@ -2,8 +2,17 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import ItemContent from './itemContent'
 import { TYPE_CONTENT } from '../typeContent'
-
-export default function InformationContent(props) {
+function areEqual(prevProps, nextProps) {
+    console.log(`nextProps: ${JSON.stringify(nextProps)}`);
+    console.log(`prevProps: ${JSON.stringify(prevProps)}`);
+    if (nextProps === prevProps) {
+        return false
+    } else {
+        return true
+    }
+    /* Trả về true nếu nextProps bằng prevProps, ngược lại trả về false */
+}
+function InformationContent(props) {
     const { onPressInterest, onPressGender,
         name,
         location,
@@ -14,6 +23,7 @@ export default function InformationContent(props) {
         dateOfBirth
     } = props
 
+    console.log('render ne')
     return (
         <View>
             <ItemContent title={"Bio"} content={bio} isTextExpand={true}
@@ -46,7 +56,8 @@ export default function InformationContent(props) {
         </View>
     )
 }
-
+export default React.memo(InformationContent, areEqual);
+// export default MyComponent
 const styles = StyleSheet.create({
 
 })

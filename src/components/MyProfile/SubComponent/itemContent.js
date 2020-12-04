@@ -104,6 +104,7 @@ const RenderTypeContent = (props) => {
 }
 
 export default function ItemContent(props) {
+    console.log('render ItemContent')
 
     const { title } = props
     return (

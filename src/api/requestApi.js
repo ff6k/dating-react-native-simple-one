@@ -108,3 +108,12 @@ export const putDrinkingsApiRequest = async (params) => {
         "drinking": drinking,
     })
 }
+
+export const putSmokingApiRequest = async (params) => {
+    const { id, token, smoking } = params
+    const Url = URL_PUT_PROFILE + `/${id}`
+    const client = getAxios('Bearer ' + token)
+    return client.put(Url, {
+        "smoking": smoking,
+    })
+}

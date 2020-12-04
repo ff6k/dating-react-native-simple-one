@@ -14,6 +14,7 @@ import HeaderSave from '/src/components/UI/headerSave'
 import AnimLottieView from '/src/components/UI/animLottieView'
 import BottomModalSlide from '/src/components/UI/bottomModalSlide'
 // import UploadImageModal from '/src/components/UI/uploadImageModal'
+import Modal from 'react-native-modal';
 
 const headerComponent = (props) => {
     const { onPressBack } = props
@@ -90,7 +91,6 @@ const footerComponent = (props) => {
                 drinking={drinking}
                 smoking={smoking}
             />
-
         </View>
     )
 }
