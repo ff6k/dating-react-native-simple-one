@@ -9,6 +9,9 @@ buildscript {
 
         googlePlayServicesVersion = "4.3.4"
         firebaseMessagingVersion = "21.0.0"
+        supportLibVersion   = "29.0.0"
+        playServicesVersion = "17.0.0" // or find latest version
+        androidMapsUtilsVersion = "+0.5"
     }
     repositories {
         mavenCentral()
