@@ -6930,6 +6930,11 @@ react-native-tag-select@^2.0.0:
   dependencies:
     prop-types "^15.6.0"
 
+react-native-toast-message@^1.3.7:
+  version "1.3.7"
+  resolved "https://registry.yarnpkg.com/react-native-toast-message/-/react-native-toast-message-1.3.7.tgz#5c6c5625f670691a09208d1b343a8febce5ffc79"
+  integrity sha512-NeQy8WWH5AkrhI13lJNLYpjXb5oFaiNa+/rL11HQ4dJUSINNco/K+9pwGYVLvkqzYvLlaq5aXuM96tYCtVeSYg==
+
 react-native-vector-icons@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-7.0.0.tgz#5b92ed363c867645daad48c559e1f99efcfbb813"

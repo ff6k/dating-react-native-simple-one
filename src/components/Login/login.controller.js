@@ -103,7 +103,7 @@ export default function LoginController(props) {
             const { jwtToken, id } = json
             handleBeforeLogin(jwtToken, id)
             dispatch(pushDataLoginEmail(json))
-            navigation.navigate(Const.NameScreens.Birthday)
+            switchNavigationScreen(json)
         } else {
             setIsShowModalFail(true)
             json.errors !== undefined ? setMessage(json.errors.email[0]) : setMessage(json.message)

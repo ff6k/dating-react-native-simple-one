@@ -27,7 +27,6 @@ export default function MultiLanguagesController(props) {
     }
 
     const onPressBack = () => {
-        console.log(code)
         navigation.navigate(Const.NameScreens.MyPreferences, { code: code })
     }
     if (code === null) {

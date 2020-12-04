@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native'
 import ButtonBack from '/src/components/UI/buttonBack'
+import HeaderSave from '/src/components/UI/headerSave'
 import Themes from '/src/themes'
 import Icon from '/src/components/UI/icon'
 
 export default function editContentList(props) {
-    const { onPressBack, data, title } = props
+    const { onPressBack, data, title, onPressSave, onChangeDataItemClick } = props
 
     const [idSelected, setIdSelected] = useState(data[0].id)
 
@@ -13,7 +14,11 @@ export default function editContentList(props) {
         setIdSelected(id)
     }
 
-    const ItemGender = ({ item }) => {
+    useEffect(() => {
+        onChangeDataItemClick && onChangeDataItemClick(idSelected)
+    })
+
+    const ItemGender = ({ item, index }) => {
         const { label, id } = item
         let isCheck = false
         if (id === idSelected) {
@@ -36,9 +41,10 @@ export default function editContentList(props) {
     }
     return (
         <View>
-            <ButtonBack
+            <HeaderSave
                 title={title}
-                onPress={onPressBack}
+                onPressBack={onPressBack}
+                onPressSave={onPressSave}
             />
             <FlatList
                 keyExtractor={item => item.id.toString()}

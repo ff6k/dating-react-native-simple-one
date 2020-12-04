@@ -99,3 +99,12 @@ export const putPhotosApiRequest = async (params) => {
         "publicId": publicId
     })
 }
+
+export const putDrinkingsApiRequest = async (params) => {
+    const { id, token, drinking } = params
+    const Url = URL_PUT_PROFILE + `/${id}`
+    const client = getAxios('Bearer ' + token)
+    return client.put(Url, {
+        "drinking": drinking,
+    })
+}

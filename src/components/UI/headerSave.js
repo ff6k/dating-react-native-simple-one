@@ -1,17 +1,16 @@
 import React from 'react'
 import { StyleSheet, TouchableOpacity, Text, View } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import Themes from '/src/themes'
 import Icon from '/src/components/UI/icon'
 
 export default function headerSave(props) {
-    const { title, onPressBack } = props
+    const { title, onPressBack, onPressSave } = props
     return (
         <View style={styles.header}>
             <View style={styles.containLeft}>
                 <TouchableOpacity style={styles.btnIcon}
-
-                    onPress={() => onPressBack && onPressBack()}>
+                    onPress={() => onPressBack && onPressBack()}
+                >
                     <Icon name="arrow-ios-back-outline"
                         color={Themes.Colors.PINK_DARK}
                         size={Themes.Const.SIZE_ICON} />
@@ -19,7 +18,9 @@ export default function headerSave(props) {
                 <Text style={styles.txtTitle}>{title}</Text>
             </View>
 
-            <TouchableOpacity style={styles.containSave}>
+            <TouchableOpacity style={styles.containSave}
+                onPress={() => onPressSave && onPressSave()}
+            >
                 <Text style={styles.txtSave}>SAVE</Text>
             </TouchableOpacity>
         </View>

@@ -13,8 +13,9 @@ export default function MyProfileController(props) {
     const { navigation } = props
     const [dataProfile, setDataProfile] = useState(null)
     const [dataPhotos, setDataPhotos] = useState(null)
-    const dataStore = useSelector(state => state.login)
     const refSlideModal = React.createRef()
+
+    const dataStore = useSelector(state => state.login)
 
     const getDataStore = () => {
         if (dataStore.length > 0) {

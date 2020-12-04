@@ -13,11 +13,11 @@ export default function SplashController(props) {
     const dispatch = useDispatch()
 
     useEffect(() => {
-
         const setDataStoreReduxProfile = (token, id) => {
             Api.RequestApi.getProfileApiRequest({ token, id })
                 .then(res => {
                     const { dateOfBirth, gender, photos } = res.data
+                    console.log(`dateOfBirth: ${dateOfBirth}`);
                     if (dateOfBirth === null) {
                         navigation.replace(Const.NameScreens.Birthday)
                     }
