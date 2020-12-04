@@ -22,10 +22,8 @@ import {
     ListItem,
 } from 'native-base';
 
-import { HubConnectionBuilder, LogLevel, HttpTransportType } from '@aspnet/signalr';
+import { HubConnectionBuilder, LogLevel, HttpTransportType, IHttpConnectionOptions } from '@aspnet/signalr';
 // import * as signalR from '@aspnet/signalr'
-import { URLAPI } from './conf';
-console.log("URLAPI", URLAPI)
 
 class App extends React.Component {
     constructor() {
@@ -34,31 +32,21 @@ class App extends React.Component {
             orders: [],
         };
     }
-    // _hubConnection = new HubConnectionBuilder()
-    //     .withUrl(URLAPI)
-    //     .configureLogging(LogLevel.Debug)
-    //     .build();
+
     _hubConnection = new HubConnectionBuilder()
-        .configureLogging(LogLevel.Debug)
-        .withUrl(URLAPI, {
-            skipNegotiation: true,
-            transport: HttpTransportType.WebSockets
+        .withUrl('http://192.168.1.120:5000/hubs/messages', {
+            accessTokenFactory: () => 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMiLCJuYmYiOjE2MDcwNzM2MDgsImV4cCI6MTYwNzE2MDAwOCwiaWF0IjoxNjA3MDczNjA4fQ.eon6s64mMzmfaLkkOs8ZhJs6b0zJQv9I0OU3ZZCFygRzqEdCxkBGLD5exRaopezdnCwBLILuPLfxoU5L5A6mig'
         })
         .build();
-    // _hubConnection = new signalR.HubConnectionBuilder()
-    //     .withUrl(URLAPI)
-    //     .configureLogging(signalR.LogLevel.Information)
-    //     .build();
+
     componentDidMount() {
         this._hubConnection.start().then(a => {
             console.log('Connected rafa');
+        })
+            .catch(err => console.log(err));
+        this._hubConnection.on('receiveMessage', (data) => {
+            console.log(data);
         });
-        // this._hubConnection.on('ReceiveOrder', order => {
-        //     let ordersState = this.state.orders;
-        //     order.time = new Date().toLocaleTimeString();
-        //     ordersState.push(order);
-        //     this.setState({ orders: ordersState });
-        // });
     }
     render() {
         return (
