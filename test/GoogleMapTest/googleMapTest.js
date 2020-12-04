@@ -1,428 +1,291 @@
-import React from 'react';
-import { StyleSheet, View, Dimensions, Animated } from 'react-native';
-
+import React, { Component } from 'react';
 import {
-    ProviderPropType,
-    Animated as AnimatedMap,
-    AnimatedRegion,
-    Marker,
-} from 'react-native-maps';
-import PanController from './PanController';
-import PriceMarker from './AnimatedPriceMarker';
+    StyleSheet,
+    View,
+    Text,
+    Image,
+    Alert,
+    Platform,
+    Dimensions
+} from 'react-native';
+import MapView,
+{ PROVIDER_GOOGLE, Marker, Callout, Polygon, Circle }
+    from 'react-native-maps';
+import { request, PERMISSIONS } from 'react-native-permissions';
+import Geolocation from '@react-native-community/geolocation';
+import Carousel from 'react-native-snap-carousel';
 
-const screen = Dimensions.get('window');
+export default class CarouselMap extends Component {
 
-const ASPECT_RATIO = screen.width / screen.height;
-const LATITUDE = 37.78825;
-const LONGITUDE = -122.4324;
-const LATITUDE_DELTA = 0.0922;
-const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-
-const ITEM_SPACING = 10;
-const ITEM_PREVIEW = 10;
-const ITEM_WIDTH = screen.width - 2 * ITEM_SPACING - 2 * ITEM_PREVIEW;
-const SNAP_WIDTH = ITEM_WIDTH + ITEM_SPACING;
-const ITEM_PREVIEW_HEIGHT = 150;
-const SCALE_END = screen.width / ITEM_WIDTH;
-const BREAKPOINT1 = 246;
-const BREAKPOINT2 = 350;
-const ONE = new Animated.Value(1);
-
-function getMarkerState(panX, panY, scrollY, i) {
-    const xLeft = -SNAP_WIDTH * i + SNAP_WIDTH / 2;
-    const xRight = -SNAP_WIDTH * i - SNAP_WIDTH / 2;
-    const xPos = -SNAP_WIDTH * i;
-
-    const isIndex = panX.interpolate({
-        inputRange: [xRight - 1, xRight, xLeft, xLeft + 1],
-        outputRange: [0, 1, 1, 0],
-        extrapolate: 'clamp',
-    });
-
-    const isNotIndex = panX.interpolate({
-        inputRange: [xRight - 1, xRight, xLeft, xLeft + 1],
-        outputRange: [1, 0, 0, 1],
-        extrapolate: 'clamp',
-    });
-
-    const center = panX.interpolate({
-        inputRange: [xPos - 10, xPos, xPos + 10],
-        outputRange: [0, 1, 0],
-        extrapolate: 'clamp',
-    });
-
-    const selected = panX.interpolate({
-        inputRange: [xRight, xPos, xLeft],
-        outputRange: [0, 1, 0],
-        extrapolate: 'clamp',
-    });
-
-    const translateY = Animated.multiply(isIndex, panY);
-
-    const translateX = panX;
-
-    const anim = Animated.multiply(
-        isIndex,
-        scrollY.interpolate({
-            inputRange: [0, BREAKPOINT1],
-            outputRange: [0, 1],
-            extrapolate: 'clamp',
-        })
-    );
-
-    const scale = Animated.add(
-        ONE,
-        Animated.multiply(
-            isIndex,
-            scrollY.interpolate({
-                inputRange: [BREAKPOINT1, BREAKPOINT2],
-                outputRange: [0, SCALE_END - 1],
-                extrapolate: 'clamp',
-            })
-        )
-    );
-
-    // [0 => 1]
-    let opacity = scrollY.interpolate({
-        inputRange: [BREAKPOINT1, BREAKPOINT2],
-        outputRange: [0, 1],
-        extrapolate: 'clamp',
-    });
-
-    // if i === index: [0 => 0]
-    // if i !== index: [0 => 1]
-    opacity = Animated.multiply(isNotIndex, opacity);
-
-    // if i === index: [1 => 1]
-    // if i !== index: [1 => 0]
-    opacity = opacity.interpolate({
-        inputRange: [0, 1],
-        outputRange: [1, 0],
-    });
-
-    let markerOpacity = scrollY.interpolate({
-        inputRange: [0, BREAKPOINT1],
-        outputRange: [0, 1],
-        extrapolate: 'clamp',
-    });
-
-    markerOpacity = Animated.multiply(isNotIndex, markerOpacity).interpolate({
-        inputRange: [0, 1],
-        outputRange: [1, 0],
-    });
-
-    const markerScale = selected.interpolate({
-        inputRange: [0, 1],
-        outputRange: [1, 1.2],
-    });
-
-    return {
-        translateY,
-        translateX,
-        scale,
-        opacity,
-        anim,
-        center,
-        selected,
-        markerOpacity,
-        markerScale,
+    static navigationOptions = {
+        title: 'San Francisco',
     };
-}
 
-class AnimatedViews extends React.Component {
-    constructor(props) {
-        super(props);
-
-        const panX = new Animated.Value(0);
-        const panY = new Animated.Value(0);
-
-        const scrollY = panY.interpolate({
-            inputRange: [-1, 1],
-            outputRange: [1, -1],
-        });
-
-        const scrollX = panX.interpolate({
-            inputRange: [-1, 1],
-            outputRange: [1, -1],
-        });
-
-        const scale = scrollY.interpolate({
-            inputRange: [0, BREAKPOINT1],
-            outputRange: [1, 1.6],
-            extrapolate: 'clamp',
-        });
-
-        const translateY = scrollY.interpolate({
-            inputRange: [0, BREAKPOINT1],
-            outputRange: [0, -100],
-            extrapolate: 'clamp',
-        });
-
-        const markers = [
-            {
-                id: 0,
-                amount: 99,
-                coordinate: {
-                    latitude: LATITUDE,
-                    longitude: LONGITUDE,
-                },
-            },
-            {
-                id: 1,
-                amount: 199,
-                coordinate: {
-                    latitude: LATITUDE + 0.004,
-                    longitude: LONGITUDE - 0.004,
-                },
-            },
-            {
-                id: 2,
-                amount: 285,
-                coordinate: {
-                    latitude: LATITUDE - 0.004,
-                    longitude: LONGITUDE - 0.004,
-                },
-            },
-        ];
-
-        const animations = markers.map((m, i) =>
-            getMarkerState(panX, panY, scrollY, i)
-        );
-
-        this.state = {
-            panX,
-            panY,
-            animations,
-            index: 0,
-            canMoveHorizontal: true,
-            scrollY,
-            scrollX,
-            scale,
-            translateY,
-            markers,
-            region: new AnimatedRegion({
-                latitude: LATITUDE,
-                longitude: LONGITUDE,
-                latitudeDelta: LATITUDE_DELTA,
-                longitudeDelta: LONGITUDE_DELTA,
-            }),
-        };
+    state = {
+        markers: [],
+        coordinates: [
+            { name: 'Burger', latitude: 37.8025259, longitude: -122.4351431, image: "https://raw.githubusercontent.com/JulianCurrie/CwC_React_Native/react-native-maps_example/src/img/burger.jpg" },
+            { name: 'Pizza', latitude: 37.7946386, longitude: -122.421646, image: "https://raw.githubusercontent.com/JulianCurrie/CwC_React_Native/react-native-maps_example/src/img/curry.jpg" },
+            { name: 'Soup', latitude: 37.7665248, longitude: -122.4165628, image: "https://raw.githubusercontent.com/JulianCurrie/CwC_React_Native/react-native-maps_example/src/img/pizza.jpg" },
+            { name: 'Sushi', latitude: 37.7834153, longitude: -122.4527787, image: "https://raw.githubusercontent.com/JulianCurrie/CwC_React_Native/react-native-maps_example/src/img/soup.jpg" },
+            { name: 'Curry', latitude: 37.7948105, longitude: -122.4596065, image: "https://raw.githubusercontent.com/JulianCurrie/CwC_React_Native/react-native-maps_example/src/img/sushi.jpg" },
+        ],
+        initialPosition: null
     }
 
     componentDidMount() {
-        const { region, panX, panY, scrollX, markers } = this.state;
-
-        panX.addListener(this.onPanXChange);
-        panY.addListener(this.onPanYChange);
-
-        region.stopAnimation();
-        region
-            .timing({
-                latitude: scrollX.interpolate({
-                    inputRange: markers.map((m, i) => i * SNAP_WIDTH),
-                    outputRange: markers.map(m => m.coordinate.latitude),
-                }),
-                longitude: scrollX.interpolate({
-                    inputRange: markers.map((m, i) => i * SNAP_WIDTH),
-                    outputRange: markers.map(m => m.coordinate.longitude),
-                }),
-                duration: 0,
-            })
-            .start();
+        this.requestLocationPermission();
     }
 
-    onStartShouldSetPanResponder = e => {
-        // we only want to move the view if they are starting the gesture on top
-        // of the view, so this calculates that and returns true if so. If we return
-        // false, the gesture should get passed to the map view appropriately.
-        const { panY } = this.state;
-        const { pageY } = e.nativeEvent;
-        const topOfMainWindow = ITEM_PREVIEW_HEIGHT + panY.__getValue();
-        const topOfTap = screen.height - pageY;
+    showWelcomeMessage = () =>
+        Alert.alert(
+            'Welcome to San Francisco',
+            'The food is amazing',
+            [
+                {
+                    text: 'Cancel',
+                    style: 'cancel'
+                },
+                {
+                    text: 'Ok'
+                }
+            ]
+        )
 
-        return topOfTap < topOfMainWindow;
-    };
+    requestLocationPermission = async () => {
+        if (Platform.OS === 'ios') {
+            var response = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+            console.log('iPhone: ' + response);
 
-    onMoveShouldSetPanResponder = e => {
-        const { panY } = this.state;
-        const { pageY } = e.nativeEvent;
-        const topOfMainWindow = ITEM_PREVIEW_HEIGHT + panY.__getValue();
-        const topOfTap = screen.height - pageY;
+            if (response === 'granted') {
+                this.locateCurrentPosition();
+            }
+        } else {
+            var response = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+            console.log('Android: ' + response);
 
-        return topOfTap < topOfMainWindow;
-    };
-
-    onPanXChange = ({ value }) => {
-        const { index } = this.state;
-        const newIndex = Math.floor((-1 * value + SNAP_WIDTH / 2) / SNAP_WIDTH);
-        if (index !== newIndex) {
-            this.setState({ index: newIndex });
-        }
-    };
-
-    onPanYChange = ({ value }) => {
-        const {
-            canMoveHorizontal,
-            region,
-            scrollY,
-            scrollX,
-            markers,
-            index,
-        } = this.state;
-        const shouldBeMovable = Math.abs(value) < 2;
-        if (shouldBeMovable !== canMoveHorizontal) {
-            this.setState({ canMoveHorizontal: shouldBeMovable });
-            if (!shouldBeMovable) {
-                const { coordinate } = markers[index];
-                region.stopAnimation();
-                region
-                    .timing({
-                        latitude: scrollY.interpolate({
-                            inputRange: [0, BREAKPOINT1],
-                            outputRange: [
-                                coordinate.latitude,
-                                coordinate.latitude - LATITUDE_DELTA * 0.5 * 0.375,
-                            ],
-                            extrapolate: 'clamp',
-                        }),
-                        latitudeDelta: scrollY.interpolate({
-                            inputRange: [0, BREAKPOINT1],
-                            outputRange: [LATITUDE_DELTA, LATITUDE_DELTA * 0.5],
-                            extrapolate: 'clamp',
-                        }),
-                        longitudeDelta: scrollY.interpolate({
-                            inputRange: [0, BREAKPOINT1],
-                            outputRange: [LONGITUDE_DELTA, LONGITUDE_DELTA * 0.5],
-                            extrapolate: 'clamp',
-                        }),
-                        duration: 0,
-                    })
-                    .start();
-            } else {
-                region.stopAnimation();
-                region
-                    .timing({
-                        latitude: scrollX.interpolate({
-                            inputRange: markers.map((m, i) => i * SNAP_WIDTH),
-                            outputRange: markers.map(m => m.coordinate.latitude),
-                        }),
-                        longitude: scrollX.interpolate({
-                            inputRange: markers.map((m, i) => i * SNAP_WIDTH),
-                            outputRange: markers.map(m => m.coordinate.longitude),
-                        }),
-                        duration: 0,
-                    })
-                    .start();
+            if (response === 'granted') {
+                this.locateCurrentPosition();
             }
         }
-    };
-
-    onRegionChange(/* region */) {
-        // this.state.region.setValue(region);
     }
 
-    render() {
-        const {
-            panX,
-            panY,
-            animations,
-            canMoveHorizontal,
-            markers,
-            region,
-        } = this.state;
+    locateCurrentPosition = () => {
+        Geolocation.getCurrentPosition(
+            position => {
+                console.log(JSON.stringify(position));
 
+                let initialPosition = {
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                    latitudeDelta: 0.09,
+                    longitudeDelta: 0.035,
+                    latitude: 37.78825,
+                    longitude: -122.4324,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
+                }
+
+                this.setState({ initialPosition });
+            },
+            error => Alert.alert(error.message),
+            { timeout: 20000 }
+        )
+    }
+
+    onCarouselItemChange = (index) => {
+        let location = this.state.coordinates[index];
+
+        this._map.animateToRegion({
+            latitude: location.latitude,
+            longitude: location.longitude,
+            latitudeDelta: 0.09,
+            longitudeDelta: 0.035
+        })
+
+        this.state.markers[index].showCallout()
+    }
+
+    onMarkerPressed = (location, index) => {
+        this._map.animateToRegion({
+            latitude: location.latitude,
+            longitude: location.longitude,
+            latitudeDelta: 0.09,
+            longitudeDelta: 0.035
+        });
+
+        this._carousel.snapToItem(index);
+    }
+
+    renderCarouselItem = ({ item }) =>
+        <View style={styles.cardContainer}>
+            <Text style={styles.cardTitle}>{item.name}</Text>
+            <Image style={styles.cardImage} source={{ uri: item.image }} />
+        </View>
+
+    render() {
         return (
             <View style={styles.container}>
-                <PanController
-                    style={styles.container}
-                    vertical
-                    horizontal={canMoveHorizontal}
-                    xMode="snap"
-                    snapSpacingX={SNAP_WIDTH}
-                    yBounds={[-1 * screen.height, 0]}
-                    xBounds={[-screen.width * (markers.length - 1), 0]}
-                    panY={panY}
-                    panX={panX}
-                    onStartShouldSetPanResponder={this.onStartShouldSetPanResponder}
-                    onMoveShouldSetPanResponder={this.onMoveShouldSetPanResponder}
+                <MapView
+                    provider={PROVIDER_GOOGLE}
+                    ref={map => this._map = map}
+                    showsUserLocation={true}
+                    style={styles.map}
+                    initialRegion={{
+                        latitude: 37.78825,
+                        longitude: -122.4324,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421,
+                    }}
+                ></MapView>
+                <MapView
+                    provider={PROVIDER_GOOGLE}
+                    ref={map => this._map = map}
+                    showsUserLocation={true}
+                    style={styles.map}
+                    initialRegion={this.state.initialPosition}
                 >
-                    <AnimatedMap
-                        provider={this.props.provider}
-                        style={styles.map}
-                        region={region}
-                        onRegionChange={this.onRegionChange}
-                    >
-                        {markers.map((marker, i) => {
-                            const { selected, markerOpacity, markerScale } = animations[i];
-
-                            return (
-                                <Marker key={marker.id} coordinate={marker.coordinate}>
-                                    <PriceMarker
-                                        style={{
-                                            opacity: markerOpacity,
-                                            transform: [{ scale: markerScale }],
-                                        }}
-                                        amount={marker.amount}
-                                        selected={selected}
-                                    />
-                                </Marker>
-                            );
-                        })}
-                    </AnimatedMap>
-                    <View style={styles.itemContainer}>
-                        {markers.map((marker, i) => {
-                            const { translateY, translateX, scale, opacity } = animations[i];
-
-                            return (
-                                <Animated.View
-                                    key={marker.id}
-                                    style={[
-                                        styles.item,
-                                        {
-                                            opacity,
-                                            transform: [{ translateY }, { translateX }, { scale }],
-                                        },
-                                    ]}
-                                />
-                            );
-                        })}
-                    </View>
-                </PanController>
+                    <Polygon
+                        coordinates={this.state.coordinates}
+                        fillColor={'rgba(100, 100, 200, 0.3)'}
+                    />
+                    <Circle
+                        center={{ latitude: 37.8025259, longitude: -122.4351431 }}
+                        radius={1000}
+                        fillColor={'rgba(200, 300, 200, 0.5)'}
+                    />
+                    <Marker
+                        draggable
+                        coordinate={{ latitude: 37.7825259, longitude: -122.4351431 }}
+                        image={{ uri: "https://raw.githubusercontent.com/JulianCurrie/CwC_React_Native/react-native-maps_example/src/img/sushi.jpg" }}>
+                        <Callout onPress={this.showWelcomeMessage}>
+                            <Text>An Interesting city</Text>
+                        </Callout>
+                    </Marker>
+                    {
+                        this.state.coordinates.map((marker, index) => (
+                            <Marker
+                                key={marker.name}
+                                ref={ref => this.state.markers[index] = ref}
+                                onPress={() => this.onMarkerPressed(marker, index)}
+                                coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
+                            >
+                                <Callout>
+                                    <Text>{marker.name}</Text>
+                                </Callout>
+                            </Marker>
+                        ))
+                    }
+                </MapView>
+                <Carousel
+                    ref={(c) => { this._carousel = c; }}
+                    data={this.state.coordinates}
+                    containerCustomStyle={styles.carousel}
+                    renderItem={this.renderCarouselItem}
+                    sliderWidth={Dimensions.get('window').width}
+                    itemWidth={300}
+                    removeClippedSubviews={false}
+                    onSnapToItem={(index) => this.onCarouselItemChange(index)}
+                />
             </View>
         );
     }
 }
 
-AnimatedViews.propTypes = {
-    provider: ProviderPropType,
-};
-
 const styles = StyleSheet.create({
     container: {
-        ...StyleSheet.absoluteFillObject,
-    },
-    itemContainer: {
-        backgroundColor: 'transparent',
-        flexDirection: 'row',
-        paddingHorizontal: ITEM_SPACING / 2 + ITEM_PREVIEW,
-        position: 'absolute',
-        // top: screen.height - ITEM_PREVIEW_HEIGHT - 64,
-        paddingTop: screen.height - ITEM_PREVIEW_HEIGHT - 64,
-        // paddingTop: !ANDROID ? 0 : screen.height - ITEM_PREVIEW_HEIGHT - 64,
+        flex: 1,
+        ...StyleSheet.absoluteFillObject
     },
     map: {
-        backgroundColor: 'transparent',
-        ...StyleSheet.absoluteFillObject,
+        ...StyleSheet.absoluteFillObject
     },
-    item: {
-        width: ITEM_WIDTH,
-        height: screen.height + 2 * ITEM_PREVIEW_HEIGHT,
-        backgroundColor: 'red',
-        marginHorizontal: ITEM_SPACING / 2,
-        overflow: 'hidden',
-        borderRadius: 3,
-        borderColor: '#000',
+    carousel: {
+        position: 'absolute',
+        bottom: 0,
+        marginBottom: 48
     },
+    cardContainer: {
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        height: 200,
+        width: 300,
+        padding: 24,
+        borderRadius: 24
+    },
+    cardImage: {
+        height: 120,
+        width: 300,
+        bottom: 0,
+        position: 'absolute',
+        borderBottomLeftRadius: 24,
+        borderBottomRightRadius: 24
+    },
+    cardTitle: {
+        color: 'white',
+        fontSize: 22,
+        alignSelf: 'center'
+    }
 });
+// import React, { Component } from 'react';
+// import {
+//     Text,
+//     StyleSheet
+// } from 'react-native';
+// import MapView from 'react-native-maps';
+// //import ClusteredMapView from 'react-native-maps-super-cluster';
+// import image from './flag-pink.png';
 
-export default AnimatedViews;
+// export default class App extends Component<{}> {
+//     render() {
+
+//         const coordinates = [];
+
+//         coordinates.push({
+//             key: 0,
+//             location: {
+//                 longitude: -70.23,
+//                 latitude: -33.23
+//             }
+//         });
+
+//         for (let i = 1; i < 100; i++) {
+
+//             const location = {
+//                 longitude: coordinates[i - 1].location.longitude + (Math.random() * (i % 2 === 0 ? -1 : 1)),
+//                 latitude: coordinates[i - 1].location.latitude + (Math.random() * (i % 2 === 0 ? -1 : 1)),
+//             };
+
+//             coordinates.push({ key: i, location });
+
+//         }
+
+//         return (
+//             <MapView
+//                 renderMarker={renderMarker}
+//                 initialRegion={{
+//                     longitude: -70.23,
+//                     latitude: -33.23,
+//                     latitudeDelta: 9.22,
+//                     longitudeDelta: 4.21,
+//                 }}
+//                 style={StyleSheet.absoluteFillObject}>
+
+//                 { coordinates.map(({ key, location }) => <MapView.Marker key={key} image={image} coordinate={location} />)}
+
+//             </MapView>
+//         );
+//     }
+// }
+
+// function renderMarker({ location }) {
+//     return (
+//         <MapView.Marker
+//             image={image}
+//             coordinate={location}
+//         >
+//             <MapView.Callout>
+//                 <Text>BiG BiG Callout</Text>
+//             </MapView.Callout>
+//         </MapView.Marker>
+//     );
+// }
