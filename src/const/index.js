@@ -13,6 +13,7 @@ import * as DateFormat from './dateFormat'
 import * as Languages from './languages'
 import * as Interests from './interests'
 import * as Cloudinary from './cloudinary'
+import * as CodeListener from './codeListener'
 const Const = {
     Common,
     PhoneAreas,
@@ -28,7 +29,8 @@ const Const = {
     DateFormat,
     Languages,
     Interests,
-    Cloudinary
+    Cloudinary,
+    CodeListener
 }
 
 export default Const;

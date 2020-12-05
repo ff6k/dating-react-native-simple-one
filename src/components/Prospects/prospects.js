@@ -7,26 +7,10 @@ import Themes from '/src/themes'
 import ListImageLiked from '/src/components/UI/listImageLiked'
 import { withTranslation } from 'react-i18next';
 
-const dataLikes = [
-    { id: 1, name: 'Trần Dần, 18', isMale: true, isLike: true, uri: 'https://1.bp.blogspot.com/-tishGiEqXCw/XqhWaDmUeoI/AAAAAAAAjp4/WJ9y5kbeK7kmu2h6KjZd_AzfTLrSznZ3QCLcBGAsYHQ/s1600/Anh-gai-xinh-toc-ngan%2B%25285%2529.jpg' },
-    { id: 2, name: 'Trần Dần, 20', isMale: true, isLike: true, uri: 'https://zicxaphotos.com/wp-content/uploads/2019/07/Girl-xinh-cute.jpg' },
-    { id: 3, name: 'Trần Dần, 20', isMale: false, isLike: false, uri: 'https://1.bp.blogspot.com/-tishGiEqXCw/XqhWaDmUeoI/AAAAAAAAjp4/WJ9y5kbeK7kmu2h6KjZd_AzfTLrSznZ3QCLcBGAsYHQ/s1600/Anh-gai-xinh-toc-ngan%2B%25285%2529.jpg' },
-    { id: 4, name: 'Trần Dần, 20', isMale: true, isLike: true, uri: 'https://zicxaphotos.com/wp-content/uploads/2019/07/Girl-xinh-cute.jpg' },
-    { id: 5, name: 'Trần Dần, 20', isMale: false, isLike: false, uri: 'https://1.bp.blogspot.com/-tishGiEqXCw/XqhWaDmUeoI/AAAAAAAAjp4/WJ9y5kbeK7kmu2h6KjZd_AzfTLrSznZ3QCLcBGAsYHQ/s1600/Anh-gai-xinh-toc-ngan%2B%25285%2529.jpg' },
-    { id: 6, name: 'Trần Dần, 21', isMale: true, isLike: true, uri: 'https://1.bp.blogspot.com/-tishGiEqXCw/XqhWaDmUeoI/AAAAAAAAjp4/WJ9y5kbeK7kmu2h6KjZd_AzfTLrSznZ3QCLcBGAsYHQ/s1600/Anh-gai-xinh-toc-ngan%2B%25285%2529.jpg' },
-]
 
-const dataTopPicks = [
-    { id: 1, name: 'Trần Dần, 18', isMale: true, isLike: false, uri: 'https://1.bp.blogspot.com/-tishGiEqXCw/XqhWaDmUeoI/AAAAAAAAjp4/WJ9y5kbeK7kmu2h6KjZd_AzfTLrSznZ3QCLcBGAsYHQ/s1600/Anh-gai-xinh-toc-ngan%2B%25285%2529.jpg' },
-    { id: 2, name: 'Trần Dần, 20', isMale: true, isLike: false, uri: 'https://zicxaphotos.com/wp-content/uploads/2019/07/Girl-xinh-cute.jpg' },
-    { id: 3, name: 'Trần Dần, 20', isMale: false, isLike: false, uri: 'https://1.bp.blogspot.com/-tishGiEqXCw/XqhWaDmUeoI/AAAAAAAAjp4/WJ9y5kbeK7kmu2h6KjZd_AzfTLrSznZ3QCLcBGAsYHQ/s1600/Anh-gai-xinh-toc-ngan%2B%25285%2529.jpg' },
-    { id: 4, name: 'Trần Dần, 20', isMale: true, isLike: false, uri: 'https://zicxaphotos.com/wp-content/uploads/2019/07/Girl-xinh-cute.jpg' },
-    { id: 5, name: 'Trần Dần, 20', isMale: false, isLike: false, uri: 'https://1.bp.blogspot.com/-tishGiEqXCw/XqhWaDmUeoI/AAAAAAAAjp4/WJ9y5kbeK7kmu2h6KjZd_AzfTLrSznZ3QCLcBGAsYHQ/s1600/Anh-gai-xinh-toc-ngan%2B%25285%2529.jpg' },
-    { id: 6, name: 'Trần Dần, 21', isMale: true, isLike: false, uri: 'https://1.bp.blogspot.com/-tishGiEqXCw/XqhWaDmUeoI/AAAAAAAAjp4/WJ9y5kbeK7kmu2h6KjZd_AzfTLrSznZ3QCLcBGAsYHQ/s1600/Anh-gai-xinh-toc-ngan%2B%25285%2529.jpg' },
-]
 
 function Prospects(props) {
-    const { t } = props
+    const { t, dataTopPicks, dataLikes, onPressUserLikedMe } = props
     return (
         <Container>
             <Header hasTabs
@@ -48,6 +32,7 @@ function Prospects(props) {
                     activeTextStyle={styles.activeTextStyle}
                     heading={"4 Likes"}>
                     <ListImageLiked data={dataLikes}
+                        onPressUserLikedMe={onPressUserLikedMe}
                         title={"People who have already liked or super liked you"}
                     />
                 </Tab>

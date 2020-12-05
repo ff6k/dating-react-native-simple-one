@@ -34,6 +34,8 @@ export const EditKids = "EditKids"
 export const EditFamilyPlan = "EditFamilyPlan"
 export const EditSmoking = "EditSmoking"
 export const EditDrinking = "EditDrinking"
+export const ImageDetail = "ImageDetail"
+
 
 
 

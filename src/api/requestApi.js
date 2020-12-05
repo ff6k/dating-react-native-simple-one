@@ -1,6 +1,7 @@
 import {
     URL_GET_IMAGE_SWIPE, URL_POST_LIKE_IMAGE_SWIPE, URL_GET_MESSAGES,
-    URL_GET_USER_DETAIL, URL_GET_PROFILE, URL_PUT_PROFILE, URL_POST_PHOTOS
+    URL_GET_USER_DETAIL, URL_GET_PROFILE, URL_PUT_PROFILE, URL_POST_PHOTOS,
+    URL_GET_USER_LIKED_ME
 } from './url'
 import axios from 'axios';
 
@@ -116,4 +117,11 @@ export const putSmokingApiRequest = async (params) => {
     return client.put(Url, {
         "smoking": smoking,
     })
+}
+
+export const getUserLikeMeApiRequest = async (params) => {
+    const { token, pageNumber, pageSize, likers } = params
+    const Url = URL_GET_USER_LIKED_ME + `?pageNumber=${pageNumber}&pageSize=${pageSize}&likers=${likers}`
+    const client = getAxios('Bearer ' + token)
+    return client.get(Url)
 }

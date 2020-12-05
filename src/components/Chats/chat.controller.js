@@ -3,11 +3,14 @@ import Chats from './chats'
 import Api from '/src/api'
 import { useSelector } from 'react-redux'
 import Const from '/src/const'
+import { connectServer, listenerConnect } from '/src/configs/Signalr'
+
 let token
 let idUser
 let dataMessagesTemp
 export default function ChatsController(props) {
     const { navigation } = props
+
     const dataStore = useSelector(state => state.login)
     const [dataMessages, setDataMessages] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
@@ -21,7 +24,12 @@ export default function ChatsController(props) {
             return null // empty data
         }
     }
-
+    useEffect(() => {
+        const _hubConnection = connectServer(token)
+        listenerConnect(_hubConnection, Const.CodeListener.CODE_RECEIVE_MESSAGE, data => {
+            console.log(data)
+        })
+    }, [])
     useEffect(() => {
         setIsLoading(true)
         getDataStore()

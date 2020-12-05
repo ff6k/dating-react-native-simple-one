@@ -14,5 +14,10 @@ export const URL_POST_MARK_MESSAGES = URL_NETWORK + URL_USER
 export const URL_GET_PROFILE = URL_NETWORK + URL_USER
 export const URL_PUT_PROFILE = URL_NETWORK + URL_USER
 export const URL_POST_PHOTOS = URL_NETWORK + URL_USER
+export const URL_GET_USER_LIKED_ME = URL_NETWORK + URL_USER + "/pagination"
 
+//realtime
+export const URL_CONNECT_SERVER_MESSAGES = URL_NETWORK + "/hubs/messages"
+
+//http://localhost:5000/api/users/pagination?pageNumber=1&pageSize=10&likers=true
 //http://localhost:5000/api/users/3/messages/16/read

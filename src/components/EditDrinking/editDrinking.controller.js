@@ -16,8 +16,8 @@ let idSelected
 export default function EditDrinkingController(props) {
     const { navigation } = props
     const onPressBack = () => {
-        // navigation.goBack()
-        navigation.navigate(Const.NameScreens.MyProfile, { drinking: data[idSelected].label })
+        navigation.goBack()
+        // navigation.navigate(Const.NameScreens.MyProfile, { drinking: data[idSelected].label })
     }
 
     const dataStore = useSelector(state => state.login)

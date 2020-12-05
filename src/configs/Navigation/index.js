@@ -34,6 +34,7 @@ import InterestInfomation from '/src/components/InterestInformation/interestInfo
 import EditFamilyPlan from '/src/components/EditFamilyPlan/editFamilyPlan.controller'
 import EditDrinking from '/src/components/EditDrinking/editDrinking.controller'
 import EditSmoking from '/src/components/EditSmoking/editSmoking.controller'
+import ImageDetail from '/src/components/ImageDetail/imageDetail.controller'
 import Const from '/src/const'
 
 const Stack = createStackNavigator();
@@ -197,6 +198,10 @@ export default function screensNavigation() {
                 <Stack.Screen
                     name={Const.NameScreens.Messages}
                     component={Messages}
+                />
+                <Stack.Screen
+                    name={Const.NameScreens.ImageDetail}
+                    component={ImageDetail}
                 />
             </Stack.Navigator>
         </NavigationContainer>

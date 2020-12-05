@@ -73,21 +73,21 @@ function Discover(props) {
                     />}
             </View>
             {!isModeDetail && <View style={styles.containFooter}>
-                <ButtonStatus
+                {/* <ButtonStatus
                     onPress={() => onPressBack()}
-                    color={Themes.Colors.YELLOW} size={25} nameFontAwesome5={"undo-alt"} />
+                    color={Themes.Colors.YELLOW} size={25} nameFontAwesome5={"undo-alt"} /> */}
                 <ButtonStatus
                     onPress={onPressUnlike}
                     style={styles.icoBigger}
                     color={Themes.Colors.BROWN_DARK} size={55} name={"close"} />
-                <ButtonStatus
+                {/* <ButtonStatus
                     onPress={() => onPressBack()}
-                    color={Themes.Colors.PURPLE} size={30} name={"flash"} />
+                    color={Themes.Colors.PURPLE} size={30} name={"flash"} /> */}
                 <ButtonStatus style={styles.icoBigger}
                     onPress={onPressLike}
                     color={Themes.Colors.GREEN_DARK} size={45} name={"heart"} />
-                <ButtonStatus
-                    color={Themes.Colors.BLUE_DARK} size={30} name={"star"} />
+                {/* <ButtonStatus
+                    color={Themes.Colors.BLUE_DARK} size={30} name={"star"} /> */}
             </View>}
         </View>
     )
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     containFooter: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'space-evenly',
         alignItems: 'center',
         marginBottom: 10
     }

@@ -8,6 +8,8 @@ import Swiper from 'react-native-swiper'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import InterestContentInfo from '/src/components/UI/interestContentInfo'
 import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome5'
+import ButtonStatus from '/src/components/UI/buttonStatus'
+
 const data = [
     { id: 31, label: 'Mountain Biking' },
     { id: 32, label: 'Snowmobiling' },
@@ -208,6 +210,23 @@ export default function imageDetail(props) {
                     </View>
                 </View>
             </View>
+            <View style={styles.containFooterBottom}>
+                {/* <ButtonStatus
+                    onPress={() => onPressBack()}
+                    color={Themes.Colors.YELLOW} size={25} nameFontAwesome5={"undo-alt"} /> */}
+                <ButtonStatus
+                    // onPress={onPressUnlike}
+                    style={styles.icoBigger}
+                    color={Themes.Colors.BROWN_DARK} size={55} name={"close"} />
+                {/* <ButtonStatus
+                    onPress={() => onPressBack()}
+                    color={Themes.Colors.PURPLE} size={30} name={"flash"} /> */}
+                <ButtonStatus style={styles.icoBigger}
+                    // onPress={onPressLike}
+                    color={Themes.Colors.GREEN_DARK} size={45} name={"heart"} />
+                {/* <ButtonStatus
+                    color={Themes.Colors.BLUE_DARK} size={30} name={"star"} /> */}
+            </View>
 
         </ScrollView>
     )
@@ -215,7 +234,18 @@ export default function imageDetail(props) {
 
 const FONT_SIZE = 16
 const MARGIN_BOTTOM = 10
+const SIZE = 60
 const styles = StyleSheet.create({
+    icoBigger: {
+        width: SIZE, height: SIZE,
+        borderRadius: SIZE / 2
+    },
+    containFooterBottom: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        marginBottom: 10,
+    },
     txtBio: {
         fontSize: FONT_SIZE,
         color: 'black',

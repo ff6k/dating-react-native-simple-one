@@ -1,17 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import 'react-native-gesture-handler';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import Icon from '/src/components/UI/icon'
 import Themes from '/src/themes'
 import Discover from '/src/components/Discover/discover.controller'
-import Prospects from '/src/components/Prospects/prospects'
+import Prospects from '/src/components/Prospects/prospects.controller'
 // import Dates from '/src/components/Dates/dates'
 import Chats from '/src/components/Chats/chat.controller'
 import Settings from '/src/components/Settings/setting.controller'
-
+import { connectServer } from '/src/configs/Signalr'
 import Const from '/src/const'
 import { withTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux'
+
 
 const Tab = createMaterialBottomTabNavigator();
 const theme = {
@@ -23,8 +25,24 @@ const theme = {
         // accent: 'green',
     },
 }
+
+let token
 function MyTabs(props) {
     const { t } = props
+    const dataStore = useSelector(state => state.login)
+    const getDataStore = () => {
+        if (dataStore.length > 0) {
+            const { jwtToken } = dataStore[0]
+            token = jwtToken
+        }
+        else {
+            return null // empty data
+        }
+    }
+    useEffect(() => {
+        getDataStore()
+        connectServer(token)
+    }, [])
     return (
         <PaperProvider theme={theme}>
             <Tab.Navigator
