@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        height: '8%'
+        // height: '8%'
+        height: 60
     }
 })

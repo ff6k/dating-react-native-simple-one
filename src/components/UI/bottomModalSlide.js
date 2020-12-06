@@ -4,14 +4,14 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import Themes from '/src/themes'
 
 const BottomModalSlide = React.forwardRef((props, ref) => {
-    const { children, height } = props
+    const { children, height, style } = props
     return (
         <View
-            style={{
-                flex: 1,
+            style={[{
+                // flex: 1,
                 justifyContent: "center",
                 alignItems: "center",
-            }}
+            }, { ...style }]}
         >
             <RBSheet
                 ref={ref}

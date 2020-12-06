@@ -11,6 +11,8 @@ export default function MessagesController(props) {
     const { navigation, route } = props
     const dataStore = useSelector(state => state.login)
     const [dataMessages, setDataMessages] = useState([])
+    const refModalSlide = React.createRef()
+
     const getDataStore = () => {
         if (dataStore.length > 0) {
             const { jwtToken, id } = dataStore[0]
@@ -54,11 +56,17 @@ export default function MessagesController(props) {
             navigation.navigate(Const.NameScreens.Chats)
         }
     }
+
+    const onPressMenu = () => {
+        refModalSlide.current.open()
+    }
     return (
         <Messages
             onPressBack={onPressBack}
             dataMessages={dataMessages}
             idUser={idUser}
+            ref={refModalSlide}
+            onPressMenu={onPressMenu}
         />
     )
 }
