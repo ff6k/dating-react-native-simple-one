@@ -4,6 +4,7 @@ import CircleAvatarActive from '/src/components/UI/circleAvatarActive'
 import Utils from '/src/utils'
 import Themes from '/src/themes'
 import Const from '/src/const'
+const width_screen = Const.Common.deviceWidth
 export default function itemMessages(props) {
     const { item, onPressMessages, idUser } = props
     const { name, dateRead, content, messageSent, recipientId } = item
@@ -74,7 +75,9 @@ const styles = StyleSheet.create({
         fontFamily: Themes.FontFamily.FontThinDefault,
     },
     containerMessages: {
-        flex: 1, justifyContent: 'center',
+        justifyContent: 'center',
+        marginRight: 10,
+        width: width_screen - 110
     },
     txtNotIsRead: {
     },

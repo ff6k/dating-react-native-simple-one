@@ -82,7 +82,8 @@ export default function ChatsController(props) {
     }
 
     const onPressMessages = (item) => {
-        const { dateRead, id, recipientId } = item
+        console.log(`item: ${JSON.stringify(item)}`);
+        const { dateRead, id, recipientId, senderId } = item
 
         if (dateRead === null && recipientId === idUser) {
             const params = {
@@ -92,14 +93,18 @@ export default function ChatsController(props) {
             }
             setDataPressMarked(id)
             postMarkMessages(params).then(res => {
-                console.log(res)
                 setDataPressMarked(id)
-                navigation.navigate(Const.NameScreens.Messages, { isMark: true })
+                navigation.navigate(Const.NameScreens.Messages, { isMark: true, idPeople: senderId })
             }).catch(err => {
                 console.log(err)
             })
         } else {
-            navigation.navigate(Const.NameScreens.Messages, { isMark: false })
+            if (recipientId === idUser) {
+                navigation.navigate(Const.NameScreens.Messages, { isMark: false, idPeople: senderId })
+            }
+            else {
+                navigation.navigate(Const.NameScreens.Messages, { isMark: false, idPeople: recipientId })
+            }
         }
     }
 

@@ -3,38 +3,10 @@ import { StyleSheet, FlatList, View, Text, TextInput, Keyboard, TouchableOpacity
 import HeaderApp from '/src/components/UI/headerApp'
 import ButtonSend from '/src/components/UI/buttonSend'
 import { FloatingAction } from "react-native-floating-action";
-import DatingModal from '/src/components/Model/datingModal'
 import BottomHalfModel from '/src/components/Model/bottomHalfModel'
 import Themes from '/src/themes'
 import { withTranslation } from 'react-i18next';
 import ItemConversition from '/src/components/UI/itemConversition'
-import { color } from 'react-native-reanimated';
-
-const ROLE_SENDER = "1"
-const ROLE_RECEIVER = "0"
-
-const data = [
-    {
-        id: "1",
-        role: ROLE_SENDER,
-        message: "có làm thì mới có ăn"
-    },
-    {
-        id: "2",
-        role: ROLE_SENDER,
-        message: "người anh em cho xin cái địa chỉ"
-    },
-    {
-        id: "3",
-        role: ROLE_RECEIVER,
-        message: "thằng zo zăn hoá"
-    },
-    {
-        id: "4",
-        role: ROLE_RECEIVER,
-        message: "người anh em cho xin cái địa chỉ, người anh em cho xin cái địa chỉ, người anh em cho xin cái địa chỉ,người anh em cho xin cái địa chỉ"
-    },
-]
 
 const actions = [
     {
@@ -62,7 +34,7 @@ const actions = [
 ];
 
 function Messages(props) {
-    const { t, onPressBack } = props
+    const { t, onPressBack, dataMessages, idUser } = props
     const [isVisible, setIsVisible] = useState(false)
     const [isVisibleModalBottom, setIsVisibleModalBottom] = useState(false)
     const [newValue, setNewValue] = useState('')
@@ -70,9 +42,11 @@ function Messages(props) {
     const [isVisibleButton, setIsVisibleButton] = useState(true)
     const [isVisibleTextInput, setIsVisibleTextInput] = useState(true)
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-
-    const renderItemChat = (item, index) => {
-        return <ItemConversition item={item} />
+    const renderItemChat = (item, index, idUser, dataMessages) => {
+        return <ItemConversition item={item} idUser={idUser}
+            index={index}
+            dataMessages={dataMessages}
+        />
     }
 
     useEffect(() => {
@@ -116,10 +90,10 @@ function Messages(props) {
                 onPressBack={onPressBack}
             />
             <FlatList style={{ flex: 1 }}
-                data={data}
+                data={dataMessages}
                 showsVerticalScrollIndicator={false}
-                keyExtractor={item => item.id}
-                renderItem={({ item, index }) => renderItemChat(item, index)} />
+                keyExtractor={item => item.id.toString()}
+                renderItem={({ item, index }) => renderItemChat(item, index, idUser, dataMessages)} />
 
             <View style={[styles.containerFooter, { height: height }, !isVisibleButton && styles.containerVisible]}>
                 <TextInput
