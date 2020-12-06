@@ -6,7 +6,7 @@ import Icon from '/src/components/UI/icon'
 import FontAwesomeIcons from 'react-native-vector-icons/SimpleLineIcons'
 
 const SIZE_ICON = 18
-const renderItemLiked = (item, index, onPressUserLikedMe) => {
+const renderItemLiked = (item, index, onPressUserLikedMe, onPressLoveStatus) => {
     const { photoUrl, name, isMale } = item
     return (
         <TouchableOpacity style={{ marginTop: 7 }}
@@ -22,7 +22,8 @@ const renderItemLiked = (item, index, onPressUserLikedMe) => {
                         : <FontAwesomeIcons name={"symbol-male"} size={SIZE_ICON} color={Themes.Colors.PINK_DARK} />}
                     <Text style={styles.txtName}>{name}</Text>
                 </View>
-                <TouchableOpacity style={{ backgroundColor: 'white', padding: 6, borderRadius: 20 }}>
+                <TouchableOpacity style={{ backgroundColor: 'white', padding: 6, borderRadius: 20 }}
+                    onPress={() => onPressLoveStatus && onPressLoveStatus(item, index)}>
                     <Icon size={20} color={Themes.Colors.GREEN_DARK} name={'heart'} />
                 </TouchableOpacity>
             </View>
@@ -45,14 +46,14 @@ const renderHeader = (title) => {
     )
 }
 export default function listImageLiked(props) {
-    const { data, title, onPressUserLikedMe } = props
+    const { data, title, onPressUserLikedMe, onPressLoveStatus } = props
     return (
         <FlatList
             style={{ flex: 1 }}
             columnWrapperStyle={{ justifyContent: 'space-evenly' }}
             data={data}
             keyExtractor={item => item.id.toString()}
-            renderItem={({ item, index }) => renderItemLiked(item, index, onPressUserLikedMe)}
+            renderItem={({ item, index }) => renderItemLiked(item, index, onPressUserLikedMe, onPressLoveStatus)}
             numColumns={2}
             ListFooterComponent={renderBottom}
             ListHeaderComponent={renderHeader(title)}

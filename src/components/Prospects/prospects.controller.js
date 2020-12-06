@@ -22,6 +22,7 @@ const dataTopPicks = [
 ]
 
 let token
+let idUser
 export default function ProspectsController(props) {
     const { navigation } = props
     const dataStore = useSelector(state => state.login)
@@ -30,6 +31,7 @@ export default function ProspectsController(props) {
         if (dataStore.length > 0) {
             const { jwtToken, id } = dataStore[0]
             token = jwtToken
+            idUser = id
             const params = {
                 token: jwtToken,
                 pageNumber: 1,
@@ -51,6 +53,22 @@ export default function ProspectsController(props) {
     const onPressUserLikedMe = (item) => {
         navigation.navigate(Const.NameScreens.ImageDetail, { item })
     }
+
+    const onPressLoveStatus = (item, index) => {
+        const { id } = item
+        const params = {
+            token,
+            idLiked: id,
+            idLiker: idUser
+        }
+        Api.RequestApi.postLikeImageSwipe(params)
+            .then(res => {
+                console.log(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
     useEffect(() => {
         getDataStore()
     }, [])
@@ -59,6 +77,7 @@ export default function ProspectsController(props) {
             dataLikes={dataLikes}
             dataTopPicks={dataTopPicks}
             onPressUserLikedMe={onPressUserLikedMe}
+            onPressLoveStatus={onPressLoveStatus}
         />
     )
 }

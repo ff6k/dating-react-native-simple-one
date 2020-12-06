@@ -10,7 +10,7 @@ import { withTranslation } from 'react-i18next';
 
 
 function Prospects(props) {
-    const { t, dataTopPicks, dataLikes, onPressUserLikedMe } = props
+    const { t, dataTopPicks, dataLikes, onPressUserLikedMe, onPressLoveStatus } = props
     return (
         <Container>
             <Header hasTabs
@@ -33,6 +33,7 @@ function Prospects(props) {
                     heading={"4 Likes"}>
                     <ListImageLiked data={dataLikes}
                         onPressUserLikedMe={onPressUserLikedMe}
+                        onPressLoveStatus={onPressLoveStatus}
                         title={"People who have already liked or super liked you"}
                     />
                 </Tab>

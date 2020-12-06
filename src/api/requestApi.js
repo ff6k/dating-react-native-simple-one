@@ -30,7 +30,11 @@ export const postRequestApi = async (url, body) => {
 
 export const postLikeImageSwipe = async (params) => {
     const { idLiker, idLiked, token } = params
+    console.log(`token: ${token}`);
+    console.log(`idLiked: ${idLiked}`);
+    console.log(`idLiker: ${idLiker}`);
     const Url = URL_POST_LIKE_IMAGE_SWIPE + `/${idLiker}/likes/${idLiked}`
+    console.log(`Url: ${Url}`);
     const client = getAxios('Bearer ' + token)
     return client.post(Url)
 }

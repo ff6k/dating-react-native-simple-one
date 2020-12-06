@@ -34,20 +34,14 @@ function Settings(props) {
                             title={"SETTINGS"}
                             style={styles.btnSetting}
                             name={"settings"}
-                            onPress={onPressMyPreferences}
-                        />
-
-                        <ButtonSetting
-                            onPress={onPressMyAlbums}
-                            title={"YOUR PHOTOS"}
-                            style={styles.btnAlbums}
-                            name={"image-2"}
                             isGradient={true}
+                            onPress={onPressMyPreferences}
                         />
                         <ButtonSetting
                             onPress={onPressMyProfile}
                             title={"EDIT INFO"}
                             style={styles.btnInfo}
+                            isGradient={true}
                             name={"edit-2"}
                         />
                     </View>
