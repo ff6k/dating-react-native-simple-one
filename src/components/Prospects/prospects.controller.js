@@ -27,6 +27,8 @@ export default function ProspectsController(props) {
     const { navigation } = props
     const dataStore = useSelector(state => state.login)
     const [dataLikes, setDataLikes] = useState([])
+    const [isShowAlertSuccess, setIsShowAlertSuccess] = useState(false)
+    const [isShowAlertFail, setIsShowAlertFail] = useState(false)
     const getDataStore = () => {
         if (dataStore.length > 0) {
             const { jwtToken, id } = dataStore[0]
@@ -63,21 +65,35 @@ export default function ProspectsController(props) {
         }
         Api.RequestApi.postLikeImageSwipe(params)
             .then(res => {
-                console.log(res.data)
+                setIsShowAlertSuccess(true)
+                const dataLikesFilter = dataLikes.filter(e => e.id !== item.id)
+                setDataLikes(dataLikesFilter)
             })
             .catch(err => {
                 console.log(err)
+                setIsShowAlertFail(true)
             })
     }
     useEffect(() => {
         getDataStore()
     }, [])
+
+
+
+    const closeAlert = () => {
+        if (isShowAlertSuccess) setIsShowAlertSuccess(false)
+        if (isShowAlertFail) setIsShowAlertFail(false)
+    }
     return (
         <Prospects
             dataLikes={dataLikes}
             dataTopPicks={dataTopPicks}
             onPressUserLikedMe={onPressUserLikedMe}
             onPressLoveStatus={onPressLoveStatus}
+            isShowAlertSuccess={isShowAlertSuccess}
+            isShowAlertFail={isShowAlertFail}
+            closeAlert={closeAlert}
+            countLikes={dataLikes.length}
         />
     )
 }

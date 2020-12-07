@@ -4,30 +4,35 @@ import Const from '/src/const'
 import Themes from '/src/themes'
 import Icon from '/src/components/UI/icon'
 import FontAwesomeIcons from 'react-native-vector-icons/SimpleLineIcons'
+import EmptyPerform from '/src/components/UI/emptyPerform'
 
 const SIZE_ICON = 18
-const renderItemLiked = (item, index, onPressUserLikedMe, onPressLoveStatus) => {
+const renderItemLiked = (props, item, index) => {
+    const { onPressUserLikedMe, onPressLoveStatus } = props
     const { photoUrl, name, isMale } = item
     return (
-        <TouchableOpacity style={{ marginTop: 7 }}
-            onPress={() => onPressUserLikedMe && onPressUserLikedMe(item)}>
-            <Image source={{ uri: photoUrl }} style={{
-                width: Const.Common.deviceWidth / 2 - 10,
-                height: Const.Common.deviceWidth / 2 + 30,
-                borderRadius: 10
-            }} />
-            <View style={styles.containBottom}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 3 }}>
-                    {!isMale ? <FontAwesomeIcons name={"symbol-female"} size={SIZE_ICON} color={Themes.Colors.PINK_DARK} />
-                        : <FontAwesomeIcons name={"symbol-male"} size={SIZE_ICON} color={Themes.Colors.PINK_DARK} />}
-                    <Text style={styles.txtName}>{name}</Text>
+        <View>
+            <TouchableOpacity style={{ marginTop: 7 }}
+                onPress={() => onPressUserLikedMe && onPressUserLikedMe(item)}>
+                <Image source={{ uri: photoUrl }} style={{
+                    width: Const.Common.deviceWidth / 2 - 10,
+                    height: Const.Common.deviceWidth / 2 + 30,
+                    borderRadius: 10
+                }} />
+                <View style={styles.containBottom}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 3 }}>
+                        {!isMale ? <FontAwesomeIcons name={"symbol-female"} size={SIZE_ICON} color={Themes.Colors.PINK_DARK} />
+                            : <FontAwesomeIcons name={"symbol-male"} size={SIZE_ICON} color={Themes.Colors.PINK_DARK} />}
+                        <Text style={styles.txtName}>{name}</Text>
+                    </View>
+                    <TouchableOpacity style={{ backgroundColor: 'white', padding: 6, borderRadius: 20 }}
+                        onPress={() => onPressLoveStatus && onPressLoveStatus(item, index)}>
+                        <Icon size={20} color={Themes.Colors.GREEN_DARK} name={'heart'} />
+                    </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={{ backgroundColor: 'white', padding: 6, borderRadius: 20 }}
-                    onPress={() => onPressLoveStatus && onPressLoveStatus(item, index)}>
-                    <Icon size={20} color={Themes.Colors.GREEN_DARK} name={'heart'} />
-                </TouchableOpacity>
-            </View>
-        </TouchableOpacity>
+            </TouchableOpacity>
+        </View>
+
     )
 }
 
@@ -45,18 +50,30 @@ const renderHeader = (title) => {
         </View>
     )
 }
+
+const renderEmpty = () => {
+    return (
+        <View style={{ width: '100%', height: 400, alignItems: 'center', justifyContent: 'center' }}>
+            <EmptyPerform title={"Empty Likes"}
+                source={require('/src/assets/images/my_heart.png')}
+                description={"So Sad !! No One Like you =))"}
+            />
+        </View>
+
+    )
+}
 export default function listImageLiked(props) {
-    const { data, title, onPressUserLikedMe, onPressLoveStatus } = props
+    const { data, title } = props
     return (
         <FlatList
-            style={{ flex: 1 }}
             columnWrapperStyle={{ justifyContent: 'space-evenly' }}
             data={data}
             keyExtractor={item => item.id.toString()}
-            renderItem={({ item, index }) => renderItemLiked(item, index, onPressUserLikedMe, onPressLoveStatus)}
+            renderItem={({ item, index }) => renderItemLiked(props, item, index)}
             numColumns={2}
             ListFooterComponent={renderBottom}
             ListHeaderComponent={renderHeader(title)}
+            ListEmptyComponent={renderEmpty}
         />
     )
 }
