@@ -35,7 +35,9 @@ export default function itemConversition(props) {
         }
     } else if (index > 0 && index < length - 1) {
         if (dataMessages[idPre].senderId === dataMessages[index].senderId && dataMessages[idNex].senderId === dataMessages[index].senderId) {
-            stylesMess = styles.containTxtMessagesBetween
+            stylesMess = senderId !== idUser ? styles.containTxtMessagesBetween : styles.containTxtMessagesBetweenTypeSender
+
+            // stylesMess = styles.containTxtMessagesBetween
         }
         else if (dataMessages[idPre].senderId !== dataMessages[index].senderId && dataMessages[idNex].senderId === dataMessages[index].senderId) {
             stylesMess = senderId === idUser ? styles.containTxtMessagesHeaderTypeSender : styles.containTxtMessagesHeader
@@ -123,6 +125,14 @@ const styles = StyleSheet.create({
         marginRight: 10,
         marginLeft: 10,
         marginBottom: 5
+    },
+
+    containTxtMessagesBetweenTypeSender: {
+        ...containTxt,
+        borderTopLeftRadius: SIZE_RADIUS,
+        borderBottomLeftRadius: SIZE_RADIUS,
+        marginLeft: MARGIN_LEFT,
+        marginBottom: 2,
     },
 
     containTxtMessagesHeaderTypeSender: {
