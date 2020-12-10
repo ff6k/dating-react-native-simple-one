@@ -100,10 +100,14 @@ export default function MessagesController(props) {
     }
 
     useEffect(() => {
+        let isMounted = true;
         const _hubConnection = connectServer(token)
         listenerConnect(_hubConnection, Const.CodeListener.CODE_RECEIVE_MESSAGE, data => {
-            setDataMessages(dataTemp => [data, ...dataTemp])
+            if (isMounted) {
+                setDataMessages(dataTemp => [data, ...dataTemp])
+            };
         })
+        return () => { isMounted = false };
     }, [])
 
     const postMarkMessages = async (params) => {

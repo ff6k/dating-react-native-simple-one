@@ -37,15 +37,11 @@ const actions = [
 
 const renderFooter = (props) => {
     const { loading } = props
-    console.log(`loading: ${loading}`);
-    if (loading) return null
+    if (!loading) return null
     return (
-        // <View style={{ backgroundColor: 'red', width: 100, height: 100 }}>
-
-        // </View>
-        <ActivityIndicator
-            style={{ color: 'red', width: 100, height: 100 }}
-        />
+        <View style={{ marginTop: 10 }}>
+            <ActivityIndicator size="large" color="gray" />
+        </View>
     )
 }
 const Messages = React.forwardRef((props, ref) => {
