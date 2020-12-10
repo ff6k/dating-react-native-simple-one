@@ -116,16 +116,16 @@ export default function ChatsController(props) {
             setDataPressMarked(id)
             postMarkMessages(params).then(res => {
                 setDataPressMarked(id)
-                navigation.navigate(Const.NameScreens.Messages, { isMark: true, idPeople: senderId })
+                navigation.navigate(Const.NameScreens.Messages, { isMark: true, idPeople: senderId, item: item })
             }).catch(err => {
                 console.log(err)
             })
         } else {
             if (recipientId === idUser) {
-                navigation.navigate(Const.NameScreens.Messages, { isMark: false, idPeople: senderId })
+                navigation.navigate(Const.NameScreens.Messages, { isMark: false, idPeople: senderId, item: item })
             }
             else {
-                navigation.navigate(Const.NameScreens.Messages, { isMark: false, idPeople: recipientId })
+                navigation.navigate(Const.NameScreens.Messages, { isMark: false, idPeople: recipientId, item: item })
             }
         }
     }

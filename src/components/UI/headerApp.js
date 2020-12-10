@@ -12,7 +12,7 @@ const item = {
     name: "Long"
 }
 export default function headerApp(props) {
-    const { onPressDates, onPressMenu, onPressBack } = props
+    const { onPressDates, onPressMenu, onPressBack, dataHeader } = props
     return (
         <View style={[styles.container]}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -25,7 +25,7 @@ export default function headerApp(props) {
                         color={Themes.Colors.PINK}
                     />
                 </TouchableOpacity>
-                <AvatarActive item={item} sizeAvatar={50} sizeActive={0} isRow={true} />
+                <AvatarActive item={item} sizeAvatar={50} sizeActive={0} isRow={true} dataHeader={dataHeader} />
             </View>
             <View style={styles.containerButtonHeader}>
                 {/* <TouchableOpacity onPress={() => onPressDates && onPressDates()}>

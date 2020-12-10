@@ -3,7 +3,6 @@ import { StyleSheet, FlatList, View, Text, RefreshControl, Keyboard, TouchableOp
 import HeaderApp from '/src/components/UI/headerApp'
 import ButtonSend from '/src/components/UI/buttonSend'
 import { FloatingAction } from "react-native-floating-action";
-import BottomHalfModel from '/src/components/Model/bottomHalfModel'
 import Icon from '/src/components/UI/icon'
 import Themes from '/src/themes'
 import { withTranslation } from 'react-i18next';
@@ -38,15 +37,19 @@ const actions = [
 
 const renderFooter = (props) => {
     const { loading } = props
-    if (!loading) return null
+    console.log(`loading: ${loading}`);
+    if (loading) return null
     return (
+        // <View style={{ backgroundColor: 'red', width: 100, height: 100 }}>
+
+        // </View>
         <ActivityIndicator
-            style={{ color: '#000' }}
+            style={{ color: 'red', width: 100, height: 100 }}
         />
     )
 }
 const Messages = React.forwardRef((props, ref) => {
-    const { t, onPressBack, dataMessages, idUser, onPressMenu, handleLoadMore,
+    const { t, onPressBack, dataMessages, idUser, onPressMenu, handleLoadMore, dataHeader
     } = props
     const [isVisible, setIsVisible] = useState(false)
     const [newValue, setNewValue] = useState('')
@@ -98,6 +101,7 @@ const Messages = React.forwardRef((props, ref) => {
                 onPressDates={onPressDates}
                 onPressMenu={onPressMenu}
                 onPressBack={onPressBack}
+                dataHeader={dataHeader}
             />
             <FlatList style={{ flex: 1, marginBottom: 10 }}
                 data={dataMessages}

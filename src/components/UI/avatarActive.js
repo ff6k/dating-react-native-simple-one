@@ -3,16 +3,21 @@ import { StyleSheet, Text, View, Image } from 'react-native'
 import Themes from '/src/themes'
 import CircleAvatarActive from '/src/components/UI/circleAvatarActive'
 export default function avatarActive(props) {
-    const { item, sizeAvatar, sizeActive, isRow, isShowActive } = props
+    const { item, sizeAvatar, sizeActive, isRow, isShowActive, dataHeader } = props
+    let nameUser
+    if (dataHeader !== undefined) {
+        const { name } = dataHeader
+        nameUser = name
+    }
     return (
         <View
             style={[styles.containerActiveChats, isRow && { flexDirection: 'row' }]}
         >
-            <CircleAvatarActive sizeActive={sizeActive} sizeAvatar={sizeAvatar} item={item} isShowActive={isShowActive} />
+            <CircleAvatarActive sizeActive={sizeActive} sizeAvatar={sizeAvatar} dataHeader={dataHeader} isShowActive={isShowActive} />
             <View style={isRow && styles.containerChat}>
                 <Text style={[styles.txtName, { width: sizeAvatar },
                 isRow && styles.txtNameRow]}>
-                    {item.name}</Text>
+                    {nameUser}</Text>
                 {isRow && <Text style={styles.txtActiveNow}>
                     Active Now</Text>}
             </View>
@@ -27,8 +32,10 @@ const styles = StyleSheet.create({
         fontFamily: Themes.FontFamily.FontMediumDefault
     },
     txtNameRow: {
-        textAlign: 'left', fontSize: 18,
-        fontFamily: Themes.FontFamily.FontBoldSemi
+        textAlign: 'left', fontSize: 16,
+        fontFamily: Themes.FontFamily.FontBoldSemi,
+        // width: 200
+        width: '100%',
     },
     containerChat: {
         justifyContent: 'space-between', paddingLeft: 10

@@ -8,7 +8,11 @@ import { connectServer, listenerConnect } from '/src/configs/Signalr'
 let isChange
 let token
 let idUser
-
+const item = {
+    uriImage: "https://img2.thuthuatphanmem.vn/uploads/2019/01/04/hinh-anh-hot-girl-dep_025104603.jpg",
+    isActive: true,
+    name: "Long"
+}
 export default function MessagesController(props) {
 
     const { navigation, route } = props
@@ -18,8 +22,17 @@ export default function MessagesController(props) {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
     const [maxPage, setMaxPage] = useState(null)
-    const [isConnected, setIsConnected] = useState(false)
+    // const [isConnected, setIsConnected] = useState(false)
+    const [dataItem, setDataItem] = useState(() => {
+        return route.params.item
+    })
     const refModalSlide = React.createRef()
+    console.log(JSON.stringify(dataMessages))
+    // const itemHeader = {
+    //     uriImage: ,
+    // isActive: true,
+    // name: "Long"
+    // }
 
     const getDataStore = () => {
         if (dataStore.length > 0) {
@@ -40,6 +53,7 @@ export default function MessagesController(props) {
 
     const loadDataApi = (page) => {
         const { idPeople } = route.params
+        // const { idPeople } = item
         const params = {
             idUser: idUser,
             idPeople: idPeople,
@@ -47,9 +61,12 @@ export default function MessagesController(props) {
             pageSize: 20,
             token
         }
+        console.log(`params: ${JSON.stringify(params)}`);
 
         getDataApi(params).then(res => {
             setDataMessages(res.data)
+            console.log('object')
+            console.log(res.data)
         })
             .catch(err => console.log(err))
     }
@@ -57,6 +74,7 @@ export default function MessagesController(props) {
     const loadDataMore = (page) => {
         if (page < 20) {
             const { idPeople } = route.params
+            // const { senderId } = dataItem
             setLoading(true)
             const params = {
                 idUser: idUser,
@@ -138,6 +156,7 @@ export default function MessagesController(props) {
             onPressMenu={onPressMenu}
             handleLoadMore={handleLoadMore}
             loading={loading}
+            dataHeader={dataItem}
         />
     )
 }

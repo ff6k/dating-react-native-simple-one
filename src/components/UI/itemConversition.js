@@ -67,8 +67,17 @@ export default function itemConversition(props) {
                     style={styles.image}
                     source={{ uri: senderPhotoUrl }}
                 />}
-                <View style={[stylesMess, !isShowImage ? { marginLeft: 45 + MARGIN_LEFT } : { marginLeft: MARGIN_LEFT }]}>
-                    <Text style={styles.txtMessage}>{content}</Text>
+                <View style={[stylesMess, !isShowImage ? { marginLeft: 45 + MARGIN_LEFT } : {
+                    marginLeft: MARGIN_LEFT,
+                }, width !== null && { width: width }]}
+                    onLayout={(event) => {
+                        var { x, y, width, height } = event.nativeEvent.layout;
+                        if (width > width_screen - 90) {
+                            setWidth(width_screen - 90)
+                        }
+                    }}
+                >
+                    <Text style={[styles.txtMessage, width !== null && { width: width_screen - 110 }]}>{content}</Text>
                 </View>
             </View> :
                 <View style={[styles.containMessage, width !== null && { width: width, marginRight: 50 }]}

@@ -3,8 +3,13 @@ import { StyleSheet, Image, View } from 'react-native'
 import Themes from '/src/themes'
 
 export default function circleAvatarActive(props) {
-    const { item, sizeAvatar, sizeActive, isShowActive } = props
-    const { photoUrl, isActive } = item
+    const { dataHeader, sizeAvatar, sizeActive, isShowActive } = props
+    let photoUrlTemp, isActiveTemp
+    if (dataHeader !== undefined) {
+        const { photoUrl, isActive } = dataHeader
+        photoUrlTemp = photoUrl
+        isActiveTemp = isActive
+    }
     return (
         <View
             style={[styles.containerAvatar, { width: sizeAvatar }]}
@@ -14,14 +19,14 @@ export default function circleAvatarActive(props) {
                 //     uri: uriImage
                 // }
                 // }
-                source={{ uri: photoUrl }}
+                source={{ uri: photoUrlTemp }}
                 style={[styles.imgAvatar, { width: sizeAvatar, height: sizeAvatar, borderRadius: sizeAvatar / 2 }]}
             />
             {
-                isShowActive && isActive &&
+                isShowActive && isActiveTemp &&
                 <View style={[styles.viewActive, { backgroundColor: Themes.Colors.GREEN_BRIGHT, right: sizeActive, bottom: sizeActive }]} />
                 ||
-                isShowActive && !isActive &&
+                isShowActive && !isActiveTemp &&
                 <View style={[styles.viewActive, { backgroundColor: 'gray', right: sizeActive, bottom: sizeActive }]} />
             }
         </View>
