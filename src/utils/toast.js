@@ -9,6 +9,14 @@ export const ToastShortTop = (message) => {
     );
 };
 
+export const ToastShortBottom = (message) => {
+    ToastAndroid.showWithGravity(
+        message,
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM
+    );
+};
+
 export const ToastModal = (type, position, text1, text2, visibilityTime) => {
     Toast.show({
         type: type, //'success | error | info'

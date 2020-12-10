@@ -4,7 +4,9 @@ import Const from '/src/const'
 import Api from '/src/api'
 import { useSelector } from 'react-redux'
 import { connectServer, listenerConnect } from '/src/configs/Signalr'
+import Utils from '/src/utils'
 
+let dataMessBegin
 let isChange
 let token
 let idUser
@@ -61,42 +63,42 @@ export default function MessagesController(props) {
             pageSize: 20,
             token
         }
-        console.log(`params: ${JSON.stringify(params)}`);
 
         getDataApi(params).then(res => {
             setDataMessages(res.data)
-            console.log('object')
-            console.log(res.data)
+            if (dataMessBegin === undefined) {
+                dataMessBegin = res.data
+            }
         })
             .catch(err => console.log(err))
     }
 
     const loadDataMore = (page) => {
-        if (page < 20) {
-            const { idPeople } = route.params
-            // const { senderId } = dataItem
-            setLoading(true)
-            const params = {
-                idUser: idUser,
-                idPeople: idPeople,
-                pageNumber: page,
-                pageSize: 20,
-                token
-            }
-            getDataApi(params).then(res => {
-                const data = res.data
-                if (data.length !== 0) { setDataMessages(temp => [...temp, ...data]) }
-                else {
-                    setMaxPage(page)
-                }
-            })
-                .catch(err => {
-                    setError(err)
-                })
-                .finally(() => {
-                    setLoading(false)
-                })
+        // if (page < 20) {
+        const { idPeople } = route.params
+        // const { senderId } = dataItem
+        setLoading(true)
+        const params = {
+            idUser: idUser,
+            idPeople: idPeople,
+            pageNumber: page,
+            pageSize: 20,
+            token
         }
+        getDataApi(params).then(res => {
+            const data = res.data
+            if (data.length !== 0) { setDataMessages(temp => [...temp, ...data]) }
+            else {
+                setMaxPage(page)
+            }
+        })
+            .catch(err => {
+                setError(err)
+            })
+            .finally(() => {
+                setLoading(false)
+            })
+        // }
     }
 
     useEffect(() => {
@@ -151,6 +153,36 @@ export default function MessagesController(props) {
             }
         }
     }
+
+    const pushDataMessages = (messages) => {
+        const { idPeople } = route.params
+
+        const params = {
+            token: token,
+            idSender: idUser,
+            idReceipt: idPeople,
+            content: messages,
+            type: 'Text'
+        }
+        Api.RequestApi.postMessagesConversationApiRequest(params)
+            .then(res => {
+                loadDataApi(1)
+                setPageNumber(1)
+                setMaxPage(null)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
+    const onPressSend = (messages) => {
+        if (messages !== '') {
+            pushDataMessages(messages)
+        }
+        else {
+            Utils.Toast.ToastShortTop('Please enter your massages 📝 !!')
+        }
+    }
     return (
         <Messages
             onPressBack={onPressBack}
@@ -161,6 +193,7 @@ export default function MessagesController(props) {
             handleLoadMore={handleLoadMore}
             loading={loading}
             dataHeader={dataItem}
+            onPressSend={onPressSend}
         />
     )
 }

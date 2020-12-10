@@ -45,7 +45,7 @@ const renderFooter = (props) => {
     )
 }
 const Messages = React.forwardRef((props, ref) => {
-    const { t, onPressBack, dataMessages, idUser, onPressMenu, handleLoadMore, dataHeader
+    const { t, onPressBack, dataMessages, idUser, onPressMenu, handleLoadMore, dataHeader, onPressSend
     } = props
     const [isVisible, setIsVisible] = useState(false)
     const [newValue, setNewValue] = useState('')
@@ -89,7 +89,10 @@ const Messages = React.forwardRef((props, ref) => {
         setIsVisible(!isVisible)
     }
 
-
+    const onPressSendData = () => {
+        onPressSend && onPressSend(newValue)
+        setNewValue('')
+    }
 
     return (
         <View style={{ flex: 1 }}>
@@ -118,7 +121,9 @@ const Messages = React.forwardRef((props, ref) => {
                     value={newValue}
                     onContentSizeChange={(e) => updateSize(e.nativeEvent.contentSize.height)}
                 />
-                <ButtonSend disabled={!isVisibleTextInput} />
+                <ButtonSend disabled={!isVisibleTextInput}
+                    onPress={onPressSendData}
+                />
 
             </View>
             <FloatingAction

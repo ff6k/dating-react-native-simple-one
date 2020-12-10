@@ -4,10 +4,7 @@ import Themes from '/src/themes'
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from '/src/components/UI/icon'
 export default function buttonSend(props) {
-    const { style, disabled } = props
-    const onPressSend = () => {
-        console.log('send')
-    }
+    const { style, disabled, onPress } = props
     return (
         <LinearGradient
             start={{ x: 0, y: 0 }}
@@ -15,7 +12,7 @@ export default function buttonSend(props) {
             colors={['pink', 'orange']}
             style={{ ...styles.linearContain, ...style }}>
             <TouchableOpacity style={[styles.btnSend, disabled && { backgroundColor: Themes.Colors.GRAY_BRIGHT_II }]} disabled={disabled}
-                onPress={() => onPressSend()}
+                onPress={() => onPress()}
             >
                 <Icon name="paper-plane" size={25} color={disabled ? "gray" : "white"}></Icon>
             </TouchableOpacity>

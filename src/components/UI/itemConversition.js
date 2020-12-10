@@ -6,7 +6,12 @@ import Const from '/src/const'
 const width_screen = Const.Common.deviceWidth
 export default function itemConversition(props) {
     const { item, idUser, dataMessages, index } = props
-    const { senderPhotoUrl, content, senderId } = item
+    const { senderPhotoUrl, content, senderId, id } = item
+    // const dt = dataMessages.filter(e => e.id === id)
+    // if (dt > 0) {
+    //     return null
+    // }
+
     const [width, setWidth] = useState(null)
     let stylesMess
     let isShowImage = false

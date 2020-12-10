@@ -1,7 +1,7 @@
 import {
     URL_GET_IMAGE_SWIPE, URL_POST_LIKE_IMAGE_SWIPE, URL_GET_MESSAGES,
     URL_GET_USER_DETAIL, URL_GET_PROFILE, URL_PUT_PROFILE, URL_POST_PHOTOS,
-    URL_GET_USER_LIKED_ME, URL_GET_MESSAGES_CONVERSATION
+    URL_GET_USER_LIKED_ME, URL_GET_MESSAGES_CONVERSATION, URL_POST_MESSAGES_CONVERSATION
 } from './url'
 import axios from 'axios';
 
@@ -131,4 +131,15 @@ export const getMessagesConversationApiRequest = async (params) => {
     const Url = URL_GET_MESSAGES_CONVERSATION + `/${idUser}/messages/thread/${idPeople}?pageSize=${pageSize}&pageNumber=${pageNumber}`
     const client = getAxios('Bearer ' + token)
     return client.get(Url)
+}
+
+export const postMessagesConversationApiRequest = async (params) => {
+    const { token, idSender, idReceipt, content, type } = params
+    const Url = URL_POST_MESSAGES_CONVERSATION + `/${idSender}/messages`
+    const client = getAxios('Bearer ' + token)
+    return client.post(Url, {
+        "recipientId": idReceipt,
+        "content": content,
+        "type": type
+    })
 }

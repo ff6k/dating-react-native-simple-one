@@ -132,8 +132,8 @@ export default class CarouselMap extends Component {
                     showsUserLocation={true}
                     style={styles.map}
                     initialRegion={{
-                        latitude: 37.78825,
-                        longitude: -122.4324,
+                        latitude: 37.4219373,
+                        longitude: -122.0839842,
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421,
                     }}
