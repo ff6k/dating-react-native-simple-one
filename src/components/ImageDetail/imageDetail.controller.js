@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import ImageDetail from '/src/components/UI/imageDetail'
+import ImageDetail from './imageDetail'
 import Api from '/src/api'
 import { useSelector } from 'react-redux'
 import Utils from '/src/utils'
 import Const from '/src/const'
 let token
+let idUser
 export default function ImageDetailController(props) {
     const { route, navigation } = props
     const [dataDetailUser, setDataDetailUser] = useState([])
@@ -12,8 +13,9 @@ export default function ImageDetailController(props) {
 
     const getDataStore = () => {
         if (dataStore.length > 0) {
-            const { jwtToken } = dataStore[0]
+            const { jwtToken, id } = dataStore[0]
             token = jwtToken
+            idUser = id
         }
         else {
             return null // empty data
@@ -64,6 +66,24 @@ export default function ImageDetailController(props) {
         //     .then(res => setDataDetailUser(res.data))
         //     .catch(err => console.log(err))
     }, [])
+
+    const onPressLike = () => {
+        const { item } = route.params
+        const params = {
+            token,
+            idLiked: item.id,
+            idLiker: idUser
+        }
+
+        Api.RequestApi.postLikeImageSwipe(params)
+            .then(res => {
+                navigation.navigate(Const.NameScreens.Prospects, { removed: true, id: item.id })
+            })
+            .catch(err => {
+                console.log(err)
+                navigation.navigate(Const.NameScreens.Prospects, { removed: false, id: item.id })
+            })
+    }
     return (
         // <Text>123</Text>
         <ImageDetail
@@ -85,6 +105,7 @@ export default function ImageDetailController(props) {
             arrImage={arrImage}
             gender={gender}
             bio={bio}
+            onPressLike={onPressLike}
         />
     )
 }

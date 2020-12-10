@@ -21,6 +21,7 @@ export default function itemConversition(props) {
         else {
             if (dataMessages[idNex].senderId === dataMessages[index].senderId) {
                 stylesMess = senderId === idUser ? styles.containTxtMessagesHeaderTypeSender : styles.containTxtMessagesHeader
+                isShowImage = true
             }
             else {
                 stylesMess = styles.containTxtMessagesAlone
@@ -33,10 +34,10 @@ export default function itemConversition(props) {
         }
         else if (dataMessages[idPre].senderId !== dataMessages[index].senderId && dataMessages[idNex].senderId === dataMessages[index].senderId) {
             stylesMess = senderId === idUser ? styles.containTxtMessagesHeaderTypeSender : styles.containTxtMessagesHeader
+            isShowImage = true
         }
         else if (dataMessages[idPre].senderId === dataMessages[index].senderId && dataMessages[idNex].senderId !== dataMessages[index].senderId) {
             stylesMess = senderId === idUser ? styles.containTxtMessagesBottomTypeSender : styles.containTxtMessagesBottom
-            isShowImage = true
         }
         else {
             stylesMess = styles.containTxtMessagesAlone
@@ -45,7 +46,6 @@ export default function itemConversition(props) {
     }
     else if (index === length - 1) {
         if (dataMessages[idPre].senderId === dataMessages[index].senderId) {
-            isShowImage = true
             stylesMess = senderId === idUser ? styles.containTxtMessagesBottomTypeSender : styles.containTxtMessagesBottom
         }
         else if (dataMessages[idPre].senderId !== dataMessages[index].senderId) {
@@ -113,48 +113,50 @@ const styles = StyleSheet.create({
 
     containTxtMessagesHeaderTypeSender: {
         ...containTxt,
-        borderTopLeftRadius: SIZE_RADIUS,
-        borderTopRightRadius: SIZE_RADIUS,
         borderBottomLeftRadius: SIZE_RADIUS,
-        marginTop: 10,
-        marginBottom: 2,
+        borderBottomRightRadius: SIZE_RADIUS,
+        borderTopLeftRadius: SIZE_RADIUS,
         marginLeft: MARGIN_LEFT,
     },
     containTxtMessagesHeader: {
         ...containTxt,
+        borderTopRightRadius: SIZE_RADIUS,
+        borderBottomLeftRadius: SIZE_RADIUS,
+        borderBottomRightRadius: SIZE_RADIUS,
+        marginLeft: MARGIN_LEFT,
+    },
+    containTxtMessagesBottomTypeSender: {
+
+        ...containTxt,
+        borderTopLeftRadius: SIZE_RADIUS,
+        borderTopRightRadius: SIZE_RADIUS,
+        borderBottomLeftRadius: SIZE_RADIUS,
+        marginTop: 10,
+        marginBottom: 2,
+        marginLeft: MARGIN_LEFT,
+    },
+    containTxtMessagesBottom: {
+        ...containTxt,
         borderTopLeftRadius: SIZE_RADIUS,
         borderTopRightRadius: SIZE_RADIUS,
         borderBottomRightRadius: SIZE_RADIUS,
         marginTop: 10,
         marginBottom: 2,
         marginLeft: MARGIN_LEFT,
-    },
-    containTxtMessagesBottomTypeSender: {
-        ...containTxt,
-        borderBottomLeftRadius: SIZE_RADIUS,
-        borderBottomRightRadius: SIZE_RADIUS,
-        borderTopLeftRadius: SIZE_RADIUS,
-        marginLeft: MARGIN_LEFT,
-    },
-    containTxtMessagesBottom: {
-        ...containTxt,
-        borderTopRightRadius: SIZE_RADIUS,
-        borderBottomLeftRadius: SIZE_RADIUS,
-        borderBottomRightRadius: SIZE_RADIUS,
-        marginLeft: MARGIN_LEFT,
+
     },
     containTxtMessagesAlone: {
         ...containTxt,
         borderRadius: SIZE_RADIUS,
         marginBottom: 2,
-        marginTop: 10
+        marginTop: 10,
     },
     containTxtMessagesBetween: {
         ...containTxt,
         borderTopRightRadius: SIZE_RADIUS,
         borderBottomRightRadius: SIZE_RADIUS,
         marginLeft: MARGIN_LEFT,
-        marginBottom: 2
+        marginBottom: 2,
     },
     image: {
         width: SIZE_IMAGE,

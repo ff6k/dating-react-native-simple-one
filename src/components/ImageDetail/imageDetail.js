@@ -47,7 +47,7 @@ const ListImageSwipe = (arrImage) => {
 export default function imageDetail(props) {
     const { onPressInfo, name,
         work, location, religiousBelief, job, education, dateOfBirth, ethnicity, oldYear,
-        kids, height, drinking, smoking, familyPlans, arrImage, gender, bio
+        kids, height, drinking, smoking, familyPlans, arrImage, gender, bio, onPressLike
     } = props
     return (
         <ScrollView style={styles.container}
@@ -222,7 +222,7 @@ export default function imageDetail(props) {
                     onPress={() => onPressBack()}
                     color={Themes.Colors.PURPLE} size={30} name={"flash"} /> */}
                 <ButtonStatus style={styles.icoBigger}
-                    // onPress={onPressLike}
+                    onPress={onPressLike}
                     color={Themes.Colors.GREEN_DARK} size={45} name={"heart"} />
                 {/* <ButtonStatus
                     color={Themes.Colors.BLUE_DARK} size={30} name={"star"} /> */}

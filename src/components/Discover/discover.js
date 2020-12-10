@@ -6,7 +6,7 @@ import ButtonStatus from '/src/components/UI/buttonStatus'
 // import SwitchGrid from '/src/components/UI/switchGrid'
 import Utils from '/src/utils'
 import SpinnerLoading from '/src/components/UI/spinnerLoading'
-import ImageDetail from '/src/components/UI/imageDetail'
+import ImageDetail from '/src/components/ImageDetail/imageDetail'
 import Const from '/src/const'
 import { withTranslation } from 'react-i18next'
 

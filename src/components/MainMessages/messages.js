@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, FlatList, View, Text, TextInput, Keyboard, TouchableOpacity } from 'react-native'
+import { StyleSheet, FlatList, View, Text, RefreshControl, Keyboard, TouchableOpacity, ActivityIndicator } from 'react-native'
 import HeaderApp from '/src/components/UI/headerApp'
 import ButtonSend from '/src/components/UI/buttonSend'
 import { FloatingAction } from "react-native-floating-action";
@@ -36,9 +36,18 @@ const actions = [
 
 ];
 
-
+const renderFooter = (props) => {
+    const { loading } = props
+    if (!loading) return null
+    return (
+        <ActivityIndicator
+            style={{ color: '#000' }}
+        />
+    )
+}
 const Messages = React.forwardRef((props, ref) => {
-    const { t, onPressBack, dataMessages, idUser, onPressMenu } = props
+    const { t, onPressBack, dataMessages, idUser, onPressMenu, handleLoadMore,
+    } = props
     const [isVisible, setIsVisible] = useState(false)
     const [newValue, setNewValue] = useState('')
     const [height, setHeight] = useState(50)
@@ -82,6 +91,7 @@ const Messages = React.forwardRef((props, ref) => {
     }
 
 
+
     return (
         <View style={{ flex: 1 }}>
             <HeaderApp
@@ -89,23 +99,18 @@ const Messages = React.forwardRef((props, ref) => {
                 onPressMenu={onPressMenu}
                 onPressBack={onPressBack}
             />
-            <FlatList style={{ flex: 1 }}
+            <FlatList style={{ flex: 1, marginBottom: 10 }}
                 data={dataMessages}
                 showsVerticalScrollIndicator={false}
-                keyExtractor={item => item.id.toString()}
+                keyExtractor={item => item.id !== undefined && item.id.toString()}
+                extraData={dataMessages}
+                inverted
+                onEndReachedThreshold={0.1}
+                onEndReached={handleLoadMore}
+                ListFooterComponent={() => renderFooter(props)}
                 renderItem={({ item, index }) => renderItemChat(item, index, idUser, dataMessages)} />
 
             <View style={[styles.containerFooter, { height: height }, !isVisibleButton && styles.containerVisible]}>
-                {/* <TextInput
-                    onChangeText={(value) => setNewValue(value)}
-                    editable={isVisibleTextInput}
-                    style={[styles.inpMessage, {
-                        height: height,
-                    }]}
-                    multiline={true}
-                    value={newValue}
-                    onContentSizeChange={(e) => updateSize(e.nativeEvent.contentSize.height)}
-                /> */}
                 <AutoGrowingTextInput style={[styles.inpMessage, { height: height }]}
                     placeholder="New message"
                     onChangeText={(value) => setNewValue(value)}
@@ -131,21 +136,6 @@ const Messages = React.forwardRef((props, ref) => {
                     console.log(`selected button: ${name}`);
                 }}
             />
-
-            {/* <BottomHalfModel
-                numberRow={4}
-                isVisible={isVisibleModalBottom} setVisibleModel={setIsVisibleModalBottom}
-            >
-                <TouchableOpacity style={styles.btnBetweenContent}>
-                    <Text style={styles.txtContentButton}>{`View Long's Profile`}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.btnBetweenContent}>
-                    <Text style={styles.txtContentButton}>{`Report Long`}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.btnBottomContent}>
-                    <Text style={styles.txtContentButton}>{`Block Long`}</Text>
-                </TouchableOpacity>
-            </BottomHalfModel> */}
             <BottomModalSlide
                 ref={ref}
                 height={200}

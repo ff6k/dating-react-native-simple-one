@@ -21,10 +21,11 @@ const dataTopPicks = [
     { id: 6, name: 'Trần Dần, 21', isMale: true, isLike: false, uri: 'https://1.bp.blogspot.com/-tishGiEqXCw/XqhWaDmUeoI/AAAAAAAAjp4/WJ9y5kbeK7kmu2h6KjZd_AzfTLrSznZ3QCLcBGAsYHQ/s1600/Anh-gai-xinh-toc-ngan%2B%25285%2529.jpg' },
 ]
 
+
 let token
 let idUser
 export default function ProspectsController(props) {
-    const { navigation } = props
+    const { navigation, route } = props
     const dataStore = useSelector(state => state.login)
     const [dataLikes, setDataLikes] = useState([])
     const [isShowAlertSuccess, setIsShowAlertSuccess] = useState(false)
@@ -78,7 +79,19 @@ export default function ProspectsController(props) {
         getDataStore()
     }, [])
 
-
+    useEffect(() => {
+        if (route.params !== undefined) {
+            const { removed, id } = route.params
+            if (removed) {
+                setIsShowAlertSuccess(true)
+                const dataLikesFilter = dataLikes.filter(e => e.id !== id)
+                setDataLikes(dataLikesFilter)
+            }
+            else {
+                setIsShowAlertFail(true)
+            }
+        }
+    }, [route.params])
 
     const closeAlert = () => {
         if (isShowAlertSuccess) setIsShowAlertSuccess(false)

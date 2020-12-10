@@ -25,12 +25,35 @@ export default function ChatsController(props) {
         }
     }
     useEffect(() => {
+        let unmounted = false;
+        console.log('chat connect')
         const _hubConnection = connectServer(token)
         listenerConnect(_hubConnection, Const.CodeListener.CODE_RECEIVE_MESSAGE, data => {
             console.log(data)
+            // setIsLoading(true)
+            const params = {
+                id: idUser,
+                pageNumber: 1,
+                pageSize: 10,
+                token
+            }
+            if (!unmounted) {
+                getDataApi(params).then(res => {
+                    setDataMessages(res.data)
+                    dataMessagesTemp = res.data
+                })
+                    .catch(err => console.log(err))
+                // .finally(() => setIsLoading(false))
+            }
         })
+
+        return () => { unmounted = true }
     }, [])
+    async function getDataApi(params) {
+        return Api.RequestApi.getMessagesApiRequest(params)
+    }
     useEffect(() => {
+        let unmounted = false;
         setIsLoading(true)
         getDataStore()
         const params = {
@@ -39,15 +62,15 @@ export default function ChatsController(props) {
             pageSize: 10,
             token
         }
-        async function getDataApi() {
-            return Api.RequestApi.getMessagesApiRequest(params)
+        if (!unmounted) {
+            getDataApi(params).then(res => {
+                setDataMessages(res.data)
+                dataMessagesTemp = res.data
+            })
+                .catch(err => console.log(err))
+                .finally(() => setIsLoading(false))
         }
-        getDataApi().then(res => {
-            setDataMessages(res.data)
-            dataMessagesTemp = res.data
-        })
-            .catch(err => console.log(err))
-            .finally(() => setIsLoading(false))
+        return () => { unmounted = true }
     }, [])
 
     const onChangeInputSearch = (text) => {
@@ -68,7 +91,6 @@ export default function ChatsController(props) {
 
     const postMarkMessages = async (params) => {
         return Api.RequestApi.postMarkMessagesApiRequest(params)
-
     }
 
     const setDataPressMarked = (id) => {
