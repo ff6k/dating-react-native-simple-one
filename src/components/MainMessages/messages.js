@@ -10,6 +10,7 @@ import ItemConversition from '/src/components/UI/itemConversition'
 import BottomModalSlide from '/src/components/UI/bottomModalSlide'
 import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
 import UploadImageModal from '/src/components/UI/uploadImageModal'
+import ReportModal from '/src/components/Model/reportModal'
 import { GifSearch } from 'react-native-gif-search'
 import Const from '/src/const'
 const btnPhoto = 'bt_photo'
@@ -54,7 +55,9 @@ const Messages = React.forwardRef((props, ref) => {
     const { t, onPressBack, dataMessages, idUser, onPressMenu, handleLoadMore, dataHeader, onPressSend,
         onPressViewProfile, onPressPhoto,
         isVisiblePhoto, setIsVisiblePhoto, onTakePhoto, onUploadPhoto, isLoadingSend,
-        onPressGif, getUriGif, isVisibleGif, setIsVisibleGif
+        onPressGif, getUriGif, isVisibleGif, setIsVisibleGif, isVisibleReport,
+        onPressReport, onPressCloseModal, onPressPostData
+
     } = props
     const [newValue, setNewValue] = useState('')
     const [height, setHeight] = useState(50)
@@ -177,6 +180,7 @@ const Messages = React.forwardRef((props, ref) => {
                     <Text style={styles.txtModal}>View Long's Profile</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.containItemModal}
+                    onPress={() => onPressReport()}
                 >
                     <View style={styles.containIconModal}>
                         <Icon
@@ -222,6 +226,10 @@ const Messages = React.forwardRef((props, ref) => {
                 horizontal={false}
                 showScrollBar={false}
                 onError={(error) => { console.log(error) }}
+            />
+            <ReportModal visible={isVisibleReport}
+                onPressCloseModal={onPressCloseModal}
+                onPressPostData={onPressPostData}
             />
         </View>
     )

@@ -1,7 +1,8 @@
 import {
     URL_GET_IMAGE_SWIPE, URL_POST_LIKE_IMAGE_SWIPE, URL_GET_MESSAGES,
     URL_GET_USER_DETAIL, URL_GET_PROFILE, URL_PUT_PROFILE, URL_POST_PHOTOS,
-    URL_GET_USER_LIKED_ME, URL_GET_MESSAGES_CONVERSATION, URL_POST_MESSAGES_CONVERSATION
+    URL_GET_USER_LIKED_ME, URL_GET_MESSAGES_CONVERSATION, URL_POST_MESSAGES_CONVERSATION,
+    URL_POST_REPORT
 } from './url'
 import axios from 'axios';
 
@@ -141,5 +142,15 @@ export const postMessagesConversationApiRequest = async (params) => {
         "recipientId": idReceipt,
         "content": content,
         "type": type
+    })
+}
+
+export const postReportApiRequest = async (params) => {
+    const { token, idUser, userIdReported, content } = params
+    const Url = URL_POST_REPORT + `/${idUser}/reports`
+    const client = getAxios('Bearer ' + token)
+    return client.post(Url, {
+        "userId": userIdReported,
+        "reportedFor": content,
     })
 }

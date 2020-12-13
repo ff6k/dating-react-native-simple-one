@@ -27,6 +27,7 @@ export default function MessagesController(props) {
     const [maxPage, setMaxPage] = useState(null)
     const [isLoadingSend, setIsLoadingSend] = useState(false)
     const [isVisibleGif, setIsVisibleGif] = useState(false)
+    const [isVisibleReport, setIsVisibleReport] = useState(false)
     // const [isConnected, setIsConnected] = useState(false)
     const [dataItem, setDataItem] = useState(() => {
         return route.params.item
@@ -143,7 +144,6 @@ export default function MessagesController(props) {
     }
 
     const handleLoadMore = () => {
-        console.log(maxPage)
         if (!loading) {
             if (maxPage === null) {
                 const pageNext = pageNumber + 1
@@ -262,6 +262,47 @@ export default function MessagesController(props) {
         handleDataImage(uriGif, 'Gif')
     }
 
+    const onPressReport = () => {
+        refModalSlide.current.close()
+        setIsVisibleReport(true)
+    }
+
+    const onPressCloseModal = () => {
+        setIsVisibleReport(false)
+    }
+
+    async function postReportApi(params) {
+        return Api.RequestApi.postReportApiRequest(params)
+    }
+
+    const onPressPostData = (data) => {
+        const { title, content } = data
+        const { idPeople } = route.params
+        // const { idPeople } = item
+        const params = {
+            idUser,
+            userIdReported: idPeople,
+            content: title + ": " + content,
+            token
+        }
+
+        postReportApi(params).then(res => {
+            Utils.Toast.ToastModal('success', 'top', 'Post Success',
+                'Your report posted successfully, We will review immediately !!',
+                3000
+            )
+        })
+            .catch(err => {
+                Utils.Toast.ToastModal('fail', 'top', 'Post fail',
+                    'Your report posted fail, Please check and try again !!',
+                    3000
+                )
+                console.log(err)
+            })
+            .finally(() => setIsVisibleReport(false))
+
+
+    }
     return (
         <Messages
             onPressBack={onPressBack}
@@ -284,6 +325,10 @@ export default function MessagesController(props) {
             isVisibleGif={isVisibleGif}
             setIsVisibleGif={setIsVisibleGif}
             getUriGif={getUriGif}
+            isVisibleReport={isVisibleReport}
+            onPressReport={onPressReport}
+            onPressCloseModal={onPressCloseModal}
+            onPressPostData={onPressPostData}
         />
     )
 }

@@ -23,7 +23,7 @@ export const ToastModal = (type, position, text1, text2, visibilityTime) => {
         position: position, //'top | bottom'
         text1: text1,
         text2: `${text2} 👋`,
-        visibilityTime: visibilityTime,
+        visibilityTime: visibilityTime, // 3000ms = 3s
         autoHide: true,
         topOffset: 30,
         bottomOffset: 40,
