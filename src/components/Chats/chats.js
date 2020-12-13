@@ -11,10 +11,13 @@ import SearchBar from '/src/components/UI/searchBar'
 import AnimLottieView from '/src/components/UI/animLottieView'
 import Const from '/src/const'
 function Chats(props) {
-    const { t, dataMessages, onChangeInput, onPressMessages, idUser, isLoading, dataMatched } = props
+    const { t, dataMessages, onChangeInput, onPressMessages, idUser, isLoading, dataMatched,
+        onPressAvatar } = props
 
     const renderItemAvatarActive = (item, index) => {
-        return <AvatarActive item={item} sizeAvatar={60} sizeActive={2} isShowActive={true} />
+        return <AvatarActive item={item} sizeAvatar={60} sizeActive={2} isShowActive={true}
+            onPressAvatar={onPressAvatar}
+        />
     }
 
     const renderItemMessages = (item, index) => {

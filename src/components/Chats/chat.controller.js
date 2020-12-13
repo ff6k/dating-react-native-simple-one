@@ -9,13 +9,13 @@ let token
 let idUser
 let dataMessagesTemp
 export default function ChatsController(props) {
-    const { navigation } = props
+    const { navigation, route } = props
+    console.log(`route: ${JSON.stringify(route)}`);
 
     const dataStore = useSelector(state => state.login)
     const [dataMessages, setDataMessages] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const [dataMatched, setDataMatched] = useState([])
-    console.log(`dataMatched: ${dataMatched}`);
     const getDataStore = () => {
         if (dataStore.length > 0) {
             const { jwtToken, id } = dataStore[0]
@@ -26,27 +26,34 @@ export default function ChatsController(props) {
             return null // empty data
         }
     }
+
+    useEffect(() => {
+        if (route.params) {
+            loadDataMessApi()
+        }
+    }, [route.params])
     useEffect(() => {
         let unmounted = false;
         console.log('chat connect')
         const _hubConnection = connectServer(token)
         listenerConnect(_hubConnection, Const.CodeListener.CODE_RECEIVE_MESSAGE, data => {
             console.log(data)
+            loadDataMessApi()
             // setIsLoading(true)
-            const params = {
-                id: idUser,
-                pageNumber: 1,
-                pageSize: 10,
-                token
-            }
-            if (!unmounted) {
-                getDataApi(params).then(res => {
-                    setDataMessages(res.data)
-                    dataMessagesTemp = res.data
-                })
-                    .catch(err => console.log(err))
-                // .finally(() => setIsLoading(false))
-            }
+            // const params = {
+            //     id: idUser,
+            //     pageNumber: 1,
+            //     pageSize: 10,
+            //     token
+            // }
+            // if (!unmounted) {
+            //     getDataApi(params).then(res => {
+            //         setDataMessages(res.data)
+            //         dataMessagesTemp = res.data
+            //     })
+            //         .catch(err => console.log(err))
+            //     // .finally(() => setIsLoading(false))
+            // }
         })
 
         return () => { unmounted = true }
@@ -129,6 +136,7 @@ export default function ChatsController(props) {
     }
 
     const onPressMessages = (item) => {
+        console.log(`item: ${JSON.stringify(item)}`);
         const { dateRead, id, recipientId, senderId } = item
 
         if (dateRead === null && recipientId === idUser) {
@@ -154,6 +162,11 @@ export default function ChatsController(props) {
         }
     }
 
+    const onPressAvatar = (item) => {
+        const { id } = item
+        navigation.navigate(Const.NameScreens.Messages, { isMark: false, idPeople: id, item: item })
+    }
+
     return (
         <Chats
             dataMessages={dataMessages}
@@ -162,6 +175,7 @@ export default function ChatsController(props) {
             idUser={idUser}
             isLoading={isLoading}
             dataMatched={dataMatched}
+            onPressAvatar={onPressAvatar}
         />
     )
 }

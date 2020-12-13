@@ -38,13 +38,27 @@ export default function itemMessages(props) {
     }
 
     const checkContent = (content) => {
-        switch (type) {
-            case 'Gif':
-                return 'You have got a gif'
-            case 'Image':
-                return 'You have got a image'
-            default:
-                return content
+        if (
+            recipientId === idUser
+        ) {
+            switch (type) {
+                case 'Gif':
+                    return 'You have got a gif'
+                case 'Image':
+                    return 'You have got a image'
+                default:
+                    return content
+            }
+        }
+        else {
+            switch (type) {
+                case 'Gif':
+                    return 'You have send a gif'
+                case 'Image':
+                    return 'You have send a image'
+                default:
+                    return 'Me: ' + content
+            }
         }
     }
 

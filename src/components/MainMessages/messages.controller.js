@@ -106,11 +106,15 @@ export default function MessagesController(props) {
     }
 
     useEffect(() => {
+        const { idPeople } = route.params
+
         let isMounted = true;
         const _hubConnection = connectServer(token)
         listenerConnect(_hubConnection, Const.CodeListener.CODE_RECEIVE_MESSAGE, data => {
             if (isMounted) {
-                setDataMessages(dataTemp => [data, ...dataTemp])
+                const { senderId } = data
+                if (senderId === idPeople)
+                    setDataMessages(dataTemp => [data, ...dataTemp])
             };
         })
         return () => { isMounted = false };
@@ -132,7 +136,7 @@ export default function MessagesController(props) {
 
     const onPressBack = () => {
         if (isChange) {
-            navigation.navigate(Const.NameScreens.Chats, true)
+            navigation.navigate(Const.NameScreens.Chats, { onChange: true })
         } else {
             navigation.navigate(Const.NameScreens.Chats)
         }
@@ -195,6 +199,7 @@ export default function MessagesController(props) {
     const saveMessageApi = (params) => {
         Api.RequestApi.postMessagesConversationApiRequest(params)
             .then(res => {
+                isChange = true
                 loadDataApi(1)
                 setPageNumber(1)
                 setMaxPage(null)
