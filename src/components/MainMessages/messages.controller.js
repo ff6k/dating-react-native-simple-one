@@ -26,6 +26,7 @@ export default function MessagesController(props) {
     const [error, setError] = useState('')
     const [maxPage, setMaxPage] = useState(null)
     const [isLoadingSend, setIsLoadingSend] = useState(false)
+    const [isVisibleGif, setIsVisibleGif] = useState(false)
     // const [isConnected, setIsConnected] = useState(false)
     const [dataItem, setDataItem] = useState(() => {
         return route.params.item
@@ -159,16 +160,17 @@ export default function MessagesController(props) {
 
     const pushDataMessages = (messages) => {
         setIsLoadingSend(true)
-        const { idPeople } = route.params
+        // const { idPeople } = route.params
 
-        const params = {
-            token: token,
-            idSender: idUser,
-            idReceipt: idPeople,
-            content: messages,
-            type: 'Text'
-        }
-        saveMessageApi(params)
+        // const params = {
+        //     token: token,
+        //     idSender: idUser,
+        //     idReceipt: idPeople,
+        //     content: messages,
+        //     type: 'Text'
+        // }
+        handleDataImage(messages, 'Text')
+        // saveMessageApi(params)
     }
 
     const onPressSend = (messages) => {
@@ -206,20 +208,17 @@ export default function MessagesController(props) {
     }
 
 
-    const handleDataImage = (data) => {
-        const { url } = data
+    const handleDataImage = (content, type) => {
         const { idPeople } = route.params
 
         const params = {
             token: token,
             idSender: idUser,
             idReceipt: idPeople,
-            content: url,
-            type: 'Image'
+            content: content,
+            type: type
         }
         saveMessageApi(params)
-
-
     }
 
     const savePhotoApi = (res) => {
@@ -233,7 +232,7 @@ export default function MessagesController(props) {
             .then(res => res.json())
             .then(
                 data => {
-                    handleDataImage(data)
+                    handleDataImage(data.url, 'Image')
                     // saveDataPhotoApi(data)
                 }
             ).catch(err => console.log(err))
@@ -251,6 +250,16 @@ export default function MessagesController(props) {
         Utils.Images.openPickerCropImage()
             .then(res => savePhotoApi(res))
             .catch(err => console.log(err))
+    }
+
+    const onPressGif = () => {
+        setIsVisibleGif(true)
+    }
+
+    const getUriGif = (uriGif) => {
+        setIsVisibleGif(false)
+        setIsLoadingSend(true)
+        handleDataImage(uriGif, 'Gif')
     }
 
     return (
@@ -271,6 +280,10 @@ export default function MessagesController(props) {
             onTakePhoto={onTakePhoto}
             onUploadPhoto={onUploadPhoto}
             isLoadingSend={isLoadingSend}
+            onPressGif={onPressGif}
+            isVisibleGif={isVisibleGif}
+            setIsVisibleGif={setIsVisibleGif}
+            getUriGif={getUriGif}
         />
     )
 }

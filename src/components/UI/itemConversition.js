@@ -173,7 +173,7 @@ export default function itemConversition(props) {
                             }
                         }}
                     >
-                        {type === 'Image' && <Image source={{ uri: content }}
+                        {(type === 'Image' || type === 'Gif') && <Image source={{ uri: content }}
                             style={{ width: 150, height: 150 }}
                             resizeMode={'stretch'}
                         />}
@@ -190,7 +190,7 @@ export default function itemConversition(props) {
                     >
                         <View style={[stylesMess, !isShowImage ? { marginRight: 40 + MARGIN_LEFT } : {},
                             width !== null && { width: width_screen - 120 }]}>
-                            {type === 'Image' && <Image source={{ uri: content }}
+                            {(type === 'Image' || type === 'Gif') && <Image source={{ uri: content }}
                                 style={{ width: 150, height: 150 }}
                                 resizeMode={'stretch'}
                             />}

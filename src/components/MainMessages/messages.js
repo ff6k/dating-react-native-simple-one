@@ -10,7 +10,8 @@ import ItemConversition from '/src/components/UI/itemConversition'
 import BottomModalSlide from '/src/components/UI/bottomModalSlide'
 import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
 import UploadImageModal from '/src/components/UI/uploadImageModal'
-
+import { GifSearch } from 'react-native-gif-search'
+import Const from '/src/const'
 const btnPhoto = 'bt_photo'
 const btnLocation = 'bt_location'
 const btnGif = 'bt_gif'
@@ -52,7 +53,8 @@ const renderFooter = (props) => {
 const Messages = React.forwardRef((props, ref) => {
     const { t, onPressBack, dataMessages, idUser, onPressMenu, handleLoadMore, dataHeader, onPressSend,
         onPressViewProfile, onPressPhoto,
-        isVisiblePhoto, setIsVisiblePhoto, onTakePhoto, onUploadPhoto, isLoadingSend
+        isVisiblePhoto, setIsVisiblePhoto, onTakePhoto, onUploadPhoto, isLoadingSend,
+        onPressGif, getUriGif, isVisibleGif, setIsVisibleGif
     } = props
     const [newValue, setNewValue] = useState('')
     const [height, setHeight] = useState(50)
@@ -95,6 +97,7 @@ const Messages = React.forwardRef((props, ref) => {
             case btnLocation:
                 break
             case btnGif:
+                onPressGif && onPressGif()
                 break
         }
     }
@@ -126,7 +129,7 @@ const Messages = React.forwardRef((props, ref) => {
                 ListFooterComponent={() => renderFooter(props)}
                 renderItem={({ item, index }) => renderItemChat(item, index, idUser, dataMessages)} />
 
-            <View style={[styles.containerFooter, { height: height }, !isVisibleButton && styles.containerVisible]}>
+            {!isVisibleGif && <View style={[styles.containerFooter, { height: height }, !isVisibleButton && styles.containerVisible]}>
                 <AutoGrowingTextInput style={[styles.inpMessage, { height: height }]}
                     placeholder="New message"
                     onChangeText={(value) => setNewValue(value)}
@@ -140,7 +143,7 @@ const Messages = React.forwardRef((props, ref) => {
                     style={{ alignItems: 'center', justifyContent: 'center' }}
                 />
 
-            </View>
+            </View>}
             <FloatingAction
                 margin={0}
                 buttonSize={Themes.Const.SIZE_ICON_MESSAGES}
@@ -200,7 +203,26 @@ const Messages = React.forwardRef((props, ref) => {
                 onUploadPhoto={onUploadPhoto}
                 onTakePhoto={onTakePhoto}
             />
-            {/* <BottomModalSlide /> */}
+            <GifSearch
+                giphyApiKey={Const.GifPhyKey.GIFPHY_KEY}
+                gifsToLoad={10}
+                maxGifsToLoad={25}
+                style={{ backgroundColor: 'white' }}
+                textInputStyle={{ fontWeight: 'bold', color: 'black' }}
+                gifListStyle={{ height: 320 }}
+                gifStyle={{ height: 160 }}
+                loadingSpinnerColor={'black'}
+                placeholderTextColor={'grey'}
+                placeholderText={'Search'}
+                darkGiphyLogo={true}
+                onGifSelected={(gif_url) => { getUriGif(gif_url) }}
+                visible={isVisibleGif}
+                onBackPressed={() => { setIsVisibleGif(false) }}
+                developmentMode={false}
+                horizontal={false}
+                showScrollBar={false}
+                onError={(error) => { console.log(error) }}
+            />
         </View>
     )
 })
