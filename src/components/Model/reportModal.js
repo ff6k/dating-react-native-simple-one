@@ -91,7 +91,7 @@ export default function reportModal(props) {
     }
 
     // console.log(idSelect)
-    // console.log()
+    console.log(idSelect)
     return (
         <Modal
             visible={visible}
@@ -161,8 +161,8 @@ export default function reportModal(props) {
                     </View>}
                 <View style={styles.containBottom}>
                     <TouchableOpacity
-                        disabled={(idSelect < 0 || (isDetail && valueReport === '')) ? true : false}
-                        style={[styles.btnNext, (idSelect < 0 || (isDetail && valueReport === '')) && { backgroundColor: 'gray' }]}
+                        disabled={(idSelect === null || idSelect < 0 || (isDetail && valueReport === '')) ? true : false}
+                        style={[styles.btnNext, (idSelect === null || idSelect < 0 || (isDetail && valueReport === '')) && { backgroundColor: 'gray' }]}
                         onPress={() => !isDetail ? onPressNext() : onPressPost()}>
                         <Text style={styles.txtNext}>{!isDetail ? 'Next' : 'Post'}</Text>
                     </TouchableOpacity>

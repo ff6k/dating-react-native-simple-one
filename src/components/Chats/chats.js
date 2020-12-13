@@ -9,48 +9,9 @@ import AvatarActive from '/src/components/UI/avatarActive'
 import ItemMessages from '/src/components/UI/itemMessages'
 import SearchBar from '/src/components/UI/searchBar'
 import AnimLottieView from '/src/components/UI/animLottieView'
-import Image from 'react-native-fast-image'
-const data = [
-    {
-        id: "1",
-        isActive: true,
-        name: "Trần Quang Long",
-        uriImage: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*"
-    },
-    {
-        id: "2",
-        isActive: true,
-        name: "Trần Quang Long",
-        uriImage: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*"
-    },
-    {
-        id: "3",
-        isActive: true,
-        name: "Trần Quang Long",
-        uriImage: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*"
-    },
-    {
-        id: "4",
-        isActive: false,
-        name: "Trần Quang Long",
-        uriImage: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*"
-    },
-    {
-        id: "11",
-        isActive: true,
-        name: "Trần Quang Long",
-        uriImage: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*"
-    },
-    {
-        id: "21",
-        isActive: true,
-        name: "Trần Quang Long",
-        uriImage: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*"
-    },
-]
-
+import Const from '/src/const'
 function Chats(props) {
-    const { t, dataMessages, onChangeInput, onPressMessages, idUser, isLoading } = props
+    const { t, dataMessages, onChangeInput, onPressMessages, idUser, isLoading, dataMatched } = props
 
     const renderItemAvatarActive = (item, index) => {
         return <AvatarActive item={item} sizeAvatar={60} sizeActive={2} isShowActive={true} />
@@ -79,6 +40,29 @@ function Chats(props) {
             source={require('/src/assets/images/oval-empty-outlined-speech-bubble.png')}
         />
     }
+
+    const LoadingComponentHeader = () => {
+        return (
+            <View style={styles.containEmptyHeader}>
+                <AnimLottieView
+                    style={{ width: 100, height: 100 }}
+                    source={require('/src/assets/lotties/6217-loading.json')}
+                />
+            </View>
+        )
+    }
+
+    const renderEmptyHeader = () => {
+        return (
+            <View style={styles.containEmptyHeader}>
+                <Text style={{
+                    fontSize: 15, fontFamily: Themes.FontFamily.FontMediumDefault,
+                    color: Themes.Colors.GRAY_BRIGHT_II
+                }}>No people matching with you</Text>
+            </View>
+        )
+    }
+
     const renderHeader = () => {
         return <View>
             <Text style={styles.txtTitle}>{t("New Matches")}</Text>
@@ -86,10 +70,11 @@ function Chats(props) {
                 style={styles.listAvatar}
                 ListHeaderComponent={HeaderComponent}
                 showsHorizontalScrollIndicator={false}
-                data={data}
+                data={dataMatched}
+                ListEmptyComponent={isLoading ? LoadingComponentHeader : renderEmptyHeader}
                 horizontal={true}
                 renderItem={({ item, index }) => renderItemAvatarActive(item, index)}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item.id.toString()}
             />
             <Text style={[styles.txtTitle, {
                 marginBottom: Themes.Const.MARGIN_AVATAR
@@ -143,6 +128,11 @@ Chats.propTypes = {
 
 
 const styles = StyleSheet.create({
+    containEmptyHeader: {
+        height: 60, width: Const.Common.deviceWidth - 40,
+        marginVertical: Themes.Const.MARGIN_AVATAR, justifyContent: 'center',
+        alignItems: 'center',
+    },
     containEmpty: {
         width: '100%', marginTop: 100, alignItems: 'center'
     },

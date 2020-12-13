@@ -59,6 +59,7 @@ const Messages = React.forwardRef((props, ref) => {
         onPressReport, onPressCloseModal, onPressPostData
 
     } = props
+    const { name } = dataHeader
     const [newValue, setNewValue] = useState('')
     const [height, setHeight] = useState(50)
     const [isVisibleButton, setIsVisibleButton] = useState(true)
@@ -177,7 +178,7 @@ const Messages = React.forwardRef((props, ref) => {
                             color={'black'}
                             name="info-outline"></Icon>
                     </View>
-                    <Text style={styles.txtModal}>View Long's Profile</Text>
+                    <Text style={styles.txtModal}>View {dataHeader.name}'s Profile</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.containItemModal}
                     onPress={() => onPressReport()}
@@ -188,7 +189,7 @@ const Messages = React.forwardRef((props, ref) => {
                             color={'black'}
                             name="flag-outline"></Icon>
                     </View>
-                    <Text style={styles.txtModal}>Report Long</Text>
+                    <Text style={styles.txtModal}>Report {dataHeader.name}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.containItemModal}
                 >
@@ -198,7 +199,7 @@ const Messages = React.forwardRef((props, ref) => {
                             color={'black'}
                             name="slash-outline"></Icon>
                     </View>
-                    <Text style={styles.txtModal}>Block Long</Text>
+                    <Text style={styles.txtModal}>Block {dataHeader.name}</Text>
                 </TouchableOpacity>
             </BottomModalSlide>
             <UploadImageModal

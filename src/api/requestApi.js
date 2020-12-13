@@ -2,7 +2,7 @@ import {
     URL_GET_IMAGE_SWIPE, URL_POST_LIKE_IMAGE_SWIPE, URL_GET_MESSAGES,
     URL_GET_USER_DETAIL, URL_GET_PROFILE, URL_PUT_PROFILE, URL_POST_PHOTOS,
     URL_GET_USER_LIKED_ME, URL_GET_MESSAGES_CONVERSATION, URL_POST_MESSAGES_CONVERSATION,
-    URL_POST_REPORT
+    URL_POST_REPORT, URL_GET_TOP_PICK, URL_GET_USER_MATCHED_ME
 } from './url'
 import axios from 'axios';
 
@@ -153,4 +153,21 @@ export const postReportApiRequest = async (params) => {
         "userId": userIdReported,
         "reportedFor": content,
     })
+}
+
+export const getTopPickApiRequest = async (params) => {
+    const { token, pageNumber, pageSize, gender, minAge, maxAge, topPicks } = params
+    const Url = URL_GET_TOP_PICK +
+        `?pageNumber=${pageNumber}&pageSize=${pageSize}&gender=${gender}&minAge=${minAge}&maxAge=${maxAge}&topPicks=${topPicks}`
+    const client = getAxios('Bearer ' + token)
+    return client.get(Url)
+}
+
+export const getMatchedMeApiRequest = async (params) => {
+    const { token, pageNumber, pageSize, isMatched } = params
+    const Url = URL_GET_USER_MATCHED_ME +
+        `?pageNumber=${pageNumber}&pageSize=${pageSize}&isMatched=${isMatched}`
+    console.log(`Url: ${Url}`);
+    const client = getAxios('Bearer ' + token)
+    return client.get(Url)
 }

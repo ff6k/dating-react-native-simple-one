@@ -3,17 +3,17 @@ import { StyleSheet, Text, View, Image } from 'react-native'
 import Themes from '/src/themes'
 import CircleAvatarActive from '/src/components/UI/circleAvatarActive'
 export default function avatarActive(props) {
-    const { item, sizeAvatar, sizeActive, isRow, isShowActive, dataHeader } = props
+    const { item, sizeAvatar, sizeActive, isRow, isShowActive } = props
     let nameUser
-    if (dataHeader !== undefined) {
-        const { name } = dataHeader
+    if (item !== undefined) {
+        const { name } = item
         nameUser = name
     }
     return (
         <View
             style={[styles.containerActiveChats, isRow && { flexDirection: 'row' }]}
         >
-            <CircleAvatarActive sizeActive={sizeActive} sizeAvatar={sizeAvatar} dataHeader={dataHeader} isShowActive={isShowActive} />
+            <CircleAvatarActive sizeActive={sizeActive} sizeAvatar={sizeAvatar} dataHeader={item} isShowActive={isShowActive} />
             <View style={isRow && styles.containerChat}>
                 <Text style={[styles.txtName, { width: sizeAvatar },
                 isRow && styles.txtNameRow]}>

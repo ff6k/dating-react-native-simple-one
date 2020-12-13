@@ -4,7 +4,6 @@ import Themes from '/src/themes'
 import Image from 'react-native-fast-image'
 export default function circleAvatarActive(props) {
     const { dataHeader, sizeAvatar, sizeActive, isShowActive } = props
-    console.log(`isShowActive: ${isShowActive}`);
     let photoUrlTemp, isActiveTemp
     if (dataHeader !== undefined) {
         const { photoUrl, isActive } = dataHeader
@@ -20,6 +19,7 @@ export default function circleAvatarActive(props) {
                 //     uri: uriImage
                 // }
                 // }
+                resizeMode={'stretch'}
                 source={{ uri: photoUrlTemp }}
                 style={[styles.imgAvatar, { width: sizeAvatar, height: sizeAvatar, borderRadius: sizeAvatar / 2 }]}
             />

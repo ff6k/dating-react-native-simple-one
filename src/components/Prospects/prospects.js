@@ -12,7 +12,7 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 
 function Prospects(props) {
     const { t, dataTopPicks, dataLikes, onPressUserLikedMe, onPressLoveStatus,
-        closeAlert, isShowAlertSuccess, isShowAlertFail, countLikes } = props
+        closeAlert, isShowAlertSuccess, isShowAlertFail, countLikes, onPressLoveStatusTopPick } = props
     return (
         <Container>
             <Header hasTabs
@@ -46,6 +46,8 @@ function Prospects(props) {
                     activeTextStyle={styles.activeTextStyle}
                     heading={"Top Picks"}>
                     <ListImageLiked data={dataTopPicks}
+                        onPressUserLikedMe={onPressUserLikedMe}
+                        onPressLoveStatus={onPressLoveStatusTopPick}
                         title={"Top Picks !"}
                     />
                 </Tab>

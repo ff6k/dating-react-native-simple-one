@@ -6,11 +6,6 @@ import Icon from '/src/components/UI/icon'
 // import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
-const item = {
-    uriImage: "https://img2.thuthuatphanmem.vn/uploads/2019/01/04/hinh-anh-hot-girl-dep_025104603.jpg",
-    isActive: true,
-    name: "Long"
-}
 export default function headerApp(props) {
     const { onPressDates, onPressMenu, onPressBack, dataHeader } = props
     return (
@@ -25,7 +20,7 @@ export default function headerApp(props) {
                         color={Themes.Colors.PINK}
                     />
                 </TouchableOpacity>
-                <AvatarActive item={item} sizeAvatar={50} sizeActive={0} isRow={true} dataHeader={dataHeader}
+                <AvatarActive sizeAvatar={50} sizeActive={0} isRow={true} item={dataHeader}
                     isShowActive={true}
                 />
             </View>

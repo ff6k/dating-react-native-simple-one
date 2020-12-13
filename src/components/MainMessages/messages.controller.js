@@ -69,7 +69,6 @@ export default function MessagesController(props) {
         }
 
         getDataApi(params).then(res => {
-            console.log(res.data)
             setDataMessages(res.data)
             if (dataMessBegin === undefined) {
                 dataMessBegin = res.data
@@ -142,7 +141,6 @@ export default function MessagesController(props) {
     const onPressMenu = () => {
         refModalSlide.current.open()
     }
-
     const handleLoadMore = () => {
         if (!loading) {
             if (maxPage === null) {

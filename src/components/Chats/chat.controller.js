@@ -14,6 +14,8 @@ export default function ChatsController(props) {
     const dataStore = useSelector(state => state.login)
     const [dataMessages, setDataMessages] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
+    const [dataMatched, setDataMatched] = useState([])
+    console.log(`dataMatched: ${dataMatched}`);
     const getDataStore = () => {
         if (dataStore.length > 0) {
             const { jwtToken, id } = dataStore[0]
@@ -52,28 +54,49 @@ export default function ChatsController(props) {
     async function getDataApi(params) {
         return Api.RequestApi.getMessagesApiRequest(params)
     }
+    async function getDataApiMatched(params) {
+        return Api.RequestApi.getMatchedMeApiRequest(params)
+    }
+    const loadDataMatchedMe = () => {
+        console.log(idUser)
+        const params = {
+            isMatched: true,
+            pageNumber: 1,
+            pageSize: 20,
+            token
+        }
+
+        getDataApiMatched(params).then(res => {
+            setDataMatched(res.data)
+        })
+            .catch(err => console.log(err))
+    }
     useEffect(() => {
         let unmounted = false;
-        console.log('loading')
         setIsLoading(true)
         getDataStore()
+
+        if (!unmounted) {
+            loadDataMatchedMe()
+            loadDataMessApi()
+        }
+        return () => { unmounted = true }
+    }, [])
+
+    const loadDataMessApi = () => {
         const params = {
             id: idUser,
             pageNumber: 1,
             pageSize: 10,
             token
         }
-        if (!unmounted) {
-            getDataApi(params).then(res => {
-                console.log(res.data)
-                setDataMessages(res.data)
-                dataMessagesTemp = res.data
-            })
-                .catch(err => console.log(err))
-                .finally(() => setIsLoading(false))
-        }
-        return () => { unmounted = true }
-    }, [])
+        getDataApi(params).then(res => {
+            setDataMessages(res.data)
+            dataMessagesTemp = res.data
+        })
+            .catch(err => console.log(err))
+            .finally(() => setIsLoading(false))
+    }
 
     const onChangeInputSearch = (text) => {
         if (text === "") {
@@ -106,7 +129,6 @@ export default function ChatsController(props) {
     }
 
     const onPressMessages = (item) => {
-        console.log(`item: ${JSON.stringify(item)}`);
         const { dateRead, id, recipientId, senderId } = item
 
         if (dateRead === null && recipientId === idUser) {
@@ -139,6 +161,7 @@ export default function ChatsController(props) {
             onPressMessages={onPressMessages}
             idUser={idUser}
             isLoading={isLoading}
+            dataMatched={dataMatched}
         />
     )
 }

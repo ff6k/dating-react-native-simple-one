@@ -7,7 +7,7 @@ import Const from '/src/const'
 const width_screen = Const.Common.deviceWidth
 export default function itemMessages(props) {
     const { item, onPressMessages, idUser } = props
-    const { name, dateRead, content, messageSent, recipientId } = item
+    const { name, dateRead, content, messageSent, recipientId, type } = item
 
     const [dateMess, setDateMess] = useState(() => {
         const date = new Date(messageSent)
@@ -37,6 +37,17 @@ export default function itemMessages(props) {
         }
     }
 
+    const checkContent = (content) => {
+        switch (type) {
+            case 'Gif':
+                return 'You have got a gif'
+            case 'Image':
+                return 'You have got a image'
+            default:
+                return content
+        }
+    }
+
     return (
         <TouchableOpacity style={styles.container}
             onPress={() => onPressMessages && onPressMessages(item)}
@@ -62,7 +73,7 @@ export default function itemMessages(props) {
                     checkIsRead()
                         ? styles.txtIsRead
                         : styles.txtNotIsRead]}
-                    >{content}</Text>
+                    >{checkContent(content)}</Text>
                 </View>
             </View>
         </TouchableOpacity>
