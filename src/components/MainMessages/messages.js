@@ -9,27 +9,32 @@ import { withTranslation } from 'react-i18next';
 import ItemConversition from '/src/components/UI/itemConversition'
 import BottomModalSlide from '/src/components/UI/bottomModalSlide'
 import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
+import UploadImageModal from '/src/components/UI/uploadImageModal'
+
+const btnPhoto = 'bt_photo'
+const btnLocation = 'bt_location'
+const btnGif = 'bt_gif'
 
 const actions = [
     {
         color: Themes.Colors.PINK,
         text: "Send Photo",
         icon: require("/src/assets/images/picture_127px.png"),
-        name: "bt_photo",
+        name: btnPhoto,
         position: 1
     },
     {
         color: Themes.Colors.PINK,
         text: "Send Location",
         icon: require("/src/assets/images/location_127px.png"),
-        name: "bt_location",
+        name: btnLocation,
         position: 2
     },
     {
         color: Themes.Colors.PINK,
         text: "Send Gif",
         icon: require("/src/assets/images/gif_127px.png"),
-        name: "bt_gif",
+        name: btnGif,
         position: 3
     },
 
@@ -45,9 +50,10 @@ const renderFooter = (props) => {
     )
 }
 const Messages = React.forwardRef((props, ref) => {
-    const { t, onPressBack, dataMessages, idUser, onPressMenu, handleLoadMore, dataHeader, onPressSend
+    const { t, onPressBack, dataMessages, idUser, onPressMenu, handleLoadMore, dataHeader, onPressSend,
+        onPressViewProfile, onPressPhoto,
+        isVisiblePhoto, setIsVisiblePhoto, onTakePhoto, onUploadPhoto, isLoadingSend
     } = props
-    const [isVisible, setIsVisible] = useState(false)
     const [newValue, setNewValue] = useState('')
     const [height, setHeight] = useState(50)
     const [isVisibleButton, setIsVisibleButton] = useState(true)
@@ -81,12 +87,20 @@ const Messages = React.forwardRef((props, ref) => {
         };
     })
 
-    const updateSize = (height) => {
-        setHeight(height)
+    const checkPressButton = (name) => {
+        switch (name) {
+            case btnPhoto:
+                onPressPhoto && onPressPhoto()
+                break
+            case btnLocation:
+                break
+            case btnGif:
+                break
+        }
     }
 
-    const onPressDates = () => {
-        setIsVisible(!isVisible)
+    const updateSize = (height) => {
+        setHeight(height)
     }
 
     const onPressSendData = () => {
@@ -97,7 +111,6 @@ const Messages = React.forwardRef((props, ref) => {
     return (
         <View style={{ flex: 1 }}>
             <HeaderApp
-                onPressDates={onPressDates}
                 onPressMenu={onPressMenu}
                 onPressBack={onPressBack}
                 dataHeader={dataHeader}
@@ -123,6 +136,8 @@ const Messages = React.forwardRef((props, ref) => {
                 />
                 <ButtonSend disabled={!isVisibleTextInput}
                     onPress={onPressSendData}
+                    isLoadingSend={isLoadingSend}
+                    style={{ alignItems: 'center', justifyContent: 'center' }}
                 />
 
             </View>
@@ -138,7 +153,8 @@ const Messages = React.forwardRef((props, ref) => {
                 styleButton={{ left: 10, bottom: 10 }}
                 color={Themes.Colors.PINK}
                 onPressItem={name => {
-                    console.log(`selected button: ${name}`);
+                    // console.log(`selected button: ${name}`);
+                    checkPressButton(name)
                 }}
             />
             <BottomModalSlide
@@ -147,7 +163,7 @@ const Messages = React.forwardRef((props, ref) => {
                 style={{ flex: 0 }}
             >
                 <TouchableOpacity style={styles.containItemModal}
-                // onPress={() => onTakePhoto && onTakePhoto()}
+                    onPress={() => onPressViewProfile && onPressViewProfile()}
                 >
                     <View style={styles.containIconModal}>
                         <Icon
@@ -158,7 +174,6 @@ const Messages = React.forwardRef((props, ref) => {
                     <Text style={styles.txtModal}>View Long's Profile</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.containItemModal}
-                // onPress={() => onUploadPhoto && onUploadPhoto()}
                 >
                     <View style={styles.containIconModal}>
                         <Icon
@@ -169,7 +184,6 @@ const Messages = React.forwardRef((props, ref) => {
                     <Text style={styles.txtModal}>Report Long</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.containItemModal}
-                // onPress={() => onUploadPhoto && onUploadPhoto()}
                 >
                     <View style={styles.containIconModal}>
                         <Icon
@@ -179,16 +193,14 @@ const Messages = React.forwardRef((props, ref) => {
                     </View>
                     <Text style={styles.txtModal}>Block Long</Text>
                 </TouchableOpacity>
-                {/* <TouchableOpacity style={styles.btnBetweenContent}>
-                    <Text style={styles.txtContentButton}>{`View Long's Profile`}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.btnBetweenContent}>
-                    <Text style={styles.txtContentButton}>{`Report Long`}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.btnBottomContent}>
-                    <Text style={styles.txtContentButton}>{`Block Long`}</Text>
-                </TouchableOpacity> */}
             </BottomModalSlide>
+            <UploadImageModal
+                isVisible={isVisiblePhoto}
+                setVisibleModel={setIsVisiblePhoto}
+                onUploadPhoto={onUploadPhoto}
+                onTakePhoto={onTakePhoto}
+            />
+            {/* <BottomModalSlide /> */}
         </View>
     )
 })

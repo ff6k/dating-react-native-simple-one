@@ -11,11 +11,11 @@ export default function uploadImageModal(props) {
             isVisible={isVisible} setVisibleModel={setVisibleModel}
         >
             <TouchableOpacity style={styles.btnBetweenContent}
-                onPress={() => onUploadPhoto()}>
+                onPress={() => onUploadPhoto && onUploadPhoto()}>
                 <Text style={styles.txtContentButton}>{"Upload photo from gallery"}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btnBottomContent}
-                onPress={() => onTakePhoto()}>
+                onPress={() => onTakePhoto && onTakePhoto()}>
                 <Text style={styles.txtContentButton}>{'Take photo with camera'}</Text>
             </TouchableOpacity>
         </BottomHalfModel>

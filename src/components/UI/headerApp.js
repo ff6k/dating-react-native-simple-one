@@ -25,7 +25,9 @@ export default function headerApp(props) {
                         color={Themes.Colors.PINK}
                     />
                 </TouchableOpacity>
-                <AvatarActive item={item} sizeAvatar={50} sizeActive={0} isRow={true} dataHeader={dataHeader} />
+                <AvatarActive item={item} sizeAvatar={50} sizeActive={0} isRow={true} dataHeader={dataHeader}
+                    isShowActive={true}
+                />
             </View>
             <View style={styles.containerButtonHeader}>
                 {/* <TouchableOpacity onPress={() => onPressDates && onPressDates()}>

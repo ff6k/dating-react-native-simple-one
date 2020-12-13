@@ -18,7 +18,7 @@ export default function avatarActive(props) {
                 <Text style={[styles.txtName, { width: sizeAvatar },
                 isRow && styles.txtNameRow]}>
                     {nameUser}</Text>
-                {isRow && <Text style={styles.txtActiveNow}>
+                {isRow && isShowActive && <Text style={styles.txtActiveNow}>
                     Active Now</Text>}
             </View>
 

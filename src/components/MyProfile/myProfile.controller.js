@@ -19,8 +19,6 @@ export default function MyProfileController(props) {
 
     // const drinkingUpdate = route.params === undefined ? 'Error' : route.params.drinking
     // console.log(`drinkingUpdate: ${drinkingUpdate}`);
-    console.log('object')
-
     const getDataStore = () => {
         if (dataStore.length > 0) {
             const { jwtToken, id } = dataStore[0]

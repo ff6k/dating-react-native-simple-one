@@ -54,6 +54,7 @@ export default function ChatsController(props) {
     }
     useEffect(() => {
         let unmounted = false;
+        console.log('loading')
         setIsLoading(true)
         getDataStore()
         const params = {
@@ -64,6 +65,7 @@ export default function ChatsController(props) {
         }
         if (!unmounted) {
             getDataApi(params).then(res => {
+                console.log(res.data)
                 setDataMessages(res.data)
                 dataMessagesTemp = res.data
             })

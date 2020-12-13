@@ -47,7 +47,7 @@ const ListImageSwipe = (arrImage) => {
 export default function imageDetail(props) {
     const { onPressInfo, name,
         work, location, religiousBelief, job, education, dateOfBirth, ethnicity, oldYear,
-        kids, height, drinking, smoking, familyPlans, arrImage, gender, bio, onPressLike
+        kids, height, drinking, smoking, familyPlans, arrImage, gender, bio, onPressLike, isShowOffButton
     } = props
     return (
         <ScrollView style={styles.container}
@@ -210,14 +210,14 @@ export default function imageDetail(props) {
                     </View>
                 </View>
             </View>
-            <View style={styles.containFooterBottom}>
+            {isShowOffButton && <View style={styles.containFooterBottom}>
                 {/* <ButtonStatus
                     onPress={() => onPressBack()}
                     color={Themes.Colors.YELLOW} size={25} nameFontAwesome5={"undo-alt"} /> */}
-                <ButtonStatus
-                    // onPress={onPressUnlike}
+                {/* <ButtonStatus
+                    onPress={onPressUnlike}
                     style={styles.icoBigger}
-                    color={Themes.Colors.BROWN_DARK} size={55} name={"close"} />
+                    color={Themes.Colors.BROWN_DARK} size={55} name={"close"} /> */}
                 {/* <ButtonStatus
                     onPress={() => onPressBack()}
                     color={Themes.Colors.PURPLE} size={30} name={"flash"} /> */}
@@ -226,7 +226,7 @@ export default function imageDetail(props) {
                     color={Themes.Colors.GREEN_DARK} size={45} name={"heart"} />
                 {/* <ButtonStatus
                     color={Themes.Colors.BLUE_DARK} size={30} name={"star"} /> */}
-            </View>
+            </View>}
 
         </ScrollView>
     )
@@ -255,7 +255,8 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0.6, borderColor: Themes.Colors.GRAY_BRIGHT_II,
         paddingHorizontal: 20,
         marginTop: 10,
-        marginBottom: 10
+        marginBottom: 10,
+        paddingBottom: 10,
     },
     containHeaderContent: {
         flexDirection: 'row',

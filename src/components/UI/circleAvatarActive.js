@@ -1,9 +1,10 @@
 import React from 'react'
-import { StyleSheet, Image, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import Themes from '/src/themes'
-
+import Image from 'react-native-fast-image'
 export default function circleAvatarActive(props) {
     const { dataHeader, sizeAvatar, sizeActive, isShowActive } = props
+    console.log(`isShowActive: ${isShowActive}`);
     let photoUrlTemp, isActiveTemp
     if (dataHeader !== undefined) {
         const { photoUrl, isActive } = dataHeader
@@ -23,10 +24,10 @@ export default function circleAvatarActive(props) {
                 style={[styles.imgAvatar, { width: sizeAvatar, height: sizeAvatar, borderRadius: sizeAvatar / 2 }]}
             />
             {
-                isShowActive && isActiveTemp &&
+                isShowActive &&
                 <View style={[styles.viewActive, { backgroundColor: Themes.Colors.GREEN_BRIGHT, right: sizeActive, bottom: sizeActive }]} />
                 ||
-                isShowActive && !isActiveTemp &&
+                isShowActive &&
                 <View style={[styles.viewActive, { backgroundColor: 'gray', right: sizeActive, bottom: sizeActive }]} />
             }
         </View>
@@ -40,6 +41,6 @@ const styles = StyleSheet.create({
     },
     viewActive: {
         width: SIZE_CIRCLE_ACTIVE, height: SIZE_CIRCLE_ACTIVE, borderRadius: SIZE_CIRCLE_ACTIVE / 2,
-        position: 'absolute'
+        position: 'absolute',
     },
 })

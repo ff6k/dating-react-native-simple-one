@@ -6,6 +6,7 @@ import Utils from '/src/utils'
 import Const from '/src/const'
 let token
 let idUser
+let isShowOffButton
 export default function ImageDetailController(props) {
     const { route, navigation } = props
     const [dataDetailUser, setDataDetailUser] = useState([])
@@ -67,6 +68,11 @@ export default function ImageDetailController(props) {
         //     .catch(err => console.log(err))
     }, [])
 
+    useEffect(() => {
+        const { isOffShowButton } = route.params
+        isShowOffButton = isOffShowButton
+    }, [route.params])
+
     const onPressLike = () => {
         const { item } = route.params
         const params = {
@@ -106,6 +112,7 @@ export default function ImageDetailController(props) {
             gender={gender}
             bio={bio}
             onPressLike={onPressLike}
+            isOffShowButton={isShowOffButton}
         />
     )
 }

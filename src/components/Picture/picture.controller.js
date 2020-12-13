@@ -66,7 +66,6 @@ export default function PictureController(props) {
     }
 
     const uploadImage = async () => {
-        console.log(dataImage)
         setIsLoading(true)
         Api.CloudinaryApi.postImageApiRequest(dataImage)
             .then(res => res.json())

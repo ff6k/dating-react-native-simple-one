@@ -9,6 +9,7 @@ import AvatarActive from '/src/components/UI/avatarActive'
 import ItemMessages from '/src/components/UI/itemMessages'
 import SearchBar from '/src/components/UI/searchBar'
 import AnimLottieView from '/src/components/UI/animLottieView'
+import Image from 'react-native-fast-image'
 const data = [
     {
         id: "1",

@@ -22,14 +22,16 @@ export default function MessagesController(props) {
     const [dataMessages, setDataMessages] = useState([])
     const [pageNumber, setPageNumber] = useState(1)
     const [loading, setLoading] = useState(false)
+    const [isVisiblePhoto, setIsVisiblePhoto] = useState(false)
     const [error, setError] = useState('')
     const [maxPage, setMaxPage] = useState(null)
+    const [isLoadingSend, setIsLoadingSend] = useState(false)
     // const [isConnected, setIsConnected] = useState(false)
     const [dataItem, setDataItem] = useState(() => {
         return route.params.item
     })
     const refModalSlide = React.createRef()
-    console.log(JSON.stringify(dataMessages))
+    // console.log(JSON.stringify(dataMessages))
     // const itemHeader = {
     //     uriImage: ,
     // isActive: true,
@@ -65,6 +67,7 @@ export default function MessagesController(props) {
         }
 
         getDataApi(params).then(res => {
+            console.log(res.data)
             setDataMessages(res.data)
             if (dataMessBegin === undefined) {
                 dataMessBegin = res.data
@@ -155,6 +158,7 @@ export default function MessagesController(props) {
     }
 
     const pushDataMessages = (messages) => {
+        setIsLoadingSend(true)
         const { idPeople } = route.params
 
         const params = {
@@ -164,15 +168,7 @@ export default function MessagesController(props) {
             content: messages,
             type: 'Text'
         }
-        Api.RequestApi.postMessagesConversationApiRequest(params)
-            .then(res => {
-                loadDataApi(1)
-                setPageNumber(1)
-                setMaxPage(null)
-            })
-            .catch(err => {
-                console.log(err)
-            })
+        saveMessageApi(params)
     }
 
     const onPressSend = (messages) => {
@@ -183,6 +179,80 @@ export default function MessagesController(props) {
             Utils.Toast.ToastShortTop('Please enter your massages 📝 !!')
         }
     }
+
+    const onPressViewProfile = () => {
+        const { idPeople } = route.params
+        const item = { id: idPeople }
+        refModalSlide.current.close()
+        navigation.navigate(Const.NameScreens.ImageDetail, { item, isOffShowButton: false })
+    }
+
+    const onPressPhoto = () => {
+        setIsVisiblePhoto(true)
+    }
+
+
+    const saveMessageApi = (params) => {
+        Api.RequestApi.postMessagesConversationApiRequest(params)
+            .then(res => {
+                loadDataApi(1)
+                setPageNumber(1)
+                setMaxPage(null)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+            .finally(() => setIsLoadingSend(false))
+    }
+
+
+    const handleDataImage = (data) => {
+        const { url } = data
+        const { idPeople } = route.params
+
+        const params = {
+            token: token,
+            idSender: idUser,
+            idReceipt: idPeople,
+            content: url,
+            type: 'Image'
+        }
+        saveMessageApi(params)
+
+
+    }
+
+    const savePhotoApi = (res) => {
+        setIsLoadingSend(true)
+
+        const { path, mime } = res
+        const typeImage = mime.split('/')[1]
+        const nameFile = new Date().getTime().toString() + `.${typeImage}`
+        const dataImage = { uri: path, name: nameFile, type: mime }
+        Api.CloudinaryApi.postImageApiRequest(dataImage)
+            .then(res => res.json())
+            .then(
+                data => {
+                    handleDataImage(data)
+                    // saveDataPhotoApi(data)
+                }
+            ).catch(err => console.log(err))
+    }
+
+    const onTakePhoto = () => {
+        setIsVisiblePhoto(false)
+        Utils.Images.openCameraCropImage()
+            .then(res => savePhotoApi(res))
+            .catch(err => console.log(err))
+    }
+
+    const onUploadPhoto = () => {
+        setIsVisiblePhoto(false)
+        Utils.Images.openPickerCropImage()
+            .then(res => savePhotoApi(res))
+            .catch(err => console.log(err))
+    }
+
     return (
         <Messages
             onPressBack={onPressBack}
@@ -194,6 +264,13 @@ export default function MessagesController(props) {
             loading={loading}
             dataHeader={dataItem}
             onPressSend={onPressSend}
+            onPressViewProfile={onPressViewProfile}
+            onPressPhoto={onPressPhoto}
+            isVisiblePhoto={isVisiblePhoto}
+            setIsVisiblePhoto={setIsVisiblePhoto}
+            onTakePhoto={onTakePhoto}
+            onUploadPhoto={onUploadPhoto}
+            isLoadingSend={isLoadingSend}
         />
     )
 }

@@ -3,19 +3,24 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import Themes from '/src/themes'
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from '/src/components/UI/icon'
+import AnimLottieView from '/src/components/UI/animLottieView'
 export default function buttonSend(props) {
-    const { style, disabled, onPress } = props
+    const { style, disabled, onPress, isLoadingSend } = props
     return (
         <LinearGradient
             start={{ x: 0, y: 0 }}
             end={{ x: 3, y: 0 }}
             colors={['pink', 'orange']}
             style={{ ...styles.linearContain, ...style }}>
-            <TouchableOpacity style={[styles.btnSend, disabled && { backgroundColor: Themes.Colors.GRAY_BRIGHT_II }]} disabled={disabled}
+            {!isLoadingSend ? <TouchableOpacity style={[styles.btnSend, disabled && { backgroundColor: Themes.Colors.GRAY_BRIGHT_II }]} disabled={disabled}
                 onPress={() => onPress()}
             >
                 <Icon name="paper-plane" size={25} color={disabled ? "gray" : "white"}></Icon>
-            </TouchableOpacity>
+            </TouchableOpacity> :
+                <AnimLottieView
+                    source={require('/src/assets/lotties/9953-loading-round.json')}
+                    style={{ width: 120, height: 120 }}
+                />}
         </LinearGradient>
     )
 }

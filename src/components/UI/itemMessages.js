@@ -43,7 +43,7 @@ export default function itemMessages(props) {
         >
             <View style={styles.containerAvatar}>
                 <CircleAvatarActive
-                    item={item} sizeAvatar={70} sizeActive={3} />
+                    dataHeader={item} sizeAvatar={70} sizeActive={3} />
             </View>
             <View style={{ flex: 4, marginVertical: 15 }}>
                 <View style={styles.containerContent}>
@@ -104,6 +104,6 @@ const styles = StyleSheet.create({
     container: {
         marginTop: 0,
         flexDirection: 'row', marginVertical: Themes.Const.MARGIN_AVATAR, width: '100%',
-        marginLeft: Themes.Const.MARGIN_AVATAR
+        marginLeft: Themes.Const.MARGIN_AVATAR,
     },
 })
