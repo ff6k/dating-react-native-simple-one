@@ -9,10 +9,9 @@ import AnimLottieView from '/src/components/UI/animLottieView'
 
 
 const MAX_SELECT = 5
-let arrInterest = [{ id: 1, label: 'Writing/Blogging' }, { id: 44, label: 'Growing Bonsais' },]
 
 const TagSelectComponent = (props) => {
-    const { isRender, selectedItem } = props
+    const { isRender, selectedItem, arrInterest } = props
     if (isRender) {
         return (
             <View>
@@ -70,20 +69,9 @@ const TagSelectComponent = (props) => {
 }
 
 export default function interestInfomation(props) {
-    const { onPressBack } = props
+    const { onPressBack, selectedItem, arrInterest } = props
 
     const [isRender, setIsRender] = useState(false)
-
-    const selectedItem = (item) => {
-        if (arrInterest.indexOf(item) >= 0) {
-            arrInterest = arrInterest.filter((ele) => {
-                return ele != item;
-            });
-        } else {
-            arrInterest.push(item)
-        }
-    }
-
     useEffect(() => {
         setIsRender(true)
     }, [])
@@ -103,6 +91,7 @@ export default function interestInfomation(props) {
             </View>
             <TagSelectComponent isRender={isRender}
                 selectedItem={selectedItem}
+                arrInterest={arrInterest}
             />
         </ScrollView>
     )

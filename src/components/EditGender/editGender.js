@@ -6,12 +6,13 @@ const data = [
 ]
 import EditContentList from '/src/components/UI/editContentList'
 export default function editGender(props) {
-    const { onPressBack } = props
+    const { onPressBack, isChange } = props
     return (
         <EditContentList
             data={data}
             onPressBack={onPressBack}
             title={'I Am'}
+            isChange={isChange}
         />
     )
 }

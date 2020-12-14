@@ -9,11 +9,14 @@ import { useSelector } from 'react-redux'
 let token
 let indexPhoto
 let idUser
+let bioBegin
+let nameBegin
 export default function MyProfileController(props) {
     const { navigation, route } = props
     const [dataProfile, setDataProfile] = useState(null)
     const [dataPhotos, setDataPhotos] = useState(null)
     const refSlideModal = React.createRef()
+    const [indexLoading, setIndexLoading] = useState()
 
     const dataStore = useSelector(state => state.login)
 
@@ -51,6 +54,8 @@ export default function MyProfileController(props) {
             return Api.RequestApi.getProfileApiRequest(params)
         }
         getApiProfile().then(res => {
+            bioBegin = res.data.bio
+            nameBegin = res.data.name
             const photos = res.data.photos
             const dataPhotos = checkAndFillPhotos(photos, 9)
             setDataPhotos(dataPhotos)
@@ -104,21 +109,95 @@ export default function MyProfileController(props) {
     const onTakePhoto = () => {
         refSlideModal.current.close()
         Utils.Images.openCameraCropImage()
-            .then(res => handleDataImage(res.path, indexPhoto))
+            .then(res => handleDataImage(res, indexPhoto))
             .catch(err => console.log(err))
     }
 
     const onUploadPhoto = () => {
         refSlideModal.current.close()
         Utils.Images.openPickerCropImage()
-            .then(res => handleDataImage(res.path, indexPhoto))
+            .then(res => handleDataImage(res, indexPhoto))
             .catch(err => console.log(err))
     }
-    const handleDataImage = (url, index) => {
-        const data = [...dataPhotos]
-        data[index].url = url
-        setDataPhotos(data)
+    const handleDataImage = (res, index) => {
+        setIndexLoading(index)
+        // console.log(`url: ${res}`);
+        // const data = [...dataPhotos]
+        // data[index].url = url
+        // setDataPhotos(data)
+        savePhotoCloudinary(res, index)
 
+    }
+
+    const savePhotoCloudinary = (res, index) => {
+        const { path, mime } = res
+        const typeImage = mime.split('/')[1]
+        const nameFile = new Date().getTime().toString() + `.${typeImage}`
+        const dataImage = { uri: path, name: nameFile, type: mime }
+        Api.CloudinaryApi.postImageApiRequest(dataImage)
+            .then(res => res.json())
+            .then(
+                data => {
+                    saveDataPhotoApi(data, index)
+                }
+            ).catch(err => console.log(err))
+    }
+
+    const saveDataPhotoApi = (data, index) => {
+        const { public_id, url } = data
+        const params = {
+            url: url,
+            publicId: public_id,
+            id: idUser,
+            token: token
+        }
+        Api.RequestApi.putPhotosApiRequest(params)
+            .then(response => {
+                const dataTemp = [...dataPhotos]
+                dataTemp[index].url = response.data.url
+                setDataPhotos(dataTemp)
+                Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your photo successfully', 3000)
+            }).catch(err => {
+                Utils.Toast.ToastModal('fail', 'top', 'Fail', `You have saved your photo fail, error: ${err}`, 3000)
+                console.log(err)
+            })
+            .finally(() => setIndexLoading(null))
+    }
+
+    const onBlurTextExpand = (value) => {
+        if (bioBegin !== undefined && bioBegin !== value) {
+            const params = {
+                bio: value,
+                id: idUser,
+                token: token
+            }
+            Api.RequestApi.putBioApiRequest(params)
+                .then(response => {
+                    bioBegin = response.data.bio
+                    Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your bio successfully', 3000)
+                }).catch(err => {
+                    Utils.Toast.ToastModal('fail', 'top', 'Fail', `You have saved your bio fail, error: ${err}`, 3000)
+                    console.log(err)
+                })
+        }
+    }
+
+    const onBlurTextInput = (value) => {
+        if (nameBegin !== undefined && nameBegin !== value) {
+            const params = {
+                name: value,
+                id: idUser,
+                token: token
+            }
+            Api.RequestApi.putNameApiRequest(params)
+                .then(response => {
+                    nameBegin = response.data.name
+                    Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your name successfully', 3000)
+                }).catch(err => {
+                    Utils.Toast.ToastModal('fail', 'top', 'Fail', `You have saved your name fail, error: ${err}`, 3000)
+                    console.log(err)
+                })
+        }
     }
 
     return (
@@ -138,6 +217,9 @@ export default function MyProfileController(props) {
             onUploadPhoto={onUploadPhoto}
             onTakePhoto={onTakePhoto}
             ref={refSlideModal}
+            indexLoading={indexLoading}
+            onBlurTextExpand={onBlurTextExpand}
+            onBlurTextInput={onBlurTextInput}
         />
     )
 }

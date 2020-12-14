@@ -32,7 +32,8 @@ const headerComponent = (props) => {
 }
 const footerComponent = (props) => {
     const { onPressInterest, onPressGender, onPressReligious, onPressEthnicity,
-        onPressKids, onPressFamilyPlans, onPressSmoking, onPressDrinking, data,
+        onPressKids, onPressFamilyPlans, onPressSmoking, onPressDrinking, data, onBlurTextExpand,
+        onBlurTextInput
     } = props
     let [name, dateOfBirth, location, religion, company, jobTitle, school, ethnicity,
         children, smoking, interests, drinking, bio, gender, phone, email] = []
@@ -66,6 +67,8 @@ const footerComponent = (props) => {
                 phone={phone}
                 email={email}
                 location={location}
+                onBlurTextExpand={onBlurTextExpand}
+                onBlurTextInput={onBlurTextInput}
             />
             <Text style={styles.headerText}>Your Virtues</Text>
             <MyVirtuesContent
@@ -95,13 +98,18 @@ const footerComponent = (props) => {
     )
 }
 
-const imageList = (item, index, onPressAddImage) => {
+const imageList = (item, index, onPressAddImage, indexLoading) => {
     if (item !== undefined) {
         const { url } = item
         if (url === undefined) {
+            let isLoading = false
+            if (index === indexLoading) {
+                isLoading = true
+            }
             return <ImageItem
                 onPressAddImage={onPressAddImage}
                 index={index}
+                isLoading={isLoading}
             />
         }
         else {
@@ -121,7 +129,7 @@ const emptyComponent = () => {
 }
 
 const MyProfile = React.forwardRef((props, ref) => {
-    const { data, onPressAddImage, dataPhotos,
+    const { data, onPressAddImage, dataPhotos, indexLoading,
         // isVisible, setVisibleModel,
         onUploadPhoto, onTakePhoto
     } = props
@@ -130,7 +138,7 @@ const MyProfile = React.forwardRef((props, ref) => {
             <FlatList
                 showsVerticalScrollIndicator={false}
                 data={dataPhotos !== null ? dataPhotos : undefined}
-                renderItem={({ item, index }) => imageList(item, index, onPressAddImage)}
+                renderItem={({ item, index }) => imageList(item, index, onPressAddImage, indexLoading)}
                 columnWrapperStyle={{ justifyContent: 'space-evenly' }}
                 ListEmptyComponent={emptyComponent}
                 keyExtractor={item => item.id.toString()}

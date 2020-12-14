@@ -120,6 +120,24 @@ export const putSmokingApiRequest = async (params) => {
     })
 }
 
+export const putBioApiRequest = async (params) => {
+    const { id, token, bio } = params
+    const Url = URL_PUT_PROFILE + `/${id}`
+    const client = getAxios('Bearer ' + token)
+    return client.put(Url, {
+        "bio": bio,
+    })
+}
+
+export const putNameApiRequest = async (params) => {
+    const { id, token, name } = params
+    const Url = URL_PUT_PROFILE + `/${id}`
+    const client = getAxios('Bearer ' + token)
+    return client.put(Url, {
+        "name": name,
+    })
+}
+
 export const getUserLikeMeApiRequest = async (params) => {
     const { token, pageNumber, pageSize, likers } = params
     const Url = URL_GET_USER_LIKED_ME + `?pageNumber=${pageNumber}&pageSize=${pageSize}&likers=${likers}`

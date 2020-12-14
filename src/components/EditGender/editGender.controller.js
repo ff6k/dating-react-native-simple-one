@@ -8,6 +8,7 @@ export default function EditGenderController(props) {
     return (
         <CheckOneItem
             onPressBack={onPressBack}
+            isChange={true}
         />
     )
 }

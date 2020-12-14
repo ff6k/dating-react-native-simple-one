@@ -6,7 +6,7 @@ import Themes from '/src/themes'
 import Icon from '/src/components/UI/icon'
 
 export default function editContentList(props) {
-    const { onPressBack, data, title, onPressSave, onChangeDataItemClick } = props
+    const { onPressBack, data, title, onPressSave, onChangeDataItemClick, isChange } = props
 
     const [idSelected, setIdSelected] = useState(data[0].id)
 
@@ -45,6 +45,7 @@ export default function editContentList(props) {
                 title={title}
                 onPressBack={onPressBack}
                 onPressSave={onPressSave}
+                isChange={isChange}
             />
             <FlatList
                 keyExtractor={item => item.id.toString()}

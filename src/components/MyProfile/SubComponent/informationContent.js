@@ -3,8 +3,6 @@ import { StyleSheet, Text, View } from 'react-native'
 import ItemContent from './itemContent'
 import { TYPE_CONTENT } from '../typeContent'
 function areEqual(prevProps, nextProps) {
-    console.log(`nextProps: ${JSON.stringify(nextProps)}`);
-    console.log(`prevProps: ${JSON.stringify(prevProps)}`);
     if (nextProps === prevProps) {
         return false
     } else {
@@ -20,14 +18,16 @@ function InformationContent(props) {
         phone,
         email,
         bio,
-        dateOfBirth
+        dateOfBirth,
+        onBlurTextExpand,
+        onBlurTextInput
     } = props
 
-    console.log('render ne')
     return (
         <View>
             <ItemContent title={"Bio"} content={bio} isTextExpand={true}
                 typeContent={TYPE_CONTENT.TextExpand}
+                onBlurTextExpand={onBlurTextExpand}
             />
             <ItemContent title={"Interest"} content={""}
                 onPressItem={onPressInterest}
@@ -36,6 +36,7 @@ function InformationContent(props) {
 
             <ItemContent title={"Name"} content={name}
                 typeContent={TYPE_CONTENT.TextInput}
+                onBlurTextInput={onBlurTextInput}
             />
             <ItemContent title={"Age"} content={dateOfBirth} keyboardType={'number-pad'}
                 typeContent={TYPE_CONTENT.TextInput}

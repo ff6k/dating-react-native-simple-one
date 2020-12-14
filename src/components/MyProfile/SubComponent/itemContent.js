@@ -18,8 +18,10 @@ const data = [
     { id: 37, label: 'Stamp Collecting' },
     { id: 38, label: 'Helping The Homeless' },
 ]
+
+
 const RenderTypeContent = (props) => {
-    const { content, onPressItem, keyboardType, typeContent } = props
+    const { content, onPressItem, keyboardType, typeContent, onBlurTextExpand, onBlurTextInput } = props
     const [contentState, setContentState] = useState(() => {
         return content ? content : ''
     });
@@ -46,6 +48,7 @@ const RenderTypeContent = (props) => {
                             fontFamily: Themes.FontFamily.FontThinDefault,
                             width: '95%'
                         }]}
+                        onBlur={() => onBlurTextInput && onBlurTextInput(contentState)}
                         placeholder={"NA"}
                         value={contentState}
                         keyboardType={keyboardType}
@@ -66,6 +69,7 @@ const RenderTypeContent = (props) => {
                         onChangeText={(value) => setContentState(value)}
                         maxLength={MAX_LENGTH_TEXT}
                         value={contentState}
+                        onBlur={() => onBlurTextExpand && onBlurTextExpand(contentState)}
                     />
                     <Text style={styles.txtCountTxt}>{`${contentState.length}/500`}</Text>
                 </View>
