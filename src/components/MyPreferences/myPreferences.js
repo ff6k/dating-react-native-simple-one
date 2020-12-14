@@ -1,25 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, ScrollView } from 'react-native'
 import Themes from '/src/themes'
-import FontAwesomeIcons from 'react-native-vector-icons/SimpleLineIcons'
 import Const from '/src/const'
 import HeaderSave from '/src/components/UI/headerSave'
 import CardDropDown from './subComponents/cardDropDown'
 import CardClick from './subComponents/cardClick'
 import CardSlider from './subComponents/cardSlider'
 
-const GENDER_ARRAY = [
-    {
-        label: 'Male', value: 'Male', icon: () => <FontAwesomeIcons name={"symbol-male"} size={18} color={Themes.Colors.PINK_DARK} />
-    },
-    {
-        label: 'Female', value: 'Female', icon: () => <FontAwesomeIcons name={"symbol-female"} size={18} color={Themes.Colors.PINK_DARK} />
-    },
-]
+
 
 let nameLang
 export default function MyPreferences(props) {
-    const { codeLanguage, onPressAppLanguages, onPressBack } = props
+    const { dataGender, codeLanguage, onPressAppLanguages, onPressBack, onChangeSlideAge, onPressSave, onChangeGender,
+        minAge, maxAge, gender, isChange } = props
 
     if (codeLanguage === Const.Languages.languageCountry[0].code) {
         nameLang = Const.Languages.languageCountry[0].country
@@ -29,6 +22,8 @@ export default function MyPreferences(props) {
     }
 
     const onSlideAge = (arrange) => {
+        // let arrangeSplice = arrange.split(',')
+        onChangeSlideAge && onChangeSlideAge(arrange[0], arrange[1])
     }
 
     return (
@@ -38,13 +33,18 @@ export default function MyPreferences(props) {
             <HeaderSave
                 title={"Settings"}
                 onPressBack={onPressBack}
+                onPressSave={onPressSave}
+                isChange={isChange}
             />
             <Text style={styles.txtHeader}>My Preferences</Text>
             <CardClick content={"Ho Chi Minh City, VietNam"}
                 title={"My current location"}
             />
-            <CardDropDown data={GENDER_ARRAY} />
-            <CardSlider
+            <CardDropDown data={dataGender}
+                onChangeGender={onChangeGender}
+                itemDefault={gender ? gender : 'male'}
+            />
+            {/* <CardSlider
                 content={"Height"}
                 textSwitchLeft={"ft"}
                 textSwitchRight={"cm"}
@@ -53,17 +53,17 @@ export default function MyPreferences(props) {
                 minValue={1}
                 maxValue={10}
                 isSwitch={true}
-            />
+            /> */}
             <CardSlider
                 content={"Age"}
                 isSwitch={false}
                 onSlide={onSlideAge}
-                valueStart={18}
-                valueEnd={21}
+                valueStart={minAge}
+                valueEnd={maxAge}
                 minValue={18}
                 maxValue={44}
             />
-            <CardSlider
+            {/* <CardSlider
                 content={"Distance"}
                 textSwitchLeft={"km"}
                 textSwitchRight={"mi"}
@@ -72,11 +72,11 @@ export default function MyPreferences(props) {
                 minValue={0}
                 maxValue={100}
                 isSwitch={true}
-            />
-            <CardClick content={"Hetero"}
+            /> */}
+            {/* <CardClick content={"Hetero"}
                 title={"Sex Orientation"}
                 nameIcon={"arrow-ios-forward-outline"}
-            />
+            /> */}
             <Text style={styles.txtHeader}>App Settings</Text>
             <CardClick content={nameLang}
                 title={"Your App Languages"}

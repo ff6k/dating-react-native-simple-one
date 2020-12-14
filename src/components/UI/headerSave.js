@@ -4,7 +4,7 @@ import Themes from '/src/themes'
 import Icon from '/src/components/UI/icon'
 
 export default function headerSave(props) {
-    const { title, onPressBack, onPressSave } = props
+    const { title, onPressBack, onPressSave, isChange } = props
     return (
         <View style={styles.header}>
             <View style={styles.containLeft}>
@@ -19,9 +19,10 @@ export default function headerSave(props) {
             </View>
 
             <TouchableOpacity style={styles.containSave}
+                disabled={!isChange}
                 onPress={() => onPressSave && onPressSave()}
             >
-                <Text style={styles.txtSave}>SAVE</Text>
+                <Text style={[styles.txtSave, !isChange && { color: 'gray' }]}>SAVE</Text>
             </TouchableOpacity>
         </View>
     )

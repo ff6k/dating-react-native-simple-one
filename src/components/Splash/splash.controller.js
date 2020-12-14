@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
 import Splash from './splash'
-import { readStorage, saveStorage, getDataUserStorage, removeKeyStorage } from '/src/configs/AsyncStorage'
+import { readStorage, saveStorage, saveDataUserStorage, removeKeyStorage } from '/src/configs/AsyncStorage'
 import Const from '/src/const'
 import { changeLanguage } from '/src/translations'
 import { useDispatch } from 'react-redux'
 import { pushDataLoginEmail } from '/src/slice/loginSlice'
+import { pushDataAgeAndGender } from '/src/slice/preferenceSlice'
 import Api from '/src/api'
 
 export default function SplashController(props) {
@@ -13,18 +14,34 @@ export default function SplashController(props) {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        const setDataStoreReduxProfile = (token, id) => {
+        const setDataStoreReduxProfile = (token, id, preferences) => {
             Api.RequestApi.getProfileApiRequest({ token, id })
                 .then(res => {
                     const { dateOfBirth, gender, photos } = res.data
-                    console.log(`dateOfBirth: ${dateOfBirth}`);
+                    if ((preferences === null || preferences === undefined) && gender !== null) {
+                        console.log('save gender')
+                        let genderOpposite
+                        if (gender === 'male') {
+                            genderOpposite = 'female'
+                        }
+                        else {
+                            genderOpposite = 'male'
+                        }
+                        const data = {
+                            gender: genderOpposite,
+                            minAge: 18,
+                            maxAge: 22
+                        }
+                        saveDataUserStorage(Const.StorageKey.CODE_PREFERENCES, [genderOpposite, 18, 22])
+                        dispatch(pushDataAgeAndGender(data))
+                    }
                     if (dateOfBirth === null) {
                         navigation.replace(Const.NameScreens.Birthday)
                     }
                     else if (gender === null) {
                         navigation.replace(Const.NameScreens.Gender)
                     }
-                    else if (photos === null | photos.length === 0) {
+                    else if (photos === null || photos.length === 0) {
                         navigation.replace(Const.NameScreens.Picture)
                     }
                     else {
@@ -36,7 +53,7 @@ export default function SplashController(props) {
                 })
         }
 
-        const checkNavigationScreen = (dataLogin, codeApp) => {
+        const checkNavigationScreen = (dataLogin, codeApp, preferences) => {
             if (dataLogin !== undefined) {
                 const [jwtToken, id, exp] = JSON.parse(dataLogin)
                 console.log(`jwtToken: ${jwtToken}`);
@@ -47,7 +64,8 @@ export default function SplashController(props) {
                         id: id
                     }
                     dispatch(pushDataLoginEmail(data))
-                    setDataStoreReduxProfile(jwtToken, id)
+                    setDataStoreReduxProfile(jwtToken, id, preferences)
+
                 } else {
                     removeKeyStorage(Const.StorageKey.CODE_LOGIN_TOKEN)
                     navigation.replace(Const.NameScreens.SingInOrUp)
@@ -64,19 +82,33 @@ export default function SplashController(props) {
             }
         }
 
+        const savePreferencesStore = (dataPre) => {
+            const [gender, minAge, maxAge] = JSON.parse(dataPre)
+            const data = {
+                gender,
+                minAge,
+                maxAge
+            }
+            dispatch(pushDataAgeAndGender(data))
+        }
+
         const run = async () => {
             Promise.all([
                 readStorage(Const.StorageKey.CODE_LANGUAGES),
                 readStorage(Const.StorageKey.CODE_LOGIN_TOKEN),
-                readStorage(Const.StorageKey.CODE_OPEN_APP)
-            ]).then(async ([codeLang, dataLogin, codeApp]) => {
+                readStorage(Const.StorageKey.CODE_OPEN_APP),
+                readStorage(Const.StorageKey.CODE_PREFERENCES)
+            ]).then(async ([codeLang, dataLogin, codeApp, preferences]) => {
                 if (codeLang !== null && codeLang !== undefined) {
                     changeLanguage(codeLang)
-                    checkNavigationScreen(dataLogin, codeApp)
                 } else {
                     saveStorage(Const.StorageKey.CODE_LANGUAGES, 'en')
-                    checkNavigationScreen(dataLogin, codeApp)
                 }
+                if (preferences !== null && preferences !== undefined) {
+                    savePreferencesStore(preferences)
+                }
+                checkNavigationScreen(dataLogin, codeApp, preferences)
+
             })
 
         }

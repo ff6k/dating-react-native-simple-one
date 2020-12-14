@@ -6,12 +6,16 @@ import Const from '/src/const'
 import Themes from '/src/themes'
 
 export default function cardDropDown(props) {
-    const { data } = props
-    const [item, setItem] = useState(data[0].label)
+    const { data, onChangeGender, itemDefault } = props
+    // console.log(`data: ${data}`);
+    // console.log(GENDER_ARRAY[0].label)
+    const [item, setItem] = useState()
+    // console.log(`item: ${item}`);
     const [isScale, setIsScale] = useState(false)
 
     const onChangeItemDropDown = (item) => {
         setItem(item.value)
+        onChangeGender && onChangeGender(item.value)
     }
 
     const onPressDropDown = () => {
@@ -27,7 +31,7 @@ export default function cardDropDown(props) {
         >
             <DropDownPicker
                 items={data}
-                defaultValue={item}
+                defaultValue={itemDefault}
                 labelStyle={{
                     fontFamily: Themes.FontFamily.FontMediumDefault, color: Themes.Colors.GRAY_BRIGHT_I,
                     paddingLeft: 5

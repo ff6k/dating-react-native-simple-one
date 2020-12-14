@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Card from '/src/components/UI/card'
 import CustomHeader from '/src/components/UI/customHeader'
@@ -11,18 +11,18 @@ export default function cardSlider(props) {
     const { content, textSwitchLeft, textSwitchRight,
         isSwitch, onSlide, valueStart, valueEnd,
         minValue, maxValue
+
     } = props
 
     const [
         nonCollidingMultiSliderValue,
         setNonCollidingMultiSliderValue,
-    ] = useState(() => {
-        if (valueStart && valueEnd) {
-            return [valueStart, valueEnd]
-        } else {
-            return [0, 100]
-        }
-    });
+    ] = useState([0, 100]);
+
+
+    useEffect(() => {
+        setNonCollidingMultiSliderValue([valueStart, valueEnd])
+    }, [valueStart, valueEnd])
 
     const nonCollidingMultiSliderValuesChange = values => {
         onSlide && onSlide(values)
