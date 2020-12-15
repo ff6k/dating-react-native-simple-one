@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import InterestInfomation from './interestInfomation'
 import { useSelector } from 'react-redux'
+import Const from '/src/const'
 import Api from '/src/api'
 let arrInterest = []
 let idUser
@@ -8,6 +9,7 @@ let token
 export default function InterestInfomationController(props) {
     const { navigation, route } = props
     useEffect(() => {
+        arrInterest = []
         arrInterest.push(...route.params.data)
     }, [])
 
@@ -28,7 +30,14 @@ export default function InterestInfomationController(props) {
         getDataStore()
     }, [])
     const onPressBack = () => {
-        navigation.goBack()
+        console.log(JSON.stringify(arrInterest))
+        console.log(JSON.stringify(route.params.data))
+        if (JSON.stringify(arrInterest) === JSON.stringify(route.params.data)) {
+            navigation.goBack()
+        }
+        else {
+            navigation.navigate(Const.NameScreens.MyProfile, { isGetInterest: true })
+        }
     }
 
     const saveInterestApi = (item) => {

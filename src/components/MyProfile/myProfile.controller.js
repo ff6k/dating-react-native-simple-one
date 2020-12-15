@@ -6,6 +6,15 @@ import Api from '/src/api'
 import Utils from '/src/utils'
 import { useSelector } from 'react-redux'
 
+
+async function getApiProfile(params) {
+    return Api.RequestApi.getProfileApiRequest(params)
+}
+
+async function getApiInterest(params) {
+    return Api.RequestApi.getInterestApiRequest(params)
+}
+
 let token
 let indexPhoto
 let idUser
@@ -26,8 +35,23 @@ export default function MyProfileController(props) {
 
     useEffect(() => {
         if (route.params !== undefined) {
-            const { gender } = route.params
-            setGenderBegin(gender)
+            const { gender, isGetInterest } = route.params
+            if (gender !== undefined) { setGenderBegin(gender) }
+            if (isGetInterest !== undefined) {
+                const params = {
+                    id: idUser,
+                    token: token
+                }
+                getApiInterest(params).then(res => {
+                    setDataInterest(res.data)
+                    Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your interest list successfully', 3000)
+                })
+                    .catch(err => {
+                        console.log(err)
+                        Utils.Toast.ToastModal('error', 'top', 'Fail', 'You have saved your interest list successfully', 3000)
+                    })
+
+            }
         }
     }, [route.params]);
     // const drinkingUpdate = route.params === undefined ? 'Error' : route.params.drinking
@@ -60,13 +84,7 @@ export default function MyProfileController(props) {
             id: idUser,
             token: token
         }
-        async function getApiProfile(params) {
-            return Api.RequestApi.getProfileApiRequest(params)
-        }
 
-        async function getApiInterest(params) {
-            return Api.RequestApi.getInterestApiRequest(params)
-        }
         Promise.all([
             getApiProfile(params),
             getApiInterest(params)
@@ -178,7 +196,7 @@ export default function MyProfileController(props) {
                 setDataPhotos(dataTemp)
                 Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your photo successfully', 3000)
             }).catch(err => {
-                Utils.Toast.ToastModal('fail', 'top', 'Fail', `You have saved your photo fail, error: ${err}`, 3000)
+                Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your photo fail, error: ${err}`, 3000)
                 console.log(err)
             })
             .finally(() => setIndexLoading(null))
@@ -196,7 +214,7 @@ export default function MyProfileController(props) {
                     bioBegin = response.data.bio
                     Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your bio successfully', 3000)
                 }).catch(err => {
-                    Utils.Toast.ToastModal('fail', 'top', 'Fail', `You have saved your bio fail, error: ${err}`, 3000)
+                    Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your bio fail, error: ${err}`, 3000)
                     console.log(err)
                 })
         }
@@ -214,7 +232,7 @@ export default function MyProfileController(props) {
                     nameBegin = response.data.name
                     Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your name successfully', 3000)
                 }).catch(err => {
-                    Utils.Toast.ToastModal('fail', 'top', 'Fail', `You have saved your name fail, error: ${err}`, 3000)
+                    Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your name fail, error: ${err}`, 3000)
                     console.log(err)
                 })
         }
@@ -236,7 +254,7 @@ export default function MyProfileController(props) {
                     dateOfBirthBegin = response.data.dateOfBirth
                     Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your date of birth successfully', 3000)
                 }).catch(err => {
-                    Utils.Toast.ToastModal('fail', 'top', 'Fail', `You have saved your date of birth fail, error: ${err}`, 3000)
+                    Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your date of birth fail, error: ${err}`, 3000)
                     console.log(err)
                 })
         }
