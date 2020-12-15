@@ -12,9 +12,16 @@ const FooterComponent = () => {
     )
 }
 export default function myVirtues(props) {
-    const { dataList, onPressBack, title, content, detail } = props;
-    const [idSelect, setIdSelect] = useState(null)
-
+    const { dataList, onPressBack, title, content, detail, onPressGetItem, itemBegin } = props;
+    const [idSelect, setIdSelect] = useState(() => {
+        if (itemBegin) {
+            if (dataList.length > 0) {
+                const item = dataList.find(e => e.name == itemBegin)
+                return item.id
+            }
+        }
+        return null
+    })
 
     const renderItem = ({ item }) => {
         let isCheck = false
@@ -33,6 +40,7 @@ export default function myVirtues(props) {
     const onPressItem = (item) => {
         const { id } = item
         setIdSelect(id)
+        onPressGetItem && onPressGetItem(item)
     }
 
     return (

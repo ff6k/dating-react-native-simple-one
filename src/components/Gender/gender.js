@@ -10,7 +10,7 @@ const GENDER = {
     MALE: "male",
     FEMALE: "female"
 }
-function BirthDay(props) {
+function Gender(props) {
     const { t, onPressBack, onPressNext, getGender } = props
     const [gender, setGender] = useState(GENDER.MALE);
     const onCheck = (gender) => {
@@ -89,4 +89,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default withTranslation()(BirthDay)
+export default withTranslation()(Gender)

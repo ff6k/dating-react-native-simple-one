@@ -74,6 +74,24 @@ export const getProfileApiRequest = async (params) => {
     return client.get(Url)
 }
 
+export const putProfileReligiousApiRequest = async (params) => {
+    const { id, token, religion } = params
+    const Url = URL_PUT_PROFILE + `/${id}`
+    const client = getAxios('Bearer ' + token)
+    return client.put(Url, {
+        "religion": religion
+    })
+}
+
+export const putProfileEthnicityApiRequest = async (params) => {
+    const { id, token, ethnicity } = params
+    const Url = URL_PUT_PROFILE + `/${id}`
+    const client = getAxios('Bearer ' + token)
+    return client.put(Url, {
+        "ethnicity": ethnicity
+    })
+}
+
 export const putProfileBirthdayApiRequest = async (params) => {
     const { id, token, dateOfBirth } = params
     const Url = URL_PUT_PROFILE + `/${id}`
@@ -89,6 +107,15 @@ export const putProfileGenderApiRequest = async (params) => {
     const client = getAxios('Bearer ' + token)
     return client.put(Url, {
         "gender": gender
+    })
+}
+
+export const putProfileKidsApiRequest = async (params) => {
+    const { id, token, children } = params
+    const Url = URL_PUT_PROFILE + `/${id}`
+    const client = getAxios('Bearer ' + token)
+    return client.put(Url, {
+        "children": children
     })
 }
 
@@ -135,6 +162,33 @@ export const putBioApiRequest = async (params) => {
     const client = getAxios('Bearer ' + token)
     return client.put(Url, {
         "bio": bio,
+    })
+}
+
+export const putJobApiRequest = async (params) => {
+    const { id, token, job } = params
+    const Url = URL_PUT_PROFILE + `/${id}`
+    const client = getAxios('Bearer ' + token)
+    return client.put(Url, {
+        "jobTitle": job,
+    })
+}
+
+export const putWorkAtApiRequest = async (params) => {
+    const { id, token, company } = params
+    const Url = URL_PUT_PROFILE + `/${id}`
+    const client = getAxios('Bearer ' + token)
+    return client.put(Url, {
+        "company": company,
+    })
+}
+
+export const putEducationApiRequest = async (params) => {
+    const { id, token, school } = params
+    const Url = URL_PUT_PROFILE + `/${id}`
+    const client = getAxios('Bearer ' + token)
+    return client.put(Url, {
+        "school": school,
     })
 }
 

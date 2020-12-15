@@ -8,7 +8,7 @@ import Icon from '/src/components/UI/icon'
 export default function editContentList(props) {
     const { onPressBack, data, title, onPressSave, onPressGetItem, isChange, indexBegin, onChangeDataItemClick } = props
 
-    const [idSelected, setIdSelected] = useState(data[indexBegin].id)
+    const [idSelected, setIdSelected] = useState(indexBegin !== -1 ? data[indexBegin].id : null)
 
     const onPressItem = (item) => {
         const { id } = item

@@ -20,6 +20,9 @@ let indexPhoto
 let idUser
 let bioBegin
 let nameBegin
+let workAtBegin
+let jobBegin
+let educationBegin
 let dateOfBirthBegin
 // let genderBegin
 export default function MyProfileController(props) {
@@ -29,13 +32,16 @@ export default function MyProfileController(props) {
     const refSlideModal = React.createRef()
     const [indexLoading, setIndexLoading] = useState()
     const [genderBegin, setGenderBegin] = useState()
+    const [religionBegin, setReligionBegin] = useState()
+    const [ethnicityBegin, setEthnicityBegin] = useState()
+    const [kidsBegin, setKidsBegin] = useState()
     const [dataInterest, setDataInterest] = useState([])
 
     const dataStore = useSelector(state => state.login)
 
     useEffect(() => {
         if (route.params !== undefined) {
-            const { gender, isGetInterest } = route.params
+            const { gender, isGetInterest, religion, ethnicity, kids } = route.params
             if (gender !== undefined) { setGenderBegin(gender) }
             if (isGetInterest !== undefined) {
                 const params = {
@@ -50,12 +56,19 @@ export default function MyProfileController(props) {
                         console.log(err)
                         Utils.Toast.ToastModal('error', 'top', 'Fail', 'You have saved your interest list successfully', 3000)
                     })
-
+            }
+            if (religion !== undefined) {
+                setReligionBegin(religion)
+            }
+            if (ethnicity !== undefined) {
+                setEthnicityBegin(ethnicity)
+            }
+            if (kids !== undefined) {
+                setKidsBegin(kids)
             }
         }
     }, [route.params]);
-    // const drinkingUpdate = route.params === undefined ? 'Error' : route.params.drinking
-    // console.log(`drinkingUpdate: ${drinkingUpdate}`);
+
     const getDataStore = () => {
         if (dataStore.length > 0) {
             const { jwtToken, id } = dataStore[0]
@@ -89,13 +102,22 @@ export default function MyProfileController(props) {
             getApiProfile(params),
             getApiInterest(params)
         ]).then(async ([dataProfile, dataInterest]) => {
-            bioBegin = dataProfile.data.bio
-            nameBegin = dataProfile.data.name
-            dateOfBirthBegin = dataProfile.data.dateOfBirth
-            setGenderBegin(dataProfile.data.gender)
-            // genderBegin = res.data.gender
-            const photos = dataProfile.data.photos
-            const dataPhotos = checkAndFillPhotos(photos, 9)
+            const { bio, jobTitle, company, name, dateOfBirth, gender, religion, photos, school, ethnicity, children } = dataProfile.data
+
+            bioBegin = bio
+            jobBegin = jobTitle
+            workAtBegin = company
+            nameBegin = name
+            dateOfBirthBegin = dateOfBirth
+            educationBegin = school
+
+            setGenderBegin(gender)
+            setKidsBegin(children)
+            setReligionBegin(religion)
+            setEthnicityBegin(ethnicity)
+
+            const photosTemp = photos
+            const dataPhotos = checkAndFillPhotos(photosTemp, 9)
             setDataPhotos(dataPhotos)
             setDataProfile(dataProfile.data)
             setDataInterest(dataInterest.data)
@@ -116,15 +138,15 @@ export default function MyProfileController(props) {
     }
 
     const onPressReligious = () => {
-        navigation.navigate(Const.NameScreens.Religious)
+        navigation.navigate(Const.NameScreens.Religious, { religion: religionBegin })
     }
 
     const onPressEthnicity = () => {
-        navigation.navigate(Const.NameScreens.Ethnicity)
+        navigation.navigate(Const.NameScreens.Ethnicity, { ethnicity: ethnicityBegin })
     }
 
     const onPressKids = () => {
-        navigation.navigate(Const.NameScreens.EditKids)
+        navigation.navigate(Const.NameScreens.EditKids, { kids: kidsBegin })
     }
 
     const onPressFamilyPlans = () => {
@@ -270,13 +292,68 @@ export default function MyProfileController(props) {
             }
             Api.RequestApi.putPhoneApiRequest(params)
                 .then(response => {
-                    console.log('success')
+                    Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your phone number successfully', 3000)
                 }).catch(err => {
+                    Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your phone number fail, error: ${err}`, 3000)
                     console.log(err)
                 })
         }
         else {
             console.log('err')
+        }
+    }
+
+    const onBlurTextInputJob = (value) => {
+        if (jobBegin !== value) {
+            const params = {
+                job: value,
+                id: idUser,
+                token: token
+            }
+            Api.RequestApi.putJobApiRequest(params)
+                .then(response => {
+                    Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your job successfully', 3000)
+                    jobBegin = value
+                }).catch(err => {
+                    Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your job fail, error: ${err}`, 3000)
+                    console.log(err)
+                })
+        }
+    }
+
+    const onBlurTextInputWorkAt = (value) => {
+        if (workAtBegin !== value) {
+            const params = {
+                company: value,
+                id: idUser,
+                token: token
+            }
+            Api.RequestApi.putWorkAtApiRequest(params)
+                .then(response => {
+                    Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your company successfully', 3000)
+                    workAtBegin = value
+                }).catch(err => {
+                    Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your company fail, error: ${err}`, 3000)
+                    console.log(err)
+                })
+        }
+    }
+
+    const onBlurTextInputEducation = (value) => {
+        if (educationBegin !== value) {
+            const params = {
+                school: value,
+                id: idUser,
+                token: token
+            }
+            Api.RequestApi.putEducationApiRequest(params)
+                .then(response => {
+                    Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your education successfully', 3000)
+                    educationBegin = value
+                }).catch(err => {
+                    Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your education fail, error: ${err}`, 3000)
+                    console.log(err)
+                })
         }
     }
 
@@ -302,10 +379,16 @@ export default function MyProfileController(props) {
             onBlurTextExpand={onBlurTextExpand}
             onBlurTextInputName={onBlurTextInputName}
             onBlurTextInputPhone={onBlurTextInputPhone}
+            onBlurTextInputJob={onBlurTextInputJob}
+            onBlurTextInputWorkAt={onBlurTextInputWorkAt}
+            onBlurTextInputEducation={onBlurTextInputEducation}
             // dateBegin={new Date('09/16/1999')}
             pickDate={pickDate}
-
+            jobBegin={jobBegin}
             gender={genderBegin}
+            kids={kidsBegin}
+            religion={religionBegin}
+            ethnicity={ethnicityBegin}
         />
     )
 }
