@@ -18,9 +18,12 @@ function InformationContent(props) {
         phone,
         email,
         bio,
-        dateOfBirth,
         onBlurTextExpand,
-        onBlurTextInput
+        onBlurTextInputName,
+        onBlurTextInputPhone,
+        dateBegin,
+        dataInterest,
+        pickDate
     } = props
 
     return (
@@ -32,14 +35,17 @@ function InformationContent(props) {
             <ItemContent title={"Interest"} content={""}
                 onPressItem={onPressInterest}
                 typeContent={TYPE_CONTENT.TagSelect}
+                data={dataInterest}
             />
 
             <ItemContent title={"Name"} content={name}
                 typeContent={TYPE_CONTENT.TextInput}
-                onBlurTextInput={onBlurTextInput}
+                onBlurTextInput={onBlurTextInputName}
             />
-            <ItemContent title={"Age"} content={dateOfBirth} keyboardType={'number-pad'}
-                typeContent={TYPE_CONTENT.TextInput}
+            <ItemContent title={"Age"}
+                typeContent={TYPE_CONTENT.DateTime}
+                dateBegin={dateBegin}
+                pickDate={pickDate}
             />
             <ItemContent title={"Gender"} content={gender}
                 onPressItem={onPressGender}
@@ -47,6 +53,7 @@ function InformationContent(props) {
             />
             <ItemContent title={"Phone"} content={phone} keyboardType={'phone-pad'}
                 typeContent={TYPE_CONTENT.TextInput}
+                onBlurTextInput={onBlurTextInputPhone}
             />
             <ItemContent title={"Email"} content={email} keyboardType={'email-address'}
                 typeContent={TYPE_CONTENT.View}

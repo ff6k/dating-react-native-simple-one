@@ -6,12 +6,14 @@ import Themes from '/src/themes'
 import Icon from '/src/components/UI/icon'
 
 export default function editContentList(props) {
-    const { onPressBack, data, title, onPressSave, onChangeDataItemClick, isChange } = props
+    const { onPressBack, data, title, onPressSave, onPressGetItem, isChange, indexBegin, onChangeDataItemClick } = props
 
-    const [idSelected, setIdSelected] = useState(data[0].id)
+    const [idSelected, setIdSelected] = useState(data[indexBegin].id)
 
-    const onPressItem = (id) => {
+    const onPressItem = (item) => {
+        const { id } = item
         setIdSelected(id)
+        onPressGetItem && onPressGetItem(item)
     }
 
     useEffect(() => {
@@ -27,7 +29,7 @@ export default function editContentList(props) {
 
         return (
             <TouchableOpacity style={styles.containContent}
-                onPress={() => onPressItem(id)}>
+                onPress={() => onPressItem(item)}>
                 <Text style={styles.txtContent}>{label}</Text>
                 {
                     isCheck && <Icon

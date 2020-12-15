@@ -3,5 +3,6 @@ export const TYPE_CONTENT = {
     TextExpand: 1,
     TagSelect: 2,
     Button: 3,
-    View: 4
+    View: 4,
+    DateTime: 5
 }

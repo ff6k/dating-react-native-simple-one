@@ -11,6 +11,7 @@ import Utils from '/src/utils'
 import Const from '/src/const'
 import CoupleButtonImage from '/src/components/UI/coupleButtonImage'
 import HeaderSave from '/src/components/UI/headerSave'
+import ButtonBack from '/src/components/UI/buttonBack'
 import AnimLottieView from '/src/components/UI/animLottieView'
 import BottomModalSlide from '/src/components/UI/bottomModalSlide'
 // import UploadImageModal from '/src/components/UI/uploadImageModal'
@@ -21,8 +22,8 @@ const headerComponent = (props) => {
     return (
         <View>
 
-            <HeaderSave
-                onPressBack={onPressBack}
+            <ButtonBack
+                onPress={onPressBack}
                 title={"Edit Profile"}
             />
             <Text style={styles.headerText}>Photos Show</Text>
@@ -33,13 +34,13 @@ const headerComponent = (props) => {
 const footerComponent = (props) => {
     const { onPressInterest, onPressGender, onPressReligious, onPressEthnicity,
         onPressKids, onPressFamilyPlans, onPressSmoking, onPressDrinking, data, onBlurTextExpand,
-        onBlurTextInput
+        onBlurTextInputName, pickDate, gender, onBlurTextInputPhone, dataInterest
     } = props
     let [name, dateOfBirth, location, religion, company, jobTitle, school, ethnicity,
-        children, smoking, interests, drinking, bio, gender, phone, email] = []
+        children, smoking, drinking, bio, phone, email] = []
     if (data !== null) {
         name = data.name
-        dateOfBirth = Utils.Calculator.getOldYear(data.dateOfBirth).toString()
+        dateOfBirth = data.dateOfBirth
         location = data.location
         religion = data.religion
         company = data.company
@@ -50,7 +51,6 @@ const footerComponent = (props) => {
         smoking = data.smoking
         bio = data.bio
         drinking = data.drinking
-        gender = data.gender
         phone = data.phone
         email = data.email
     }
@@ -62,13 +62,17 @@ const footerComponent = (props) => {
                 onPressGender={onPressGender}
                 name={name}
                 bio={bio}
-                dateOfBirth={dateOfBirth}
+                // dateOfBirth={dateOfBirth}
                 gender={gender}
                 phone={phone}
                 email={email}
                 location={location}
                 onBlurTextExpand={onBlurTextExpand}
-                onBlurTextInput={onBlurTextInput}
+                onBlurTextInputName={onBlurTextInputName}
+                onBlurTextInputPhone={onBlurTextInputPhone}
+                dateBegin={dateOfBirth && new Date(dateOfBirth)}
+                pickDate={pickDate}
+                dataInterest={dataInterest}
             />
             <Text style={styles.headerText}>Your Virtues</Text>
             <MyVirtuesContent

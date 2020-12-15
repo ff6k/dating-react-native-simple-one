@@ -5,26 +5,45 @@ import InterestContentInfo from '/src/components/UI/interestContentInfo'
 import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
 import { TYPE_CONTENT } from '../typeContent'
 import Icon from '/src/components/UI/icon'
+import DateTimePicker from '/src/components/UI/dateTimePicker'
+import Utils from '/src/utils'
 
 const MAX_LENGTH_TEXT = 500
 
-const data = [
-    { id: 31, label: 'Mountain Biking' },
-    { id: 32, label: 'Snowmobiling' },
-    { id: 33, label: 'Painting' },
-    { id: 34, label: 'Grilling' },
-    { id: 35, label: 'Surf Fishing' },
-    { id: 36, label: 'Bartending' },
-    { id: 37, label: 'Stamp Collecting' },
-    { id: 38, label: 'Helping The Homeless' },
-]
+// const data = [
+//     { id: 31, label: 'Mountain Biking' },
+//     { id: 32, label: 'Snowmobiling' },
+//     { id: 33, label: 'Painting' },
+//     { id: 34, label: 'Grilling' },
+//     { id: 35, label: 'Surf Fishing' },
+//     { id: 36, label: 'Bartending' },
+//     { id: 37, label: 'Stamp Collecting' },
+//     { id: 38, label: 'Helping The Homeless' },
+// ]
 
 
 const RenderTypeContent = (props) => {
-    const { content, onPressItem, keyboardType, typeContent, onBlurTextExpand, onBlurTextInput } = props
+    const { data, title, content, onPressItem, keyboardType, typeContent, onBlurTextExpand, onBlurTextInput, dateBegin, pickDate } = props
     const [contentState, setContentState] = useState(() => {
         return content ? content : ''
     });
+    const [isNotFormat, setIsNotFormat] = useState(null)
+
+    const isFormatPhone = () => {
+        if (typeContent === TYPE_CONTENT.TextInput && title === 'Phone') {
+            const isPhoneFormat = Utils.ValidateInput.validatePhoneNumber(contentState)
+            if (isPhoneFormat) {
+                setIsNotFormat(false)
+            }
+            else { setIsNotFormat(true) }
+        }
+    }
+
+    const onBlur = () => {
+        onBlurTextInput && onBlurTextInput(contentState)
+        isFormatPhone()
+    }
+
     switch (typeContent) {
         case TYPE_CONTENT.Button:
             return (
@@ -41,24 +60,27 @@ const RenderTypeContent = (props) => {
             )
         case TYPE_CONTENT.TextInput:
             return (
-                <View style={styles.containView}>
-                    <TextInput
-                        style={[{
-                            color: 'black', fontSize: 16,
-                            fontFamily: Themes.FontFamily.FontThinDefault,
-                            width: '95%'
-                        }]}
-                        onBlur={() => onBlurTextInput && onBlurTextInput(contentState)}
-                        placeholder={"NA"}
-                        value={contentState}
-                        keyboardType={keyboardType}
-                        onChangeText={(value) => setContentState(value)}
-                    />
-                    <Icon
-                        name={'edit-2-outline'}
-                        size={20}
-                        color={Themes.Colors.GRAY_BRIGHT_I}
-                    />
+                <View>
+                    {isNotFormat && <Text style={styles.txtInvalid}>Invalid</Text>}
+                    <View style={styles.containView}>
+                        <TextInput
+                            style={[{
+                                color: 'black', fontSize: 16,
+                                fontFamily: Themes.FontFamily.FontThinDefault,
+                                width: '95%'
+                            }, isNotFormat && { color: 'red' }]}
+                            onBlur={() => onBlur()}
+                            placeholder={"NA"}
+                            value={contentState}
+                            keyboardType={keyboardType}
+                            onChangeText={(value) => setContentState(value)}
+                        />
+                        <Icon
+                            name={'edit-2-outline'}
+                            size={20}
+                            color={Themes.Colors.GRAY_BRIGHT_I}
+                        />
+                    </View>
                 </View>
 
             )
@@ -104,6 +126,17 @@ const RenderTypeContent = (props) => {
                     />
                 </View>
             )
+        case TYPE_CONTENT.DateTime:
+            return (
+                <DateTimePicker
+                    style={styles.inpDateTime}
+                    styleText={styles.txtDateTime}
+                    modeShow={'date'}
+                    sizeIcon={20}
+                    dateBegin={dateBegin}
+                    pickDate={pickDate}
+                />
+            )
     }
 }
 
@@ -125,6 +158,16 @@ export default function ItemContent(props) {
 
 const HEIGHT_HEADER = 40
 const styles = StyleSheet.create({
+    inpDateTime: {
+        height: 50,
+        alignItems: 'center',
+        paddingRight: 10
+    },
+    txtDateTime: {
+        fontSize: 16,
+        color: 'black', fontSize: 16,
+        fontFamily: Themes.FontFamily.FontThinDefault,
+    },
     containView: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -168,4 +211,9 @@ const styles = StyleSheet.create({
     txtContent: {
         ...Themes.Styles.TextContent
     },
+    txtInvalid: {
+        fontSize: 10,
+        color: 'red',
+        position: 'absolute'
+    }
 })

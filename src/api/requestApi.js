@@ -2,7 +2,7 @@ import {
     URL_GET_IMAGE_SWIPE, URL_POST_LIKE_IMAGE_SWIPE, URL_GET_MESSAGES,
     URL_GET_USER_DETAIL, URL_GET_PROFILE, URL_PUT_PROFILE, URL_POST_PHOTOS,
     URL_GET_USER_LIKED_ME, URL_GET_MESSAGES_CONVERSATION, URL_POST_MESSAGES_CONVERSATION,
-    URL_POST_REPORT, URL_GET_TOP_PICK, URL_GET_USER_MATCHED_ME
+    URL_POST_REPORT, URL_GET_TOP_PICK, URL_GET_USER_MATCHED_ME, URL_GET_INTERESTS
 } from './url'
 import axios from 'axios';
 
@@ -120,6 +120,15 @@ export const putSmokingApiRequest = async (params) => {
     })
 }
 
+export const putPhoneApiRequest = async (params) => {
+    const { id, token, phone } = params
+    const Url = URL_PUT_PROFILE + `/${id}`
+    const client = getAxios('Bearer ' + token)
+    return client.put(Url, {
+        "phone": phone,
+    })
+}
+
 export const putBioApiRequest = async (params) => {
     const { id, token, bio } = params
     const Url = URL_PUT_PROFILE + `/${id}`
@@ -128,6 +137,7 @@ export const putBioApiRequest = async (params) => {
         "bio": bio,
     })
 }
+
 
 export const putNameApiRequest = async (params) => {
     const { id, token, name } = params
@@ -185,7 +195,29 @@ export const getMatchedMeApiRequest = async (params) => {
     const { token, pageNumber, pageSize, isMatched } = params
     const Url = URL_GET_USER_MATCHED_ME +
         `?pageNumber=${pageNumber}&pageSize=${pageSize}&isMatched=${isMatched}`
-    console.log(`Url: ${Url}`);
     const client = getAxios('Bearer ' + token)
     return client.get(Url)
+}
+
+export const getInterestApiRequest = async (params) => {
+    const { token, id } = params
+    const Url = URL_GET_INTERESTS +
+        `/${id}/interests`
+    const client = getAxios('Bearer ' + token)
+    return client.get(Url)
+}
+export const postInterestApiRequest = async (params) => {
+    const { token, id, idInterest } = params
+    const Url = URL_GET_INTERESTS +
+        `/${id}/interests/${idInterest}`
+    const client = getAxios('Bearer ' + token)
+    return client.post(Url)
+}
+
+export const deleteInterestApiRequest = async (params) => {
+    const { token, id, idInterest } = params
+    const Url = URL_GET_INTERESTS +
+        `/${id}/interests/${idInterest}`
+    const client = getAxios('Bearer ' + token)
+    return client.delete(Url)
 }

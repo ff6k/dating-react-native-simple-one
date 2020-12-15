@@ -11,15 +11,25 @@ let indexPhoto
 let idUser
 let bioBegin
 let nameBegin
+let dateOfBirthBegin
+// let genderBegin
 export default function MyProfileController(props) {
     const { navigation, route } = props
     const [dataProfile, setDataProfile] = useState(null)
     const [dataPhotos, setDataPhotos] = useState(null)
     const refSlideModal = React.createRef()
     const [indexLoading, setIndexLoading] = useState()
+    const [genderBegin, setGenderBegin] = useState()
+    const [dataInterest, setDataInterest] = useState([])
 
     const dataStore = useSelector(state => state.login)
 
+    useEffect(() => {
+        if (route.params !== undefined) {
+            const { gender } = route.params
+            setGenderBegin(gender)
+        }
+    }, [route.params]);
     // const drinkingUpdate = route.params === undefined ? 'Error' : route.params.drinking
     // console.log(`drinkingUpdate: ${drinkingUpdate}`);
     const getDataStore = () => {
@@ -50,19 +60,29 @@ export default function MyProfileController(props) {
             id: idUser,
             token: token
         }
-        async function getApiProfile() {
+        async function getApiProfile(params) {
             return Api.RequestApi.getProfileApiRequest(params)
         }
-        getApiProfile().then(res => {
-            bioBegin = res.data.bio
-            nameBegin = res.data.name
-            const photos = res.data.photos
+
+        async function getApiInterest(params) {
+            return Api.RequestApi.getInterestApiRequest(params)
+        }
+        Promise.all([
+            getApiProfile(params),
+            getApiInterest(params)
+        ]).then(async ([dataProfile, dataInterest]) => {
+            bioBegin = dataProfile.data.bio
+            nameBegin = dataProfile.data.name
+            dateOfBirthBegin = dataProfile.data.dateOfBirth
+            setGenderBegin(dataProfile.data.gender)
+            // genderBegin = res.data.gender
+            const photos = dataProfile.data.photos
             const dataPhotos = checkAndFillPhotos(photos, 9)
             setDataPhotos(dataPhotos)
-            setDataProfile(res.data)
+            setDataProfile(dataProfile.data)
+            setDataInterest(dataInterest.data)
         })
             .catch(err => console.log(err))
-        // .finally(() => setIsLoading(false))
     }, [])
 
     const onPressBack = () => {
@@ -70,11 +90,11 @@ export default function MyProfileController(props) {
     }
 
     const onPressInterest = () => {
-        navigation.navigate(Const.NameScreens.InterestInfomation)
+        navigation.navigate(Const.NameScreens.InterestInfomation, { data: dataInterest })
     }
 
     const onPressGender = () => {
-        navigation.navigate(Const.NameScreens.EditGender)
+        navigation.navigate(Const.NameScreens.EditGender, { gender: genderBegin })
     }
 
     const onPressReligious = () => {
@@ -182,7 +202,7 @@ export default function MyProfileController(props) {
         }
     }
 
-    const onBlurTextInput = (value) => {
+    const onBlurTextInputName = (value) => {
         if (nameBegin !== undefined && nameBegin !== value) {
             const params = {
                 name: value,
@@ -200,6 +220,48 @@ export default function MyProfileController(props) {
         }
     }
 
+    const pickDate = (date) => {
+
+        const dateTemp = Utils.Format.formatDate(new Date(date), Const.DateFormat.DATE_DEFAULT)
+        const dateOfBirthBeginTemp = Utils.Format.formatDate(new Date(dateOfBirthBegin), Const.DateFormat.DATE_DEFAULT)
+
+        if (dateOfBirthBegin !== undefined && dateOfBirthBeginTemp !== dateTemp) {
+            const params = {
+                dateOfBirth: date,
+                id: idUser,
+                token: token
+            }
+            Api.RequestApi.putProfileBirthdayApiRequest(params)
+                .then(response => {
+                    dateOfBirthBegin = response.data.dateOfBirth
+                    Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your date of birth successfully', 3000)
+                }).catch(err => {
+                    Utils.Toast.ToastModal('fail', 'top', 'Fail', `You have saved your date of birth fail, error: ${err}`, 3000)
+                    console.log(err)
+                })
+        }
+    }
+
+    const onBlurTextInputPhone = (value) => {
+        const isPhoneFormat = Utils.ValidateInput.validatePhoneNumber(value)
+        if (isPhoneFormat) {
+            const params = {
+                phone: value,
+                id: idUser,
+                token: token
+            }
+            Api.RequestApi.putPhoneApiRequest(params)
+                .then(response => {
+                    console.log('success')
+                }).catch(err => {
+                    console.log(err)
+                })
+        }
+        else {
+            console.log('err')
+        }
+    }
+
     return (
         <MyProfile
             onPressDrinking={onPressDrinking}
@@ -207,6 +269,7 @@ export default function MyProfileController(props) {
             onPressBack={onPressBack}
             data={dataProfile}
             dataPhotos={dataPhotos}
+            dataInterest={dataInterest}
             onPressInterest={onPressInterest}
             onPressGender={onPressGender}
             onPressReligious={onPressReligious}
@@ -219,7 +282,12 @@ export default function MyProfileController(props) {
             ref={refSlideModal}
             indexLoading={indexLoading}
             onBlurTextExpand={onBlurTextExpand}
-            onBlurTextInput={onBlurTextInput}
+            onBlurTextInputName={onBlurTextInputName}
+            onBlurTextInputPhone={onBlurTextInputPhone}
+            // dateBegin={new Date('09/16/1999')}
+            pickDate={pickDate}
+
+            gender={genderBegin}
         />
     )
 }

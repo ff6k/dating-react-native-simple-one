@@ -5,10 +5,11 @@ import PropTypes from 'prop-types';
 // import { Icon } from 'react-native-eva-icons';
 import Icon from '/src/components/UI/icon'
 import Themes from '/src/themes'
+import Const from '/src/const'
 import Utils from '/src/utils'
 export default function dateTimePicker(props) {
-    const { modeShow, style, styleText, onGetDate } = props;
-    const [date, setDate] = useState(new Date());
+    const { modeShow, style, styleText, onGetDate, sizeIcon, dateBegin, pickDate } = props;
+    const [date, setDate] = useState(() => { return dateBegin ? dateBegin : new Date() });
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
 
@@ -16,6 +17,7 @@ export default function dateTimePicker(props) {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === 'ios');
         setDate(currentDate);
+        pickDate(currentDate)
     };
 
     useEffect(() => {
@@ -23,7 +25,8 @@ export default function dateTimePicker(props) {
     }, [date])
 
     const formatDate = (date) => {
-        return Utils.Format.formatDate(date)
+        return Utils.Format.formatDate(date, Const.DateFormat.DATE_DEFAULT)
+        // return Utils.Format.formatDate(date)
     }
 
     const formatTime = (date) => {
@@ -58,20 +61,19 @@ export default function dateTimePicker(props) {
                     modeShow === 'date' ?
                         <Icon
                             color={Themes.Colors.GRAY_BRIGHT_I}
-                            size={Themes.Const.SIZE_ICON_II}
+                            size={[sizeIcon ? sizeIcon : Themes.Const.SIZE_ICON_II]}
                             name="calendar-outline"
                         />
                         :
                         <Icon
                             color={Themes.Colors.GRAY_BRIGHT_I}
-                            size={Themes.Const.SIZE_ICON_II}
+                            size={[sizeIcon ? sizeIcon : Themes.Const.SIZE_ICON_II]}
                             name="clock-outline"
                         />
                 }
             </TouchableOpacity>
             {show && (
                 <DateTimePicker
-                    style={{ backgroundColor: 'red' }}
                     testID="dateTimePicker"
                     value={date}
                     mode={mode}
