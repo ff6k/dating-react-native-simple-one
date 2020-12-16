@@ -36,12 +36,13 @@ export default function MyProfileController(props) {
     const [ethnicityBegin, setEthnicityBegin] = useState()
     const [kidsBegin, setKidsBegin] = useState()
     const [dataInterest, setDataInterest] = useState([])
-
+    const [drinkingBegin, setDrinkingBegin] = useState()
+    const [smokingBegin, setSmokingBegin] = useState()
     const dataStore = useSelector(state => state.login)
 
     useEffect(() => {
         if (route.params !== undefined) {
-            const { gender, isGetInterest, religion, ethnicity, kids } = route.params
+            const { gender, isGetInterest, religion, ethnicity, kids, drinking, smoking } = route.params
             if (gender !== undefined) { setGenderBegin(gender) }
             if (isGetInterest !== undefined) {
                 const params = {
@@ -65,6 +66,12 @@ export default function MyProfileController(props) {
             }
             if (kids !== undefined) {
                 setKidsBegin(kids)
+            }
+            if (drinking !== undefined) {
+                setDrinkingBegin(drinking)
+            }
+            if (smoking !== undefined) {
+                setSmokingBegin(smoking)
             }
         }
     }, [route.params]);
@@ -102,7 +109,7 @@ export default function MyProfileController(props) {
             getApiProfile(params),
             getApiInterest(params)
         ]).then(async ([dataProfile, dataInterest]) => {
-            const { bio, jobTitle, company, name, dateOfBirth, gender, religion, photos, school, ethnicity, children } = dataProfile.data
+            const { drinking, bio, jobTitle, company, name, dateOfBirth, gender, religion, photos, school, ethnicity, children } = dataProfile.data
 
             bioBegin = bio
             jobBegin = jobTitle
@@ -115,6 +122,7 @@ export default function MyProfileController(props) {
             setKidsBegin(children)
             setReligionBegin(religion)
             setEthnicityBegin(ethnicity)
+            setDrinkingBegin(drinking)
 
             const photosTemp = photos
             const dataPhotos = checkAndFillPhotos(photosTemp, 9)
@@ -154,11 +162,11 @@ export default function MyProfileController(props) {
     }
 
     const onPressSmoking = () => {
-        navigation.navigate(Const.NameScreens.EditSmoking)
+        navigation.navigate(Const.NameScreens.EditSmoking, { smoking: smokingBegin })
     }
 
     const onPressDrinking = () => {
-        navigation.navigate(Const.NameScreens.EditDrinking)
+        navigation.navigate(Const.NameScreens.EditDrinking, { drinking: drinkingBegin })
     }
 
     const onPressAddImage = (index) => {
@@ -386,9 +394,11 @@ export default function MyProfileController(props) {
             pickDate={pickDate}
             jobBegin={jobBegin}
             gender={genderBegin}
+            drinking={drinkingBegin}
             kids={kidsBegin}
             religion={religionBegin}
             ethnicity={ethnicityBegin}
+            smoking={smokingBegin}
         />
     )
 }

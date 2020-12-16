@@ -3,15 +3,17 @@ import EditContentList from '/src/components/UI/editContentList'
 
 
 export default function editDrinking(props) {
-    const { onPressBack, onPressSave, onChangeDataItemClick, data } = props
+    const { onPressBack, isChange, indexDrinking, data, onChangeDataItemClick, onPressGetItem } = props
 
     return (
         <EditContentList
+            title={'Drinking Status'}
             data={data}
             onPressBack={onPressBack}
-            title={'Drinking Status'}
-            onPressSave={onPressSave}
+            indexBegin={indexDrinking}
+            isChange={isChange}
             onChangeDataItemClick={onChangeDataItemClick}
+            onPressGetItem={onPressGetItem}
         />
     )
 }

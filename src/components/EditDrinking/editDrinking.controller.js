@@ -1,24 +1,20 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import EditDrinking from './editDrinking'
-import Api from '/src/api'
-import { useSelector } from 'react-redux'
 import Const from '/src/const'
 import Utils from '/src/utils'
+import { useSelector } from 'react-redux'
+import Api from '/src/api'
 const data = [
     { id: 0, label: `Yes` },
     { id: 1, label: `No` },
     { id: 2, label: `Sometimes` },
 ]
 
+let idClick
 let token
 let idUser
-let idSelected
 export default function EditDrinkingController(props) {
-    const { navigation } = props
-    const onPressBack = () => {
-        navigation.goBack()
-        // navigation.navigate(Const.NameScreens.MyProfile, { drinking: data[idSelected].label })
-    }
+    const { navigation, route } = props
 
     const dataStore = useSelector(state => state.login)
 
@@ -37,32 +33,49 @@ export default function EditDrinkingController(props) {
         getDataStore()
     }, [])
 
-    const onPressSave = () => {
-        const statusDrink = data[idSelected].label
-        const params = {
-            token: token,
-            id: idUser,
-            drinking: statusDrink
+    const [indexDrinking, setIndexKids] = useState(() => {
+        return data.findIndex(e => e.label == route.params.drinking)
+    })
+
+    const onPressBack = () => {
+        if (idClick === undefined || (indexDrinking === -1 && idClick === undefined)
+            || (indexDrinking !== -1 && data[indexDrinking].id === idClick)) {
+            navigation.goBack()
         }
-        Api.RequestApi.putDrinkingsApiRequest(params)
-            .then(res => {
-                Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your status drinking', 3000)
-            })
-            .catch(err => {
-                console.log(err)
-                Utils.Toast.ToastModal('error', 'top', 'Fail', err, 3000)
-            })
+        else {
+            const temp = data.find(e => e.id == idClick)
+            navigation.navigate(Const.NameScreens.MyProfile, { drinking: temp.label })
+        }
     }
 
     const onChangeDataItemClick = (id) => {
-        idSelected = id
+        idClick = id
+    }
+
+    const onPressGetItem = (item) => {
+        if (item.id !== idClick) {
+            const params = {
+                drinking: item.label,
+                id: idUser,
+                token: token
+            }
+            Api.RequestApi.putDrinkingsApiRequest(params)
+                .then(response => {
+                    Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your drinking status successfully', 3000)
+                }).catch(err => {
+                    Utils.Toast.ToastModal('fail', 'top', 'Fail', `You have saved your drinking status fail, error: ${err}`, 3000)
+                    console.log(err)
+                })
+        }
     }
     return (
         <EditDrinking
             onPressBack={onPressBack}
+            isChange={true}
             data={data}
-            onPressSave={onPressSave}
+            indexDrinking={indexDrinking}
             onChangeDataItemClick={onChangeDataItemClick}
+            onPressGetItem={onPressGetItem}
         />
     )
 }

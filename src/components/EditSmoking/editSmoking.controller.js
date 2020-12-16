@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Const from '/src/const'
 import EditSmoking from './editSmoking'
 import { useSelector } from 'react-redux'
@@ -11,15 +11,11 @@ const data = [
     { id: 2, label: `Sometimes` },
 ]
 
+let idClick
 let token
 let idUser
-let idSelected
 export default function EditSmokingController(props) {
-    const { navigation } = props
-    const onPressBack = () => {
-        navigation.goBack()
-        // navigation.navigate(Const.NameScreens.MyProfile, { drinking: data[idSelected].label })
-    }
+    const { navigation, route } = props
 
     const dataStore = useSelector(state => state.login)
 
@@ -38,31 +34,53 @@ export default function EditSmokingController(props) {
         getDataStore()
     }, [])
 
-    const onPressSave = () => {
-        const statusSmoking = data[idSelected].label
-        const params = {
-            token: token,
-            id: idUser,
-            smoking: statusSmoking
+    const [indexSmoking, setIndexSmoking] = useState(() => {
+        return data.findIndex(e => e.label == route.params.smoking)
+    })
+
+    const onPressBack = () => {
+        if (idClick === undefined || (indexSmoking === -1 && idClick === undefined)
+            || (indexSmoking !== -1 && data[indexSmoking].id === idClick)) {
+            navigation.goBack()
         }
-        Api.RequestApi.putSmokingApiRequest(params)
-            .then(res => {
-                Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your status smoking', 3000)
-            })
-            .catch(err => {
-                console.log(err)
-                Utils.Toast.ToastModal('error', 'top', 'Fail', err, 3000)
-            })
+        else {
+            const temp = data.find(e => e.id == idClick)
+            console.log(`temp: ${temp}`);
+            if (temp === undefined) {
+                navigation.goBack()
+            }
+            else { navigation.navigate(Const.NameScreens.MyProfile, { smoking: temp.label }) }
+        }
     }
+
     const onChangeDataItemClick = (id) => {
-        idSelected = id
+        idClick = id
+    }
+
+    const onPressGetItem = (item) => {
+        if (item.id !== idClick) {
+            const params = {
+                smoking: item.label,
+                id: idUser,
+                token: token
+            }
+            Api.RequestApi.putSmokingApiRequest(params)
+                .then(response => {
+                    Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your smoking status successfully', 3000)
+                }).catch(err => {
+                    Utils.Toast.ToastModal('fail', 'top', 'Fail', `You have saved your smoking status fail, error: ${err}`, 3000)
+                    console.log(err)
+                })
+        }
     }
     return (
         <EditSmoking
-            data={data}
             onPressBack={onPressBack}
-            onPressSave={onPressSave}
+            isChange={true}
+            data={data}
+            indexSmoking={indexSmoking}
             onChangeDataItemClick={onChangeDataItemClick}
+            onPressGetItem={onPressGetItem}
         />
     )
 }

@@ -35,19 +35,18 @@ const footerComponent = (props) => {
     const { onPressInterest, onPressGender, onPressReligious, onPressEthnicity,
         onPressKids, onPressFamilyPlans, onPressSmoking, onPressDrinking, data, onBlurTextExpand,
         onBlurTextInputName, pickDate, gender, onBlurTextInputPhone, dataInterest, religion,
-        onBlurTextInputJob, jobBegin, onBlurTextInputWorkAt, onBlurTextInputEducation, ethnicity, kids
+        onBlurTextInputJob, jobBegin, onBlurTextInputWorkAt, onBlurTextInputEducation, ethnicity, kids, drinking,
+        smoking
     } = props
     let [name, dateOfBirth, location, company, school,
-        smoking, drinking, bio, phone, email] = []
+        bio, phone, email] = []
     if (data !== null) {
         name = data.name
         dateOfBirth = data.dateOfBirth
         location = data.location
         company = data.company
         school = data.school
-        smoking = data.smoking
         bio = data.bio
-        drinking = data.drinking
         phone = data.phone
         email = data.email
     }
