@@ -38,11 +38,12 @@ export default function MyProfileController(props) {
     const [dataInterest, setDataInterest] = useState([])
     const [drinkingBegin, setDrinkingBegin] = useState()
     const [smokingBegin, setSmokingBegin] = useState()
+    const [locationBegin, setLocationBegin] = useState()
     const dataStore = useSelector(state => state.login)
 
     useEffect(() => {
         if (route.params !== undefined) {
-            const { gender, isGetInterest, religion, ethnicity, kids, drinking, smoking } = route.params
+            const { gender, isGetInterest, religion, ethnicity, kids, drinking, smoking, locationSelect } = route.params
             if (gender !== undefined) { setGenderBegin(gender) }
             if (isGetInterest !== undefined) {
                 const params = {
@@ -72,6 +73,9 @@ export default function MyProfileController(props) {
             }
             if (smoking !== undefined) {
                 setSmokingBegin(smoking)
+            }
+            if (locationSelect !== undefined) {
+                setLocationBegin(locationSelect)
             }
         }
     }, [route.params]);
@@ -109,7 +113,7 @@ export default function MyProfileController(props) {
             getApiProfile(params),
             getApiInterest(params)
         ]).then(async ([dataProfile, dataInterest]) => {
-            const { drinking, bio, jobTitle, company, name, dateOfBirth, gender, religion, photos, school, ethnicity, children } = dataProfile.data
+            const { drinking, bio, jobTitle, company, name, dateOfBirth, gender, religion, photos, school, ethnicity, children, location } = dataProfile.data
 
             bioBegin = bio
             jobBegin = jobTitle
@@ -123,6 +127,7 @@ export default function MyProfileController(props) {
             setReligionBegin(religion)
             setEthnicityBegin(ethnicity)
             setDrinkingBegin(drinking)
+            setLocationBegin(location)
 
             const photosTemp = photos
             const dataPhotos = checkAndFillPhotos(photosTemp, 9)
@@ -404,6 +409,7 @@ export default function MyProfileController(props) {
             religion={religionBegin}
             ethnicity={ethnicityBegin}
             smoking={smokingBegin}
+            location={locationBegin}
         />
     )
 }

@@ -1,28 +1,10 @@
 import React, { useState } from 'react'
-import { FlatList, Text, View, StyleSheet } from 'react-native'
+import { FlatList, Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import ButtonBack from '/src/components/UI/buttonBack'
 import Themes from '/src/themes'
 import Icon from '/src/components/UI/icon'
 import AnimLottieView from '/src/components/UI/animLottieView'
-const renderItemLocation = ({ item, index }) => {
-    const { label } = item
-    console.log(label)
 
-    return (
-        <View style={styles.containItem}>
-            <View style={styles.containIcon}>
-                <Icon
-                    style={styles.icon}
-                    name={'pin-outline'}
-                    size={25}
-                    color={Themes.Colors.GRAY_BRIGHT_II}
-                />
-            </View>
-
-            <Text style={styles.txtContent}>{label}</Text>
-        </View>
-    )
-}
 
 const EmptyComponent = () => {
     return (
@@ -33,8 +15,43 @@ const EmptyComponent = () => {
     )
 }
 
+const COLOR = Themes.Colors.PINK_DARK
 export default function editLocation(props) {
-    const { onPressBack, dataLocation } = props
+    const { onPressBack, dataLocation, onPressItemLocation } = props
+
+    const [latitudeSelect, setLatitudeSelect] = useState(null)
+
+    const onPressItem = (item) => {
+        const { latitude } = item
+        setLatitudeSelect(latitude)
+        onPressItemLocation && onPressItemLocation(item)
+    }
+
+    const renderItemLocation = ({ item, index }) => {
+        const { label, latitude } = item
+        let isSelect = false
+        if (latitude === latitudeSelect) {
+            isSelect = true
+        }
+
+        return (
+            <TouchableOpacity style={styles.containItem}
+                onPress={() => onPressItem(item)}
+            >
+                <View style={[styles.containIcon, isSelect && { borderColor: COLOR }]}>
+                    <Icon
+                        style={styles.icon}
+                        name={'pin-outline'}
+                        size={25}
+                        color={!isSelect ? Themes.Colors.GRAY_BRIGHT_II : COLOR}
+                    />
+                </View>
+
+                <Text style={[styles.txtContent, isSelect && { color: COLOR }]}>{label}</Text>
+            </TouchableOpacity>
+        )
+    }
+
     return (
         <View style={{ flex: 1 }}>
             <ButtonBack

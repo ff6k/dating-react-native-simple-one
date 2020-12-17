@@ -83,6 +83,15 @@ export const putProfileReligiousApiRequest = async (params) => {
     })
 }
 
+export const putProfileLocationApiRequest = async (params) => {
+    const { id, token, location } = params
+    const Url = URL_PUT_PROFILE + `/${id}`
+    const client = getAxios('Bearer ' + token)
+    return client.put(Url, {
+        "location": location
+    })
+}
+
 export const putProfileEthnicityApiRequest = async (params) => {
     const { id, token, ethnicity } = params
     const Url = URL_PUT_PROFILE + `/${id}`
