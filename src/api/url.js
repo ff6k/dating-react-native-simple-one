@@ -22,6 +22,8 @@ export const URL_POST_REPORT = URL_NETWORK + URL_USER
 export const URL_GET_TOP_PICK = URL_NETWORK + URL_USER + "/pagination"
 export const URL_GET_USER_MATCHED_ME = URL_NETWORK + URL_USER + "/pagination"
 export const URL_GET_INTERESTS = URL_NETWORK + URL_USER
+export const URL_REMOVE_PHOTOS = URL_NETWORK + URL_USER
+
 //realtime
 export const URL_CONNECT_SERVER_MESSAGES = URL_NETWORK + "/hubs/messages"
 

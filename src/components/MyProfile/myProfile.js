@@ -13,6 +13,7 @@ import CoupleButtonImage from '/src/components/UI/coupleButtonImage'
 import HeaderSave from '/src/components/UI/headerSave'
 import ButtonBack from '/src/components/UI/buttonBack'
 import AnimLottieView from '/src/components/UI/animLottieView'
+import SpinnerLoading from '/src/components/UI/spinnerLoading'
 import BottomModalSlide from '/src/components/UI/bottomModalSlide'
 // import UploadImageModal from '/src/components/UI/uploadImageModal'
 import Modal from 'react-native-modal';
@@ -101,7 +102,8 @@ const footerComponent = (props) => {
     )
 }
 
-const imageList = (item, index, onPressAddImage, indexLoading) => {
+const imageList = (item, index, props) => {
+    const { onPressAddImage, indexLoading, onPressRemoveImage, idRemoving } = props
     if (item !== undefined) {
         const { url } = item
         if (url === undefined) {
@@ -116,8 +118,14 @@ const imageList = (item, index, onPressAddImage, indexLoading) => {
             />
         }
         else {
+            let isRemoving = false
+            if (index === idRemoving) {
+                isRemoving = true
+            }
             return <ImageItem uri={url}
                 index={index}
+                isRemoving={isRemoving}
+                onPressRemoveImage={onPressRemoveImage}
             />
         }
     }
@@ -132,16 +140,15 @@ const emptyComponent = () => {
 }
 
 const MyProfile = React.forwardRef((props, ref) => {
-    const { data, onPressAddImage, dataPhotos, indexLoading,
-        // isVisible, setVisibleModel,
-        onUploadPhoto, onTakePhoto
+    const { dataPhotos, onUploadPhoto, onTakePhoto, isRemoving
     } = props
     return (
         <View>
+            {/* <SpinnerLoading isLoading={isRemoving} source={require('/src/assets/lotties/9844-loading-40-paperplane.json')} /> */}
             <FlatList
                 showsVerticalScrollIndicator={false}
                 data={dataPhotos !== null ? dataPhotos : undefined}
-                renderItem={({ item, index }) => imageList(item, index, onPressAddImage, indexLoading)}
+                renderItem={({ item, index }) => imageList(item, index, props)}
                 columnWrapperStyle={{ justifyContent: 'space-evenly' }}
                 ListEmptyComponent={emptyComponent}
                 keyExtractor={item => item.id.toString()}

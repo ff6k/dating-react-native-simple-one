@@ -31,6 +31,7 @@ export default function MyProfileController(props) {
     const [dataPhotos, setDataPhotos] = useState(null)
     const refSlideModal = React.createRef()
     const [indexLoading, setIndexLoading] = useState()
+    const [idRemoving, setIdRemoving] = useState()
     const [genderBegin, setGenderBegin] = useState()
     const [religionBegin, setReligionBegin] = useState()
     const [ethnicityBegin, setEthnicityBegin] = useState()
@@ -227,7 +228,9 @@ export default function MyProfileController(props) {
         Api.RequestApi.putPhotosApiRequest(params)
             .then(response => {
                 const dataTemp = [...dataPhotos]
+                dataTemp[index].id = response.data.id
                 dataTemp[index].url = response.data.url
+                dataTemp[index].publicId = response.data.publicId
                 setDataPhotos(dataTemp)
                 Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your photo successfully', 3000)
             }).catch(err => {
@@ -374,6 +377,28 @@ export default function MyProfileController(props) {
         navigation.navigate(Const.NameScreens.EditLocation)
     }
 
+    const removeItemInDataPhotos = (index) => {
+        const dataTemp = [...dataPhotos]
+        dataTemp[index] = { id: dataTemp[index].id }
+        setDataPhotos(dataTemp)
+    }
+
+    const onPressRemoveImage = (index) => {
+        setIdRemoving(index)
+        const { id } = dataPhotos[index]
+        const params = {
+            idUser,
+            token,
+            idPhoto: id,
+        }
+        Api.RequestApi.removePhotosApiRequest(params)
+            .then(res => {
+                removeItemInDataPhotos(index)
+            })
+            .catch(err => console.log(err))
+            .finally(() => setIdRemoving(null))
+    }
+
     return (
         <MyProfile
             onPressDrinking={onPressDrinking}
@@ -394,12 +419,14 @@ export default function MyProfileController(props) {
             onTakePhoto={onTakePhoto}
             ref={refSlideModal}
             indexLoading={indexLoading}
+            idRemoving={idRemoving}
             onBlurTextExpand={onBlurTextExpand}
             onBlurTextInputName={onBlurTextInputName}
             onBlurTextInputPhone={onBlurTextInputPhone}
             onBlurTextInputJob={onBlurTextInputJob}
             onBlurTextInputWorkAt={onBlurTextInputWorkAt}
             onBlurTextInputEducation={onBlurTextInputEducation}
+            onPressRemoveImage={onPressRemoveImage}
             // dateBegin={new Date('09/16/1999')}
             pickDate={pickDate}
             jobBegin={jobBegin}
