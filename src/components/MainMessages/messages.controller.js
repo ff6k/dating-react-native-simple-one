@@ -113,7 +113,10 @@ export default function MessagesController(props) {
         let _hubConnection
         let isMounted = true;
         _hubConnection = connectServer(token)
-        _hubConnection.onclose(() => setTimeout(_hubConnection = connectServer(token), 5000));
+        _hubConnection.onclose(() => {
+            console.log('reconnect...')
+            _hubConnection = connectServer(token)
+        });
         listenerConnect(_hubConnection, Const.CodeListener.CODE_RECEIVE_MESSAGE, data => {
             if (isMounted) {
                 const { senderId } = data
@@ -231,7 +234,6 @@ export default function MessagesController(props) {
             .then(
                 data => {
                     handleDataSend(data.url, Const.TypeSend.IMAGE)
-                    // saveDataPhotoApi(data)
                 }
             ).catch(err => console.log(err))
     }

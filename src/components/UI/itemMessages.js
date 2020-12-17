@@ -42,20 +42,24 @@ export default function itemMessages(props) {
             recipientId === idUser
         ) {
             switch (type) {
-                case 'Gif':
+                case Const.TypeSend.GIF:
                     return 'You have got a gif'
-                case 'Image':
+                case Const.TypeSend.IMAGE:
                     return 'You have got a image'
+                case Const.TypeSend.LOCATION:
+                    return 'You have got a location'
                 default:
                     return content
             }
         }
         else {
             switch (type) {
-                case 'Gif':
+                case Const.TypeSend.GIF:
                     return 'You have send a gif'
-                case 'Image':
+                case Const.TypeSend.IMAGE:
                     return 'You have send a image'
+                case Const.TypeSend.LOCATION:
+                    return 'You have send a location'
                 default:
                     return 'Me: ' + content
             }
