@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
+import { Linking } from 'react-native'
 import Messages from './messages'
 import Const from '/src/const'
 import Api from '/src/api'
 import { useSelector } from 'react-redux'
 import { connectServer, listenerConnect } from '/src/configs/Signalr'
 import Utils from '/src/utils'
+import Geolocation from '@react-native-community/geolocation';
+import { request, PERMISSIONS } from 'react-native-permissions';
 
 let dataMessBegin
 let isChange
@@ -107,9 +110,10 @@ export default function MessagesController(props) {
 
     useEffect(() => {
         const { idPeople } = route.params
-
+        let _hubConnection
         let isMounted = true;
-        const _hubConnection = connectServer(token)
+        _hubConnection = connectServer(token)
+        _hubConnection.onclose(() => setTimeout(_hubConnection = connectServer(token), 5000));
         listenerConnect(_hubConnection, Const.CodeListener.CODE_RECEIVE_MESSAGE, data => {
             if (isMounted) {
                 const { senderId } = data
@@ -162,17 +166,7 @@ export default function MessagesController(props) {
 
     const pushDataMessages = (messages) => {
         setIsLoadingSend(true)
-        // const { idPeople } = route.params
-
-        // const params = {
-        //     token: token,
-        //     idSender: idUser,
-        //     idReceipt: idPeople,
-        //     content: messages,
-        //     type: 'Text'
-        // }
-        handleDataImage(messages, 'Text')
-        // saveMessageApi(params)
+        handleDataSend(messages, Const.TypeSend.TEXT)
     }
 
     const onPressSend = (messages) => {
@@ -199,6 +193,7 @@ export default function MessagesController(props) {
     const saveMessageApi = (params) => {
         Api.RequestApi.postMessagesConversationApiRequest(params)
             .then(res => {
+                console.log(res.data)
                 isChange = true
                 loadDataApi(1)
                 setPageNumber(1)
@@ -211,7 +206,7 @@ export default function MessagesController(props) {
     }
 
 
-    const handleDataImage = (content, type) => {
+    const handleDataSend = (content, type) => {
         const { idPeople } = route.params
 
         const params = {
@@ -235,7 +230,7 @@ export default function MessagesController(props) {
             .then(res => res.json())
             .then(
                 data => {
-                    handleDataImage(data.url, 'Image')
+                    handleDataSend(data.url, Const.TypeSend.IMAGE)
                     // saveDataPhotoApi(data)
                 }
             ).catch(err => console.log(err))
@@ -262,7 +257,7 @@ export default function MessagesController(props) {
     const getUriGif = (uriGif) => {
         setIsVisibleGif(false)
         setIsLoadingSend(true)
-        handleDataImage(uriGif, 'Gif')
+        handleDataSend(uriGif, Const.TypeSend.GIF)
     }
 
     const onPressReport = () => {
@@ -276,6 +271,49 @@ export default function MessagesController(props) {
 
     async function postReportApi(params) {
         return Api.RequestApi.postReportApiRequest(params)
+    }
+
+    const onPressLocation = () => {
+        setIsLoadingSend(true)
+        fetchData()
+    }
+
+    async function fetchData() {
+        if (Platform.OS === 'ios') {
+            var response = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+            if (response === 'granted') {
+                locateCurrentPosition();
+            }
+        } else {
+            var response = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+            if (response === 'granted') {
+                locateCurrentPosition();
+            }
+            else {
+                setIsLoadingSend(false)
+            }
+        }
+    }
+
+    const locateCurrentPosition = () => {
+        Geolocation.getCurrentPosition(
+            (position) => {
+                console.log('send location')
+                const currentLongitude =
+                    JSON.stringify(position.coords.longitude);
+                const currentLatitude =
+                    JSON.stringify(position.coords.latitude);
+
+                const mess = Utils.Decode.encodeString([currentLongitude, currentLatitude])
+                handleDataSend(mess, Const.TypeSend.LOCATION)
+
+            }, (error) => {
+                setIsLoadingSend(false)
+                console.log(error.message)
+            }, {
+            enableHighAccuracy: false, timeout: 20000, maximumAge: 1000
+        }
+        );
     }
 
     const onPressPostData = (data) => {
@@ -306,6 +344,29 @@ export default function MessagesController(props) {
 
 
     }
+
+    const onPressLocationLink = (item) => {
+        const { content, senderId, senderName, recipientName } = item
+        const arrString = Utils.Decode.decodeString(content)
+        if (senderId === idUser) {
+            linkLocationOpenGoogleMap(arrString[0], arrString[1], senderName)
+        }
+        else {
+            linkLocationOpenGoogleMap(arrString[0], arrString[1], recipientName)
+        }
+    }
+
+    const linkLocationOpenGoogleMap = (longitude, latitude, name) => {
+        const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+        const latLng = `${latitude},${longitude}`;
+        const label = name;
+        const url = Platform.select({
+            ios: `${scheme}${label}@${latLng}`,
+            android: `${scheme}${latLng}(${label})`
+        });
+        Linking.openURL(url);
+    }
+
     return (
         <Messages
             onPressBack={onPressBack}
@@ -319,6 +380,7 @@ export default function MessagesController(props) {
             onPressSend={onPressSend}
             onPressViewProfile={onPressViewProfile}
             onPressPhoto={onPressPhoto}
+            onPressLocation={onPressLocation}
             isVisiblePhoto={isVisiblePhoto}
             setIsVisiblePhoto={setIsVisiblePhoto}
             onTakePhoto={onTakePhoto}
@@ -332,6 +394,7 @@ export default function MessagesController(props) {
             onPressReport={onPressReport}
             onPressCloseModal={onPressCloseModal}
             onPressPostData={onPressPostData}
+            onPressLocationLink={onPressLocationLink}
         />
     )
 }

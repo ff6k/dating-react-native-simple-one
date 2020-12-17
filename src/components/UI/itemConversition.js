@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import Image from 'react-native-fast-image'
 import Themes from '/src/themes'
 import Utils from '/src/utils'
@@ -88,9 +88,9 @@ const getTime = (date) => {
 
 const width_screen = Const.Common.deviceWidth
 export default function itemConversition(props) {
-    const { item, idUser, dataMessages, index } = props
+    const { item, idUser, dataMessages, index, onPressLocationLink } = props
     // console.log(`item: ${JSON.stringify(item)}`);
-    const { senderPhotoUrl, content, senderId, type } = item
+    const { senderPhotoUrl, content, senderId, type, senderName, recipientName } = item
     // const dt = dataMessages.filter(e => e.id === id)
     // if (dt > 0) {
     //     return null
@@ -173,11 +173,17 @@ export default function itemConversition(props) {
                             }
                         }}
                     >
-                        {(type === 'Image' || type === 'Gif') && <Image source={{ uri: content }}
+                        {(type === Const.TypeSend.IMAGE || type === Const.TypeSend.GIF) && <Image source={{ uri: content }}
                             style={{ width: 150, height: 150 }}
                             resizeMode={'stretch'}
                         />}
-                        {type === 'Text' && <Text style={[styles.txtMessage, width !== null && { width: width_screen - 110 }]}>{content}</Text>}
+                        {type === Const.TypeSend.TEXT && <Text style={[styles.txtMessage, width !== null && { width: width_screen - 110 }]}>{content}</Text>}
+                        {type === Const.TypeSend.LOCATION && <TouchableOpacity
+                            onPress={() => onPressLocationLink && onPressLocationLink(item)}
+                        >
+                            <Text style={styles.linkLocation}>Open Location {senderName}</Text>
+                        </TouchableOpacity>
+                        }
                     </View>
                 </View> :
                     <View style={[styles.containMessage, width !== null && { width: width, marginRight: 50 }]}
@@ -190,11 +196,17 @@ export default function itemConversition(props) {
                     >
                         <View style={[stylesMess, !isShowImage ? { marginRight: 40 + MARGIN_LEFT } : {},
                             width !== null && { width: width_screen - 120 }]}>
-                            {(type === 'Image' || type === 'Gif') && <Image source={{ uri: content }}
+                            {(type === Const.TypeSend.IMAGE || type === Const.TypeSend.GIF) && <Image source={{ uri: content }}
                                 style={{ width: 150, height: 150 }}
                                 resizeMode={'stretch'}
                             />}
-                            {type === 'Text' && <Text style={styles.txtMessage}>{content}</Text>}
+                            {type === Const.TypeSend.TEXT && <Text style={styles.txtMessage}>{content}</Text>}
+                            {type === Const.TypeSend.LOCATION && <TouchableOpacity
+                                onPress={() => onPressLocationLink && onPressLocationLink(item)}
+                            >
+                                <Text style={styles.linkLocation}>Open Location {senderName}</Text>
+                            </TouchableOpacity>
+                            }
                         </View>
                         {isShowImage && <Image
                             style={[styles.image, { marginRight: 12 }]}
@@ -217,6 +229,12 @@ const SIZE_IMAGE = 35
 const SIZE_RADIUS = 15
 const MARGIN_LEFT = 15
 const styles = StyleSheet.create({
+    linkLocation: {
+        color: 'blue',
+        fontSize: 14,
+        fontFamily: Themes.FontFamily.FontMediumDefault,
+        textDecorationLine: 'underline'
+    },
     text: {
         marginTop: 10,
         marginRight: 10,

@@ -56,7 +56,7 @@ const Messages = React.forwardRef((props, ref) => {
         onPressViewProfile, onPressPhoto,
         isVisiblePhoto, setIsVisiblePhoto, onTakePhoto, onUploadPhoto, isLoadingSend,
         onPressGif, getUriGif, isVisibleGif, setIsVisibleGif, isVisibleReport,
-        onPressReport, onPressCloseModal, onPressPostData
+        onPressReport, onPressCloseModal, onPressPostData, onPressLocation, onPressLocationLink
 
     } = props
     const { name } = dataHeader
@@ -65,10 +65,11 @@ const Messages = React.forwardRef((props, ref) => {
     const [isVisibleButton, setIsVisibleButton] = useState(true)
     const [isVisibleTextInput, setIsVisibleTextInput] = useState(true)
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-    const renderItemChat = (item, index, idUser, dataMessages) => {
+    const renderItemChat = (item, index, idUser, dataMessages, onPressLocationLink) => {
         return <ItemConversition item={item} idUser={idUser}
             index={index}
             dataMessages={dataMessages}
+            onPressLocationLink={onPressLocationLink}
         />
     }
 
@@ -99,6 +100,7 @@ const Messages = React.forwardRef((props, ref) => {
                 onPressPhoto && onPressPhoto()
                 break
             case btnLocation:
+                onPressLocation && onPressLocation()
                 break
             case btnGif:
                 onPressGif && onPressGif()
@@ -131,7 +133,7 @@ const Messages = React.forwardRef((props, ref) => {
                 onEndReachedThreshold={0.1}
                 onEndReached={handleLoadMore}
                 ListFooterComponent={() => renderFooter(props)}
-                renderItem={({ item, index }) => renderItemChat(item, index, idUser, dataMessages)} />
+                renderItem={({ item, index }) => renderItemChat(item, index, idUser, dataMessages, onPressLocationLink)} />
 
             {!isVisibleGif && <View style={[styles.containerFooter, { height: height }, !isVisibleButton && styles.containerVisible]}>
                 <AutoGrowingTextInput style={[styles.inpMessage, { height: height }]}

@@ -14,6 +14,7 @@ import * as Languages from './languages'
 import * as Interests from './interests'
 import * as Cloudinary from './cloudinary'
 import * as CodeListener from './codeListener'
+import * as TypeSend from './typeSend'
 const Const = {
     Common,
     PhoneAreas,
@@ -30,7 +31,8 @@ const Const = {
     Languages,
     Interests,
     Cloudinary,
-    CodeListener
+    CodeListener,
+    TypeSend
 }
 
 export default Const;

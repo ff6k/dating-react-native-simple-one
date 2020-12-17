@@ -7,3 +7,17 @@ export function parseJwt(token) {
 
     return JSON.parse(jsonPayload);
 };
+
+const CODE_STRING = '$'
+
+export function encodeString(arrString) {
+    let encodeStr = ''
+    arrString.forEach(element => {
+        encodeStr += (element + CODE_STRING)
+    });
+    return encodeStr
+}
+
+export function decodeString(string) {
+    return string.split(CODE_STRING)
+} 

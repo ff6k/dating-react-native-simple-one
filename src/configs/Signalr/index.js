@@ -11,6 +11,7 @@ export const connectServer = (token) => {
                     accessTokenFactory: () => token
                 })
                 .build();
+            // _hubConnection.serverTimeoutInMilliseconds = 100000;
             _hubConnection.start().then(() => {
                 console.log('connect server success')
                 return _hubConnection
@@ -27,6 +28,7 @@ export const connectServer = (token) => {
 
 //'receiveMessage'
 export const listenerConnect = (_hubConnection, CODE_LISTEN, getData) => {
+
     try {
         _hubConnection.on(CODE_LISTEN, (data) => {
             getData(data)
