@@ -36,7 +36,7 @@ const footerComponent = (props) => {
         onPressKids, onPressFamilyPlans, onPressSmoking, onPressDrinking, data, onBlurTextExpand,
         onBlurTextInputName, pickDate, gender, onBlurTextInputPhone, dataInterest, religion,
         onBlurTextInputJob, jobBegin, onBlurTextInputWorkAt, onBlurTextInputEducation, ethnicity, kids, drinking,
-        smoking
+        smoking, onPressLocation
     } = props
     let [name, dateOfBirth, location, company, school,
         bio, phone, email] = []
@@ -56,6 +56,7 @@ const footerComponent = (props) => {
             <InformationContent
                 onPressInterest={onPressInterest}
                 onPressGender={onPressGender}
+                onPressLocation={onPressLocation}
                 name={name}
                 bio={bio}
                 // dateOfBirth={dateOfBirth}

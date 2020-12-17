@@ -15,6 +15,7 @@ import * as Interests from './interests'
 import * as Cloudinary from './cloudinary'
 import * as CodeListener from './codeListener'
 import * as TypeSend from './typeSend'
+import * as PositionStackKey from './positionStackKey'
 const Const = {
     Common,
     PhoneAreas,
@@ -32,7 +33,8 @@ const Const = {
     Interests,
     Cloudinary,
     CodeListener,
-    TypeSend
+    TypeSend,
+    PositionStackKey
 }
 
 export default Const;

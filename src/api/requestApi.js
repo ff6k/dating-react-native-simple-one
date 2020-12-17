@@ -2,9 +2,10 @@ import {
     URL_GET_IMAGE_SWIPE, URL_POST_LIKE_IMAGE_SWIPE, URL_GET_MESSAGES,
     URL_GET_USER_DETAIL, URL_GET_PROFILE, URL_PUT_PROFILE, URL_POST_PHOTOS,
     URL_GET_USER_LIKED_ME, URL_GET_MESSAGES_CONVERSATION, URL_POST_MESSAGES_CONVERSATION,
-    URL_POST_REPORT, URL_GET_TOP_PICK, URL_GET_USER_MATCHED_ME, URL_GET_INTERESTS
+    URL_POST_REPORT, URL_GET_TOP_PICK, URL_GET_USER_MATCHED_ME, URL_GET_INTERESTS, URL_GET_LOCATION_DETAIL
 } from './url'
 import axios from 'axios';
+import Const from '/src/const'
 
 const getAxios = (token) => {
     const client = axios.create({
@@ -273,4 +274,12 @@ export const deleteInterestApiRequest = async (params) => {
         `/${id}/interests/${idInterest}`
     const client = getAxios('Bearer ' + token)
     return client.delete(Url)
+}
+
+export const getLocationDetailApiRequest = async (params) => {
+    const { latitude, longitude } = params
+    const access_key = Const.PositionStackKey.ACCESS_KEY
+    const Url = URL_GET_LOCATION_DETAIL + `?access_key=${access_key}&query=${latitude},${longitude}&output=json`
+    console.log(Url)
+    return axios.get(Url)
 }

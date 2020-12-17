@@ -108,6 +108,7 @@ export default function MessagesController(props) {
         // }
     }
 
+    //TODO: fix error when turn off server
     useEffect(() => {
         const { idPeople } = route.params
         let _hubConnection
@@ -275,6 +276,8 @@ export default function MessagesController(props) {
         return Api.RequestApi.postReportApiRequest(params)
     }
 
+    //TODO: fix Location request timed out (find location so long)
+    //TODO: fix No location provider available (no turn on GPS)
     const onPressLocation = () => {
         setIsLoadingSend(true)
         fetchData()

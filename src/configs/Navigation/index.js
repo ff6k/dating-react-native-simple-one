@@ -35,6 +35,7 @@ import EditFamilyPlan from '/src/components/EditFamilyPlan/editFamilyPlan.contro
 import EditDrinking from '/src/components/EditDrinking/editDrinking.controller'
 import EditSmoking from '/src/components/EditSmoking/editSmoking.controller'
 import ImageDetail from '/src/components/ImageDetail/imageDetail.controller'
+import EditLocation from '/src/components/EditLocation/editLocation.controller'
 import Const from '/src/const'
 
 const Stack = createStackNavigator();
@@ -186,6 +187,10 @@ export default function screensNavigation() {
                 <Stack.Screen
                     name={Const.NameScreens.Work}
                     component={Work}
+                />
+                <Stack.Screen
+                    name={Const.NameScreens.EditLocation}
+                    component={EditLocation}
                 />
                 <Stack.Screen
                     name={Const.NameScreens.MultiLanguages}

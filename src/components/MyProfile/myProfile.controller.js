@@ -365,6 +365,10 @@ export default function MyProfileController(props) {
         }
     }
 
+    const onPressLocation = () => {
+        navigation.navigate(Const.NameScreens.EditLocation)
+    }
+
     return (
         <MyProfile
             onPressDrinking={onPressDrinking}
@@ -375,6 +379,7 @@ export default function MyProfileController(props) {
             dataInterest={dataInterest}
             onPressInterest={onPressInterest}
             onPressGender={onPressGender}
+            onPressLocation={onPressLocation}
             onPressReligious={onPressReligious}
             onPressEthnicity={onPressEthnicity}
             onPressKids={onPressKids}

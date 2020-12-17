@@ -11,7 +11,7 @@ function areEqual(prevProps, nextProps) {
     /* Trả về true nếu nextProps bằng prevProps, ngược lại trả về false */
 }
 function InformationContent(props) {
-    const { onPressInterest, onPressGender,
+    const { onPressInterest, onPressGender, onPressLocation,
         name,
         location,
         gender,
@@ -59,6 +59,7 @@ function InformationContent(props) {
                 typeContent={TYPE_CONTENT.View}
             />
             <ItemContent title={"Location"} content={location}
+                onPressItem={onPressLocation}
                 typeContent={TYPE_CONTENT.Button}
             />
         </View>
