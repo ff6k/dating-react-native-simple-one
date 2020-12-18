@@ -39,9 +39,10 @@ export const postLikeImageSwipe = async (params) => {
 }
 
 
+//TODO: fix gender
 export const getRequestImageSwipe = async (params) => {
     const { gender, pageNumber, pageSize, token } = params
-    const Url = URL_GET_IMAGE_SWIPE + `?gender=${gender}&pageNumber=${pageNumber}&pageSize=${pageSize}`
+    const Url = URL_GET_IMAGE_SWIPE + `?gender=${gender}&pageNumber=${pageNumber}&pageSize=${pageSize}&forCards=true&gender=female&maxAge=38`
     const client = getAxios('Bearer ' + token)
     return client.get(Url)
 }

@@ -14,11 +14,11 @@ const STATUS = {
 const SIZE_IMAGE_PER = 95
 
 const Footer = (props) => {
-    const { onPressInfo } = props
+    const { onPressInfo, id } = props
     return (
         <View style={styles.containFooter}>
             <View style={styles.containInfo}>
-                <Text style={styles.txtName}>Long</Text>
+                <Text style={styles.txtName}>{id}</Text>
                 <Text style={styles.txtOlds}>21</Text>
                 <TouchableOpacity style={styles.containIcoInfo}
                     onPress={() => onPressInfo && onPressInfo()}

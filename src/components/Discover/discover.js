@@ -15,7 +15,7 @@ function Discover(props) {
         onPressLike, getUserCurrent, isSwipeRight, isSwipeLeft, onPressUnlike,
         dataDetailUser, arrImage
     } = props
-    let name, work, location, religiousBelief, job, education, ethnicity, kids, height, drinking, smoking, familyPlans, gender, oldYear, dateOfBirth, bio
+    let name, work, location, religiousBelief, job, education, ethnicity, kids, height, drinking, smoking, familyPlans, gender, oldYear, dateOfBirth, bio, id
     if (dataDetailUser !== null) {
         name = dataDetailUser['name'] ? dataDetailUser['name'] : 'NA'
         work = dataDetailUser['company'] ? dataDetailUser['company'] : 'NA'
@@ -34,6 +34,7 @@ function Discover(props) {
         oldYear = dataDetailUser['dateOfBirth'] ? Utils.Calculator.getOldYear(dataDetailUser['dateOfBirth']).toString() : 'NA'
         dateOfBirth = dataDetailUser['dateOfBirth'] ? Utils.Format.formatDateUTC(dataDetailUser['dateOfBirth'], Const.DateFormat.DATE_LONG) : 'NA'
         bio = dataDetailUser['bio'] ? dataDetailUser['bio'] : ''
+        id = dataDetailUser['id'] ? dataDetailUser['id'] : ''
     }
 
     return (
@@ -50,6 +51,7 @@ function Discover(props) {
                         getUserCurrent={getUserCurrent}
                         isSwipeRight={isSwipeRight}
                         isSwipeLeft={isSwipeLeft}
+                        id={id}
                     />
                     :
                     <ImageDetail onPressInfo={onPressInfo}

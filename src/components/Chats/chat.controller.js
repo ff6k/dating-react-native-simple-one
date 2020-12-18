@@ -3,7 +3,7 @@ import Chats from './chats'
 import Api from '/src/api'
 import { useSelector } from 'react-redux'
 import Const from '/src/const'
-import { connectServer, listenerConnect } from '/src/configs/Signalr'
+import { connectServerMess, listenerConnect } from '/src/configs/Signalr'
 
 let token
 let idUser
@@ -35,25 +35,15 @@ export default function ChatsController(props) {
     useEffect(() => {
         let unmounted = false;
         console.log('chat connect')
-        const _hubConnection = connectServer(token)
+        const _hubConnection = connectServerMess(token)
+        // _hubConnection.onclose(() => {
+        //     console.log('reconnect...')
+        //     _hubConnection = connectServerMess(token)
+
+        // });
         listenerConnect(_hubConnection, Const.CodeListener.CODE_RECEIVE_MESSAGE, data => {
             console.log(data)
             loadDataMessApi()
-            // setIsLoading(true)
-            // const params = {
-            //     id: idUser,
-            //     pageNumber: 1,
-            //     pageSize: 10,
-            //     token
-            // }
-            // if (!unmounted) {
-            //     getDataApi(params).then(res => {
-            //         setDataMessages(res.data)
-            //         dataMessagesTemp = res.data
-            //     })
-            //         .catch(err => console.log(err))
-            //     // .finally(() => setIsLoading(false))
-            // }
         })
 
         return () => { unmounted = true }

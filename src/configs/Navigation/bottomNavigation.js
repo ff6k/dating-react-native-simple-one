@@ -9,7 +9,7 @@ import Prospects from '/src/components/Prospects/prospects.controller'
 // import Dates from '/src/components/Dates/dates'
 import Chats from '/src/components/Chats/chat.controller'
 import Settings from '/src/components/Settings/setting.controller'
-import { connectServer } from '/src/configs/Signalr'
+import { connectServerMess } from '/src/configs/Signalr'
 import Const from '/src/const'
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux'
@@ -41,7 +41,7 @@ function MyTabs(props) {
     }
     useEffect(() => {
         getDataStore()
-        connectServer(token)
+        connectServerMess(token)
     }, [])
     return (
         <PaperProvider theme={theme}>

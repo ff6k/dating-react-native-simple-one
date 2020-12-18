@@ -26,6 +26,7 @@ export const URL_REMOVE_PHOTOS = URL_NETWORK + URL_USER
 
 //realtime
 export const URL_CONNECT_SERVER_MESSAGES = URL_NETWORK + "/hubs/messages"
+export const URL_CONNECT_SERVER_NOTIFICATION = URL_NETWORK + "/hubs/notification"
 
 //LOCATION
 export const URL_GET_LOCATION_DETAIL = "http://api.positionstack.com/v1/reverse"

@@ -4,7 +4,7 @@ import Messages from './messages'
 import Const from '/src/const'
 import Api from '/src/api'
 import { useSelector } from 'react-redux'
-import { connectServer, listenerConnect } from '/src/configs/Signalr'
+import { connectServerMess, listenerConnect } from '/src/configs/Signalr'
 import Utils from '/src/utils'
 import Geolocation from '@react-native-community/geolocation';
 import { request, PERMISSIONS } from 'react-native-permissions';
@@ -113,11 +113,11 @@ export default function MessagesController(props) {
         const { idPeople } = route.params
         let _hubConnection
         let isMounted = true;
-        _hubConnection = connectServer(token)
-        _hubConnection.onclose(() => {
-            console.log('reconnect...')
-            _hubConnection = connectServer(token)
-        });
+        _hubConnection = connectServerMess(token)
+        // _hubConnection.onclose(() => {
+        //     console.log('reconnect...')
+        //     _hubConnection = connectServerMess(token)
+        // });
         listenerConnect(_hubConnection, Const.CodeListener.CODE_RECEIVE_MESSAGE, data => {
             if (isMounted) {
                 const { senderId } = data

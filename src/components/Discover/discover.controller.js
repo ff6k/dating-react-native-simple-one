@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Discover from './discover'
+import Const from '/src/const'
 import Api from '/src/api'
 import { useSelector } from 'react-redux'
+import { connectServerNotifier, listenerConnect } from '/src/configs/Signalr'
 
 let token
 let idUser
@@ -47,7 +49,14 @@ export default function DiscoverController() {
         })
             .catch(err => console.log(err))
             .finally(() => setIsLoading(false))
+        // }
+        // return () => { unmounted = true }
+    }, [])
 
+    useEffect(() => {
+        connectServerNotifier(token, Const.CodeListener.CODE_RECEIVE_NOTIFICATION, data => {
+            console.log(data)
+        })
     }, [])
 
     const getUserCurrent = (id, index) => {
