@@ -36,6 +36,7 @@ import EditDrinking from '/src/components/EditDrinking/editDrinking.controller'
 import EditSmoking from '/src/components/EditSmoking/editSmoking.controller'
 import ImageDetail from '/src/components/ImageDetail/imageDetail.controller'
 import EditLocation from '/src/components/EditLocation/editLocation.controller'
+import MatchTogether from '/src/components/MatchTogether/matchTogether.controller'
 import Const from '/src/const'
 
 const Stack = createStackNavigator();
@@ -207,6 +208,10 @@ export default function screensNavigation() {
                 <Stack.Screen
                     name={Const.NameScreens.ImageDetail}
                     component={ImageDetail}
+                />
+                <Stack.Screen
+                    name={Const.NameScreens.MatchTogether}
+                    component={MatchTogether}
                 />
             </Stack.Navigator>
         </NavigationContainer>

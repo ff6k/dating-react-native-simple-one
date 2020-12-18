@@ -10,7 +10,6 @@ let idUser
 let dataMessagesTemp
 export default function ChatsController(props) {
     const { navigation, route } = props
-    console.log(`route: ${JSON.stringify(route)}`);
 
     const dataStore = useSelector(state => state.login)
     const [dataMessages, setDataMessages] = useState(null)

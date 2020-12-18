@@ -14,10 +14,10 @@ export default function SplashController(props) {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        const setDataStoreReduxProfile = (token, id, preferences) => {
+        const setDataStoreReduxProfile = (token, id, preferences, data) => {
             Api.RequestApi.getProfileApiRequest({ token, id })
                 .then(res => {
-                    const { dateOfBirth, gender, photos } = res.data
+                    const { dateOfBirth, gender, photos, name } = res.data
                     if ((preferences === null || preferences === undefined) && gender !== null) {
                         console.log('save gender')
                         let genderOpposite
@@ -45,6 +45,8 @@ export default function SplashController(props) {
                         navigation.replace(Const.NameScreens.Picture)
                     }
                     else {
+                        const dataTemp = { ...data, photoProfile: photos, name: name }
+                        dispatch(pushDataLoginEmail(dataTemp))
                         navigation.replace(Const.NameScreens.BottomNavigation)
                     }
                 })
@@ -63,8 +65,8 @@ export default function SplashController(props) {
                         jwtToken: jwtToken,
                         id: id
                     }
-                    dispatch(pushDataLoginEmail(data))
-                    setDataStoreReduxProfile(jwtToken, id, preferences)
+                    // dispatch(pushDataLoginEmail(data))
+                    setDataStoreReduxProfile(jwtToken, id, preferences, data)
 
                 } else {
                     removeKeyStorage(Const.StorageKey.CODE_LOGIN_TOKEN)

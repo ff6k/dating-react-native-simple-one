@@ -7,7 +7,8 @@ import { connectServerNotifier, listenerConnect } from '/src/configs/Signalr'
 
 let token
 let idUser
-export default function DiscoverController() {
+export default function DiscoverController(props) {
+    const { navigation } = props
     const [isModeDetail, setIsModeDetail] = useState(false)
     const [isSwipeRight, setIsSwipeRight] = useState(false)
     const [isSwipeLeft, setIsSwipeLeft] = useState(false)
@@ -55,7 +56,7 @@ export default function DiscoverController() {
 
     useEffect(() => {
         connectServerNotifier(token, Const.CodeListener.CODE_RECEIVE_NOTIFICATION, data => {
-            console.log(data)
+            navigation.navigate(Const.NameScreens.MatchTogether, { data })
         })
     }, [])
 

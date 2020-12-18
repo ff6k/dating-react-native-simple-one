@@ -36,6 +36,9 @@ export const EditSmoking = "EditSmoking"
 export const EditDrinking = "EditDrinking"
 export const ImageDetail = "ImageDetail"
 export const EditLocation = "EditLocation"
+export const MatchTogether = "MatchTogether"
+
+
 
 
 
