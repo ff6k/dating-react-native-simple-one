@@ -113,8 +113,14 @@ export default function DiscoverController(props) {
 
     const onLike = () => {
         postDataImageSwipeApi(idUser, idCurrentUserSwipe, token).then(res => {
-            console.log('liked')
+            handleLikeUser(res)
         }).catch(err => console.log(err))
+    }
+    const handleLikeUser = (res) => {
+        const { data } = res
+        if (data !== '') {
+            navigation.navigate(Const.NameScreens.MatchTogether, { data })
+        }
     }
 
     const onPressLike = () => {
@@ -122,7 +128,7 @@ export default function DiscoverController(props) {
             setIsSwipeRight(true)
             if (idCurrentUserSwipe !== null) {
                 postDataImageSwipeApi(idUser, idCurrentUserSwipe, token).then(res => {
-                    console.log('liked')
+                    handleLikeUser(res)
                 }).catch(err => console.log(err))
             }
         }

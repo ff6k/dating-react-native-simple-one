@@ -51,7 +51,6 @@ function Discover(props) {
                         getUserCurrent={getUserCurrent}
                         isSwipeRight={isSwipeRight}
                         isSwipeLeft={isSwipeLeft}
-                        id={id}
                     />
                     :
                     <ImageDetail onPressInfo={onPressInfo}

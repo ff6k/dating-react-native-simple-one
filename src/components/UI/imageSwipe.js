@@ -12,13 +12,14 @@ const STATUS = {
 }
 
 const SIZE_IMAGE_PER = 95
+let current = 0
 
 const Footer = (props) => {
-    const { onPressInfo, id } = props
+    const { onPressInfo, data } = props
     return (
         <View style={styles.containFooter}>
             <View style={styles.containInfo}>
-                <Text style={styles.txtName}>{id}</Text>
+                <Text style={styles.txtName}>{data && data[current].id}</Text>
                 <Text style={styles.txtOlds}>21</Text>
                 <TouchableOpacity style={styles.containIcoInfo}
                     onPress={() => onPressInfo && onPressInfo()}
@@ -52,7 +53,6 @@ const TabSwipe = (props) => {
         </View>
     </View>)
 }
-let current = 0
 export default class ImageSwipe extends React.Component {
 
     constructor(props) {
@@ -260,7 +260,7 @@ export default class ImageSwipe extends React.Component {
                         <Image
                             style={styles.imgSwipe}
                             source={{ uri: item.photos[this.state.currentIndexPicture].url }} />
-                        <Footer onPressInfo={this.props.onPressInfo} />
+                        <Footer onPressInfo={this.props.onPressInfo} {...this.props} />
                     </Animated.View>
                 )
             }
