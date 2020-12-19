@@ -20,7 +20,7 @@ export default function MatchTogether(props) {
                 <Text style={styles.txtHeader}>It's a Match</Text>
             </View>
             <View style={styles.containContent}>
-                <Text style={styles.txtTitle}>You and Me like each other</Text>
+                <Text style={styles.txtTitle}>You and {nameMatched} like each other</Text>
             </View>
             <View style={{ width: '80%', alignSelf: 'center', height: 200, justifyContent: 'center', marginVertical: 50 }}>
                 <View style={{ width: '65%', alignSelf: 'center' }}>

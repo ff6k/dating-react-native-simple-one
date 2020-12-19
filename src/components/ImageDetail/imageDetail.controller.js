@@ -10,7 +10,6 @@ let isShowOffButton
 export default function ImageDetailController(props) {
     const { route, navigation } = props
     const [dataDetailUser, setDataDetailUser] = useState([])
-    console.log(`dataDetailUser: ${dataDetailUser}`);
     const dataStore = useSelector(state => state.login)
 
     const getDataStore = () => {
@@ -28,7 +27,7 @@ export default function ImageDetailController(props) {
         navigation.goBack()
     }
 
-    let arrImage, name, work, location, religiousBelief, job, education, ethnicity, kids, height, drinking, smoking, familyPlans, gender, oldYear, dateOfBirth, bio
+    let arrImage, name, work, location, religiousBelief, job, education, ethnicity, kids, height, drinking, smoking, familyPlans, gender, oldYear, dateOfBirth, bio, interests
     if (dataDetailUser !== null) {
         arrImage = dataDetailUser['photos'] ? dataDetailUser['photos'] : []
         name = dataDetailUser['name'] ? dataDetailUser['name'] : 'NA'
@@ -48,6 +47,7 @@ export default function ImageDetailController(props) {
         oldYear = dataDetailUser['dateOfBirth'] ? Utils.Calculator.getOldYear(dataDetailUser['dateOfBirth']).toString() : 'NA'
         dateOfBirth = dataDetailUser['dateOfBirth'] ? Utils.Format.formatDateUTC(dataDetailUser['dateOfBirth'], Const.DateFormat.DATE_LONG) : 'NA'
         bio = dataDetailUser['bio'] ? dataDetailUser['bio'] : ''
+        interests = dataDetailUser['interests']
     }
 
     useEffect(() => {
@@ -112,6 +112,7 @@ export default function ImageDetailController(props) {
             arrImage={arrImage}
             gender={gender}
             bio={bio}
+            interests={interests}
             onPressLike={onPressLike}
             isOffShowButton={isShowOffButton}
         />

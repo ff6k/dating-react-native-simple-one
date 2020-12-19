@@ -3,13 +3,13 @@ import Settings from './settings'
 import { removeKeyStorage } from '/src/configs/AsyncStorage'
 import Const from '/src/const'
 import { resetData } from '/src/slice/loginSlice'
-import { useDispatch } from 'react-redux'
-
+import { useDispatch, useSelector } from 'react-redux'
 export default function SettingController(props) {
     const { navigation } = props
     const [isShowConfirmModal, setIsShowConfirmModal] = useState(false)
     const dispatch = useDispatch()
 
+    const dataStore = useSelector(state => state.login)
     const onPressLogout = () => {
         setIsShowConfirmModal(true)
     }
@@ -31,11 +31,6 @@ export default function SettingController(props) {
         navigation.navigate(Const.NameScreens.MyPreferences)
     }
 
-    const onPressMyAlbums = () => {
-        navigation.navigate(Const.NameScreens.MyAlbums)
-        // console.log('albums')
-    }
-
     const onPressButtonLeft = () => {
         setIsShowConfirmModal(false)
     }
@@ -53,9 +48,9 @@ export default function SettingController(props) {
             setIsShowConfirmModal={setIsShowConfirmModal}
             onPressMyProfile={onPressMyProfile}
             onPressMyPreferences={onPressMyPreferences}
-            onPressMyAlbums={onPressMyAlbums}
             onPressButtonLeft={onPressButtonLeft}
             onPressButtonRight={onPressButtonRight}
+            dataInfo={dataStore[0]}
         />
     )
 }

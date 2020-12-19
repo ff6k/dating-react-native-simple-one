@@ -168,7 +168,7 @@ const Messages = React.forwardRef((props, ref) => {
             />
             <BottomModalSlide
                 ref={ref}
-                height={200}
+                height={150}
                 style={{ flex: 0 }}
             >
                 <TouchableOpacity style={styles.containItemModal}
@@ -192,16 +192,6 @@ const Messages = React.forwardRef((props, ref) => {
                             name="flag-outline"></Icon>
                     </View>
                     <Text style={styles.txtModal}>Report {dataHeader.name}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.containItemModal}
-                >
-                    <View style={styles.containIconModal}>
-                        <Icon
-                            size={25}
-                            color={'black'}
-                            name="slash-outline"></Icon>
-                    </View>
-                    <Text style={styles.txtModal}>Block {dataHeader.name}</Text>
                 </TouchableOpacity>
             </BottomModalSlide>
             <UploadImageModal

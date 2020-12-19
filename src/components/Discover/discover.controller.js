@@ -17,6 +17,7 @@ export default function DiscoverController(props) {
     const [dataDetailUser, setDataDetailUser] = useState(null)
     const [idCurrentUserSwipe, setIdCurrentUserSwipe] = useState(null)
     const [indexCurrentSwipe, setIndexCurrentSwipe] = useState(0)
+    const [pageNumber, setPageNumber] = useState(1)
 
     const dataStore = useSelector(state => state.login)
 
@@ -31,20 +32,12 @@ export default function DiscoverController(props) {
         }
     }
 
+    //TODO: fix gender
     useEffect(() => {
         setIsLoading(true)
         getDataStore()
-        const params = {
-            gender: 'male',
-            pageNumber: 1,
-            pageSize: 10,
-            token
-        }
 
-        async function getDataApi() {
-            return Api.RequestApi.getRequestImageSwipe(params)
-        }
-        getDataApi().then(res => {
+        getDataApi('male', pageNumber, token).then(res => {
             setDataUserSwipe(res.data)
             setIdCurrentUserSwipe(res.data[0].id)
         })
@@ -89,21 +82,24 @@ export default function DiscoverController(props) {
         console.log('back')
     }
 
-    const getDataApi = async () => {
+    const getDataApi = async (gender, pageNumber, token) => {
         const params = {
-            gender: 'male',
-            pageNumber: 1,
+            gender: gender,
+            pageNumber: pageNumber,
             pageSize: 10,
             token
         }
         return Api.RequestApi.getRequestImageSwipe(params)
     }
+
+    //TODO: fix gender
     const updateData = () => {
-        // getDataApi().then(res => {
-        //     const data = dataUserSwipe.concat(res.data)
-        //     setDataUserSwipe(data)
-        // })
-        //     .catch(err => console.log(err))
+        getDataApi('male', pageNumber + 1, token).then(res => {
+            const data = dataUserSwipe.concat(res.data)
+            setDataUserSwipe(data)
+            setPageNumber(pageNumber => pageNumber + 1)
+        })
+            .catch(err => console.log(err))
     }
 
     const postDataImageSwipeApi = async (idUser, idLiked, token) => {
