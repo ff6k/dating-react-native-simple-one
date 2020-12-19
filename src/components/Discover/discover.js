@@ -15,7 +15,8 @@ function Discover(props) {
         onPressLike, getUserCurrent, isSwipeRight, isSwipeLeft, onPressUnlike,
         dataDetailUser, arrImage
     } = props
-    let name, work, location, religiousBelief, job, education, ethnicity, kids, height, drinking, smoking, familyPlans, gender, oldYear, dateOfBirth, bio, id
+    console.log(JSON.stringify(dataDetailUser))
+    let activities, name, work, location, religiousBelief, job, education, ethnicity, kids, height, drinking, smoking, familyPlans, gender, oldYear, dateOfBirth, bio, id
     if (dataDetailUser !== null) {
         name = dataDetailUser['name'] ? dataDetailUser['name'] : 'NA'
         work = dataDetailUser['company'] ? dataDetailUser['company'] : 'NA'
@@ -35,6 +36,8 @@ function Discover(props) {
         dateOfBirth = dataDetailUser['dateOfBirth'] ? Utils.Format.formatDateUTC(dataDetailUser['dateOfBirth'], Const.DateFormat.DATE_LONG) : 'NA'
         bio = dataDetailUser['bio'] ? dataDetailUser['bio'] : ''
         id = dataDetailUser['id'] ? dataDetailUser['id'] : ''
+        activities = dataDetailUser['activities']
+        console.log(`activities: ${JSON.stringify(activities)}`);
     }
 
     return (
@@ -71,6 +74,7 @@ function Discover(props) {
                         arrImage={arrImage}
                         gender={gender}
                         bio={bio}
+                        activities={[]}
                     />}
             </View>
             {!isModeDetail && <View style={styles.containFooter}>

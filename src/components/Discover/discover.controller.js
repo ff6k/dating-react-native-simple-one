@@ -66,22 +66,16 @@ export default function DiscoverController(props) {
     }
 
     const requestApiUserDetail = async () => {
-        const params = {
-            id: idCurrentUserSwipe,
-            token: token
-        }
-        console.log(idCurrentUserSwipe)
-        console.log(token)
-        // return Api.RequestApi.getUserDetailApiRequest(params)
-        Promise.all([
-            Api.RequestApi.getUserDetailApiRequest(params),
-            // Api.RequestApi.getInterestApiRequest(params)
-        ]).then(async ([resDataDetail]) => {
-            // const temp = [...resDataDetail.data, ...resDataInterest.data]
-            // console.log(`temp: ${temp}`);
-            setDataDetailUser(resDataDetail.data)
-        })
-            .catch(err => console.log(err))
+        console.log('dataUserSwipe', JSON.stringify())
+        // const params = {
+        //     id: idCurrentUserSwipe,
+        //     token: token
+        // }
+        // Api.RequestApi.getUserDetailApiRequest(params)
+        //     .then(res => {
+        setDataDetailUser(dataUserSwipe[indexCurrentSwipe])
+        //     })
+        //     .catch(err => console.log(err))
     }
 
     const onPressInfo = () => {
@@ -175,7 +169,7 @@ export default function DiscoverController(props) {
             getUserCurrent={getUserCurrent}
             isSwipeRight={isSwipeRight}
             isSwipeLeft={isSwipeLeft}
-            idCurrentUserSwipe={idCurrentUserSwipe}
+            // idCurrentUserSwipe={idCurrentUserSwipe}
             dataDetailUser={dataDetailUser}
             isLoading={isLoading}
             arrImage={dataDetailUser && dataDetailUser.photos}

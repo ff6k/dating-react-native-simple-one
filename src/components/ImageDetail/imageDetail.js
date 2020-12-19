@@ -45,7 +45,7 @@ const ListImageSwipe = (arrImage) => {
 }
 
 export default function imageDetail(props) {
-    const { onPressInfo, name,
+    const { onPressInfo, name, activities,
         work, location, religiousBelief, job, education, dateOfBirth, ethnicity, oldYear,
         kids, height, drinking, smoking, familyPlans, arrImage, gender, bio, onPressLike, isShowOffButton
     } = props
@@ -93,7 +93,7 @@ export default function imageDetail(props) {
                             <Text style={styles.txtInfo}>{location}</Text>
                         </View>
                         <InterestContentInfo
-                            data={data}
+                            data={activities}
                         />
                     </View>
                 </View>
