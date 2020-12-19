@@ -31,7 +31,8 @@ const RenderTypeContent = (props) => {
 
     const isFormatPhone = () => {
         if (typeContent === TYPE_CONTENT.TextInput && title === 'Phone') {
-            const isPhoneFormat = Utils.ValidateInput.validatePhoneNumber(contentState)
+            const valueFormat = Utils.Format.formatPhone(contentState, '+84')
+            const isPhoneFormat = Utils.ValidateInput.validatePhoneNumber(valueFormat)
             if (isPhoneFormat) {
                 setIsNotFormat(false)
             }

@@ -70,14 +70,25 @@ export default function DiscoverController(props) {
             id: idCurrentUserSwipe,
             token: token
         }
-        return Api.RequestApi.getUserDetailApiRequest(params)
+        console.log(idCurrentUserSwipe)
+        console.log(token)
+        // return Api.RequestApi.getUserDetailApiRequest(params)
+        Promise.all([
+            Api.RequestApi.getUserDetailApiRequest(params),
+            // Api.RequestApi.getInterestApiRequest(params)
+        ]).then(async ([resDataDetail]) => {
+            // const temp = [...resDataDetail.data, ...resDataInterest.data]
+            // console.log(`temp: ${temp}`);
+            setDataDetailUser(resDataDetail.data)
+        })
+            .catch(err => console.log(err))
     }
 
     const onPressInfo = () => {
         setIsModeDetail(!isModeDetail)
         requestApiUserDetail()
-            .then(res => setDataDetailUser(res.data))
-            .catch(err => console.log(err))
+        // .then(res => setDataDetailUser(res.data))
+        // .catch(err => console.log(err))
     }
 
     const onPressBack = () => {

@@ -10,6 +10,7 @@ let isShowOffButton
 export default function ImageDetailController(props) {
     const { route, navigation } = props
     const [dataDetailUser, setDataDetailUser] = useState([])
+    console.log(`dataDetailUser: ${dataDetailUser}`);
     const dataStore = useSelector(state => state.login)
 
     const getDataStore = () => {

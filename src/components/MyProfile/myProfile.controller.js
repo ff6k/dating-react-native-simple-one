@@ -299,7 +299,8 @@ export default function MyProfileController(props) {
     }
 
     const onBlurTextInputPhone = (value) => {
-        const isPhoneFormat = Utils.ValidateInput.validatePhoneNumber(value)
+        const valueFormat = Utils.Format.formatPhone(value, '+84')
+        const isPhoneFormat = Utils.ValidateInput.validatePhoneNumber(valueFormat)
         if (isPhoneFormat) {
             const params = {
                 phone: value,

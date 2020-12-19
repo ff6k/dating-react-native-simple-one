@@ -1,22 +1,16 @@
 
 import React from 'react'
-import { StyleSheet, FlatList, View, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, FlatList, View, Text } from 'react-native'
 import Themes from '/src/themes'
 import InformationContent from './SubComponent/informationContent'
 import MyVicesContent from './SubComponent/myVicesContent'
 import MyVirtuesContent from './SubComponent/myVirtuesContent'
 import MyVitalsContent from './SubComponent/myVitalsContent'
 import ImageItem from '/src/components/UI/imageItem'
-import Utils from '/src/utils'
-import Const from '/src/const'
 import CoupleButtonImage from '/src/components/UI/coupleButtonImage'
-import HeaderSave from '/src/components/UI/headerSave'
 import ButtonBack from '/src/components/UI/buttonBack'
 import AnimLottieView from '/src/components/UI/animLottieView'
-import SpinnerLoading from '/src/components/UI/spinnerLoading'
 import BottomModalSlide from '/src/components/UI/bottomModalSlide'
-// import UploadImageModal from '/src/components/UI/uploadImageModal'
-import Modal from 'react-native-modal';
 
 const headerComponent = (props) => {
     const { onPressBack } = props
@@ -59,7 +53,6 @@ const footerComponent = (props) => {
                 onPressLocation={onPressLocation}
                 name={name}
                 bio={bio}
-                // dateOfBirth={dateOfBirth}
                 gender={gender}
                 phone={phone}
                 email={email}

@@ -112,6 +112,7 @@ export default function SplashController(props) {
                 checkNavigationScreen(dataLogin, codeApp, preferences)
 
             })
+                .catch(err => console.log(err))
 
         }
         setTimeout(

@@ -14,3 +14,7 @@ export const formatDateUTC = (date, dateFormat) => {
 export const formatTime = (date) => {
     return moment(date).format(Const.DateFormat.TIME);
 }
+
+export const formatPhone = (phone, code) => {
+    return code + phone.slice(1, phone.length)
+}

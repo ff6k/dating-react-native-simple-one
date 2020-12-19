@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder, TouchableOpacity }
     from 'react-native';
 import Themes from '/src/themes'
+import Utils from '/src/utils'
 const SCREEN_WIDTH = Dimensions.get('window').width
 
 import Icon from '/src/components/UI/icon'
@@ -19,8 +20,8 @@ const Footer = (props) => {
     return (
         <View style={styles.containFooter}>
             <View style={styles.containInfo}>
-                <Text style={styles.txtName}>{data && data[current].id}</Text>
-                <Text style={styles.txtOlds}>21</Text>
+                <Text style={styles.txtName}>{data && data[current].name}</Text>
+                <Text style={styles.txtOlds}>{data && Utils.Calculator.getOldYear(data[current].dateOfBirth)}</Text>
                 <TouchableOpacity style={styles.containIcoInfo}
                     onPress={() => onPressInfo && onPressInfo()}
                 >
@@ -28,7 +29,7 @@ const Footer = (props) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.containSubInfo}>
-                <Text style={styles.txtSubInfo}>Có Làm thì mới có ăn</Text>
+                <Text style={styles.txtSubInfo}>{data && data[current].location}</Text>
             </View>
         </View>
     )
