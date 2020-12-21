@@ -99,8 +99,9 @@ export default function LoginController(props) {
     }
 
     const requestApiSuccess = (json) => {
+        console.log(`json: ${JSON.stringify(json)}`);
         if (json.status === "Active") {
-            const { jwtToken, id } = json
+            const { jwtToken, id, dateOfBirth, gender, photos, name } = json
             handleBeforeLogin(jwtToken, id)
             dispatch(pushDataLoginEmail(json))
             switchNavigationScreen(json)

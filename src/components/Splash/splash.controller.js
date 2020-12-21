@@ -17,6 +17,7 @@ export default function SplashController(props) {
         const setDataStoreReduxProfile = (token, id, preferences, data) => {
             Api.RequestApi.getProfileApiRequest({ token, id })
                 .then(res => {
+                    // console.log(JSON.stringify(res.data))
                     const { dateOfBirth, gender, photos, name } = res.data
                     if ((preferences === null || preferences === undefined) && gender !== null) {
                         console.log('save gender')
@@ -45,7 +46,8 @@ export default function SplashController(props) {
                         navigation.replace(Const.NameScreens.Picture)
                     }
                     else {
-                        const dataTemp = { ...data, photoProfile: photos, name: name }
+                        const dataTemp = { ...data, photos: photos, name: name, dateOfBirth }
+                        console.log(`dataTemp: ${JSON.stringify(dataTemp)}`);
                         dispatch(pushDataLoginEmail(dataTemp))
                         navigation.replace(Const.NameScreens.BottomNavigation)
                     }

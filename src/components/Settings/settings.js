@@ -12,9 +12,16 @@ function Settings(props) {
     const { t, onPressLogout, isShowConfirmModal, setIsShowConfirmModal,
         onPressMyProfile, onPressMyPreferences,
         onPressButtonLeft, onPressButtonRight, dataInfo } = props
-    const { name, email, dateOfBirth, gender } = dataInfo
-    console.log(`gender: ${gender}`);
-    const oldYear = Utils.Calculator.getOldYear(dateOfBirth)
+    let nameTemp, emailTemp, dateOfBirthTemp, genderTemp, oldYearTemp, photoTemp
+    if (dataInfo !== undefined) {
+        const { name, email, dateOfBirth, gender, photos } = dataInfo
+        nameTemp = name
+        emailTemp = email
+        dateOfBirthTemp = dateOfBirth
+        genderTemp = gender
+        oldYearTemp = Utils.Calculator.getOldYear(dateOfBirth)
+        photoTemp = photos
+    }
     return (
         <View style={styles.container}>
             <View style={styles.containHeader}>
@@ -22,15 +29,14 @@ function Settings(props) {
                     <Image
                         style={styles.imgAvatar}
                         source={{
-                            uri:
-                                'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*'
+                            uri: photoTemp ? photoTemp[0].url : null
                         }} />
                     <View style={styles.containName}>
-                        <Text style={styles.txtName}>{name}, {oldYear}</Text>
-                        {gender === 'male' ? <FontAwesomeIcons name={"symbol-male"} size={18} color={Themes.Colors.PINK_DARK} /> :
+                        <Text style={styles.txtName}>{nameTemp}, {oldYearTemp}</Text>
+                        {genderTemp === 'male' ? <FontAwesomeIcons name={"symbol-male"} size={18} color={Themes.Colors.PINK_DARK} /> :
                             <FontAwesomeIcons name={"symbol-female"} size={18} color={Themes.Colors.PINK_DARK} />}
                     </View>
-                    <Text style={styles.txtDetail}>{email}</Text>
+                    <Text style={styles.txtDetail}>{emailTemp}</Text>
                     <View style={styles.containButton}>
                         <ButtonSetting
                             title={"SETTINGS"}

@@ -4,7 +4,11 @@ import ItemContent from './itemContent'
 import { TYPE_CONTENT } from '../typeContent'
 
 export default function MyVitalsContent(props) {
-    const { onPressEthnicity, onPressKids, onPressFamilyPlans, ethnicity, kids, familyPlans } = props
+    const { onPressEthnicity, onPressKids,
+        // onPressFamilyPlans,
+        ethnicity, kids,
+        // familyPlans 
+    } = props
     return (
         <View>
             <ItemContent title={"Ethnicity"} content={ethnicity}
@@ -15,10 +19,10 @@ export default function MyVitalsContent(props) {
                 typeContent={TYPE_CONTENT.Button}
                 onPressItem={onPressKids}
             />
-            <ItemContent title={"Family Plans"} content={familyPlans}
+            {/* <ItemContent title={"Family Plans"} content={familyPlans}
                 typeContent={TYPE_CONTENT.Button}
                 onPressItem={onPressFamilyPlans}
-            />
+            /> */}
         </View>
     )
 }

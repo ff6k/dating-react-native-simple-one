@@ -34,16 +34,18 @@ export default function EditFamilyPlanController(props) {
     }, [])
 
     const [indexFamilyPlan, setIndexKids] = useState(() => {
-        return data.findIndex(e => e.label == route.params.kids)
+        return data.findIndex(e => e.label == route.params.familyPlan)
     })
-    console.log(indexFamilyPlan)
+
     const onPressBack = () => {
-        if (idClick === undefined || data[indexFamilyPlan].id === idClick) {
+        console.log(idClick)
+        if (idClick === undefined || idClick === null || (indexFamilyPlan === -1 && idClick === undefined)
+            || (indexFamilyPlan !== -1 && data[indexFamilyPlan].id === idClick)) {
             navigation.goBack()
         }
         else {
-            const KidsTemp = data.find(e => e.id == idClick)
-            navigation.navigate(Const.NameScreens.MyProfile, { kids: KidsTemp.label })
+            const temp = data.find(e => e.id == idClick)
+            navigation.navigate(Const.NameScreens.MyProfile, { familyPlan: temp.label })
         }
     }
 
@@ -59,8 +61,9 @@ export default function EditFamilyPlanController(props) {
                 id: idUser,
                 token: token
             }
-            Api.RequestApi.putProfileKidsApiRequest(params)
+            Api.RequestApi.putProfileFamilyPlanApiRequest(params)
                 .then(response => {
+                    console.log(response.data)
                     Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your children successfully', 3000)
                 }).catch(err => {
                     Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your children fail, error: ${err}`, 3000)

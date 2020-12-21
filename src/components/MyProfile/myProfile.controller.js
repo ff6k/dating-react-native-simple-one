@@ -114,7 +114,8 @@ export default function MyProfileController(props) {
             getApiProfile(params),
             getApiInterest(params)
         ]).then(async ([dataProfile, dataInterest]) => {
-            const { drinking, bio, jobTitle, company, name, dateOfBirth, gender, religion, photos, school, ethnicity, children, location } = dataProfile.data
+            const { drinking, bio, jobTitle, company, name, dateOfBirth, gender, religion, photos, school, ethnicity, children, location,
+            } = dataProfile.data
 
             bioBegin = bio
             jobBegin = jobTitle
@@ -161,10 +162,6 @@ export default function MyProfileController(props) {
 
     const onPressKids = () => {
         navigation.navigate(Const.NameScreens.EditKids, { kids: kidsBegin })
-    }
-
-    const onPressFamilyPlans = () => {
-        navigation.navigate(Const.NameScreens.EditFamilyPlan)
     }
 
     const onPressSmoking = () => {
@@ -259,7 +256,7 @@ export default function MyProfileController(props) {
     }
 
     const onBlurTextInputName = (value) => {
-        if (nameBegin !== undefined && nameBegin !== value) {
+        if (value !== '' && nameBegin !== undefined && nameBegin !== value) {
             const params = {
                 name: value,
                 id: idUser,
@@ -321,7 +318,7 @@ export default function MyProfileController(props) {
     }
 
     const onBlurTextInputJob = (value) => {
-        if (jobBegin !== value) {
+        if (value !== '' && jobBegin !== value) {
             const params = {
                 job: value,
                 id: idUser,
@@ -339,7 +336,7 @@ export default function MyProfileController(props) {
     }
 
     const onBlurTextInputWorkAt = (value) => {
-        if (workAtBegin !== value) {
+        if (value !== '' && workAtBegin !== value) {
             const params = {
                 company: value,
                 id: idUser,
@@ -357,7 +354,7 @@ export default function MyProfileController(props) {
     }
 
     const onBlurTextInputEducation = (value) => {
-        if (educationBegin !== value) {
+        if (value !== '' && educationBegin !== value) {
             const params = {
                 school: value,
                 id: idUser,
@@ -414,7 +411,6 @@ export default function MyProfileController(props) {
             onPressReligious={onPressReligious}
             onPressEthnicity={onPressEthnicity}
             onPressKids={onPressKids}
-            onPressFamilyPlans={onPressFamilyPlans}
             onPressAddImage={onPressAddImage}
             onUploadPhoto={onUploadPhoto}
             onTakePhoto={onTakePhoto}

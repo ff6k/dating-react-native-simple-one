@@ -130,6 +130,15 @@ export const putProfileKidsApiRequest = async (params) => {
     })
 }
 
+export const putProfileFamilyPlanApiRequest = async (params) => {
+    const { id, token, familyPlan } = params
+    const Url = URL_PUT_PROFILE + `/${id}`
+    const client = getAxios('Bearer ' + token)
+    return client.put(Url, {
+        familyPlan: familyPlan
+    })
+}
+
 export const putPhotosApiRequest = async (params) => {
     const { id, token, publicId, url } = params
     const Url = URL_POST_PHOTOS + `/${id}/photos/url`

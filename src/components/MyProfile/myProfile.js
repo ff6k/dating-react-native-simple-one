@@ -82,7 +82,7 @@ const footerComponent = (props) => {
                 onPressFamilyPlans={onPressFamilyPlans}
                 ethnicity={ethnicity}
                 kids={kids}
-                familyPlans={null}
+            // familyPlans={familyPlan}
             />
             <Text style={styles.headerText}>Your Vices</Text>
             <MyVicesContent
