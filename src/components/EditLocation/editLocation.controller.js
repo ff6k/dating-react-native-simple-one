@@ -85,7 +85,7 @@ export default function EditLocationController(props) {
                 Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your location successfully', 500)
             })
             .catch(err => {
-                Utils.Toast.ToastModal('fail', 'top', 'Fail', `You have saved your location fail, error: ${err}`, 500)
+                Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your location fail, error: ${err}`, 500)
                 console.log(err)
             })
 

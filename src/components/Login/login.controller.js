@@ -148,6 +148,10 @@ export default function LoginController(props) {
         navigation.goBack()
     }
 
+    const onPressForgotPassword = () => {
+        navigation.navigate(Const.NameScreens.ForgetPassword)
+    }
+
     return (
         <Login
             isLoading={isLoading}
@@ -158,6 +162,7 @@ export default function LoginController(props) {
             message={message}
             onBack={onBack}
             onPressButtonModal={onPressButtonModal}
+            onPressForgotPassword={onPressForgotPassword}
         />
     )
 }

@@ -63,7 +63,7 @@ export default function EditFamilyPlanController(props) {
                 .then(response => {
                     Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your children successfully', 3000)
                 }).catch(err => {
-                    Utils.Toast.ToastModal('fail', 'top', 'Fail', `You have saved your children fail, error: ${err}`, 3000)
+                    Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your children fail, error: ${err}`, 3000)
                     console.log(err)
                 })
         }

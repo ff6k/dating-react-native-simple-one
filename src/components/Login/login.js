@@ -13,7 +13,7 @@ import AlertModal from '/src/components/Model/alertModal'
 import Icon from '/src/components/UI/icon'
 function Login(props) {
     const { t, onPressLogin, onPressLoginNumberPhone, onPressLoginFacebookAPI,
-        isLoading, isShowModalFail, message, onPressButtonModal, onBack } = props;
+        isLoading, isShowModalFail, message, onPressButtonModal, onBack, onPressForgotPassword } = props;
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [isSecureTextEntry, setIsSecureTextEntry] = useState(true)
@@ -82,6 +82,17 @@ function Login(props) {
                             name={'eye-outline'}
                         />}
                 </TouchableOpacity>
+
+            </View>
+            <View style={{
+                marginBottom: Themes.Const.MARGIN_TOP_V3,
+                marginHorizontal: Themes.Const.MARGIN_HORIZONTAL
+            }}>
+                <TouchableOpacity style={styles.btnForgetPassword}
+                    onPress={() => onPressForgotPassword && onPressForgotPassword()}
+                >
+                    <Text style={styles.txtForgetPassword}>Forgot Password ?</Text>
+                </TouchableOpacity>
             </View>
 
             <TouchableOpacity
@@ -97,11 +108,12 @@ function Login(props) {
             >
                 <Text style={styles.txtLoginFB}>{t('Login With Facebook')}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.btnSignInPhone}
+            {/* <TouchableOpacity style={styles.btnSignInPhone}
                 onPress={() => onLoginNumberPhone()}
             >
                 <Text style={styles.txtPhone}>{t('Login with phone number')}</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+
             <AlertModal
                 visible={isShowModalFail}
                 urlImage={require('/src/assets/images/warning.png')}
@@ -117,7 +129,20 @@ function Login(props) {
 
 
 const styles = StyleSheet.create({
-
+    btnForgetPassword: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: Themes.Const.MARGIN_TOP_V3,
+        width: 150,
+        marginTop: 10,
+        position: 'absolute',
+        right: 0
+    },
+    txtForgetPassword: {
+        color: Themes.Colors.GRAY_BRIGHT_I,
+        fontSize: 14,
+        fontFamily: Themes.FontFamily.FontThinDefault
+    },
     txtTitle: {
         ...Themes.Styles.Title
     },
@@ -128,7 +153,6 @@ const styles = StyleSheet.create({
     inpPassword: {
         ...Themes.Styles.TextInput,
         marginTop: Themes.Const.MARGIN_TOP,
-        marginBottom: Themes.Const.MARGIN_TOP_V3,
         flexDirection: 'row',
         alignItems: 'center'
     },

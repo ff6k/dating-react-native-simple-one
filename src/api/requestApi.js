@@ -3,7 +3,7 @@ import {
     URL_GET_USER_DETAIL, URL_GET_PROFILE, URL_PUT_PROFILE, URL_POST_PHOTOS,
     URL_GET_USER_LIKED_ME, URL_GET_MESSAGES_CONVERSATION, URL_POST_MESSAGES_CONVERSATION,
     URL_POST_REPORT, URL_GET_TOP_PICK, URL_GET_USER_MATCHED_ME, URL_GET_INTERESTS, URL_GET_LOCATION_DETAIL,
-    URL_REMOVE_PHOTOS
+    URL_REMOVE_PHOTOS, URL_POST_FORGOT_PASSWORD
 } from './url'
 import axios from 'axios';
 import Const from '/src/const'
@@ -299,4 +299,13 @@ export const removePhotosApiRequest = async (params) => {
     const Url = URL_REMOVE_PHOTOS + `/${idUser}/photos/${idPhoto}`
     const client = getAxios('Bearer ' + token)
     return client.delete(Url)
+}
+
+export const postForgotPasswordApiRequest = async (params) => {
+    const { email } = params
+    const Url = URL_POST_FORGOT_PASSWORD
+    const client = getAxios()
+    return client.post(Url, {
+        email: email
+    })
 }

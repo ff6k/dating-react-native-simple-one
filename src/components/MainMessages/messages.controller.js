@@ -339,7 +339,7 @@ export default function MessagesController(props) {
             )
         })
             .catch(err => {
-                Utils.Toast.ToastModal('fail', 'top', 'Post fail',
+                Utils.Toast.ToastModal('error', 'top', 'Post fail',
                     'Your report posted fail, Please check and try again !!',
                     3000
                 )
