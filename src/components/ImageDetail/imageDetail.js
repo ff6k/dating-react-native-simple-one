@@ -9,6 +9,7 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import InterestContentInfo from '/src/components/UI/interestContentInfo'
 import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome5'
 import ButtonStatus from '/src/components/UI/buttonStatus'
+import { withTranslation } from 'react-i18next';
 
 const data = [
     { id: 31, label: 'Mountain Biking' },
@@ -44,8 +45,8 @@ const ListImageSwipe = (arrImage) => {
     }
 }
 
-export default function imageDetail(props) {
-    const { onPressInfo, name, interests,
+function ImageDetail(props) {
+    const { t, onPressInfo, name, interests,
         work, location, religiousBelief, job, education, dateOfBirth, ethnicity, oldYear,
         kids, height, drinking, smoking, familyPlans, arrImage, gender, bio, onPressLike, isShowOffButton
     } = props
@@ -110,7 +111,7 @@ export default function imageDetail(props) {
                                 size={Themes.Const.FONT_SIZE + 10}
                                 color={Themes.Colors.GRAY_BRIGHT_I}
                                 name="star-outline"></Icon>
-                            <Text style={styles.txtHeader}>Religious belief</Text>
+                            <Text style={styles.txtHeader}>{t("Religious belief")}</Text>
                         </View>
                         <Text style={styles.txtContent}>{religiousBelief}</Text>
                     </View>
@@ -120,7 +121,7 @@ export default function imageDetail(props) {
                                 size={Themes.Const.FONT_SIZE + 10}
                                 color={Themes.Colors.GRAY_BRIGHT_I}
                                 name="google-outline"></Icon>
-                            <Text style={styles.txtHeader}>Work</Text>
+                            <Text style={styles.txtHeader}>{t("Work")}</Text>
                         </View>
                         <Text style={styles.txtContent}>{work}</Text>
                     </View>
@@ -130,7 +131,7 @@ export default function imageDetail(props) {
                                 size={Themes.Const.FONT_SIZE + 10}
                                 color={Themes.Colors.GRAY_BRIGHT_I}
                                 name="briefcase-outline"></Icon>
-                            <Text style={styles.txtHeader}>Job</Text>
+                            <Text style={styles.txtHeader}>{t("Job")}</Text>
                         </View>
                         <Text style={styles.txtContent}>{job}</Text>
                     </View>
@@ -140,7 +141,7 @@ export default function imageDetail(props) {
                                 size={Themes.Const.FONT_SIZE + 10}
                                 color={Themes.Colors.GRAY_BRIGHT_I}
                                 name="home-outline"></Icon>
-                            <Text style={styles.txtHeader}>Education</Text>
+                            <Text style={styles.txtHeader}>{t("Education")}</Text>
                         </View>
                         <Text style={styles.txtContent}>{education}</Text>
                     </View>
@@ -153,7 +154,7 @@ export default function imageDetail(props) {
                                 size={Themes.Const.FONT_SIZE + 10}
                                 color={Themes.Colors.GRAY_BRIGHT_I}
                                 name="people-outline"></Icon>
-                            <Text style={styles.txtHeader}>Ethnicity</Text>
+                            <Text style={styles.txtHeader}>{t("Ethnicity")}</Text>
                         </View>
                         <Text style={styles.txtContent}>{ethnicity}</Text>
                     </View>
@@ -163,7 +164,7 @@ export default function imageDetail(props) {
                                 size={Themes.Const.FONT_SIZE + 10}
                                 color={Themes.Colors.GRAY_BRIGHT_I}
                                 name="smiling-face-outline"></Icon>
-                            <Text style={styles.txtHeader}>Kids</Text>
+                            <Text style={styles.txtHeader}>{t("Kids")}</Text>
                         </View>
                         <Text style={styles.txtContent}>{kids}</Text>
                     </View>
@@ -173,7 +174,7 @@ export default function imageDetail(props) {
                                 size={Themes.Const.FONT_SIZE + 10}
                                 color={Themes.Colors.GRAY_BRIGHT_I}
                                 name="clipboard-outline"></Icon>
-                            <Text style={styles.txtHeader}>Family Plans</Text>
+                            <Text style={styles.txtHeader}>{t("Family Plans")}</Text>
                         </View>
                         <Text style={styles.txtContent}>{familyPlans}</Text>
                     </View>
@@ -183,7 +184,7 @@ export default function imageDetail(props) {
                                 size={Themes.Const.FONT_SIZE + 10}
                                 color={Themes.Colors.GRAY_BRIGHT_I}
                                 name="pantone-outline"></Icon>
-                            <Text style={styles.txtHeader}>Height</Text>
+                            <Text style={styles.txtHeader}>{t("Height")}</Text>
                         </View>
                         <Text style={styles.txtContent}>{height}</Text>
                     </View>
@@ -195,7 +196,7 @@ export default function imageDetail(props) {
                             <FontAwesomeIcons
                                 style={styles.icoInfo}
                                 name={"wine-bottle"} size={Themes.Const.FONT_SIZE + 5} color={Themes.Colors.GRAY_BRIGHT_I} />
-                            <Text style={styles.txtHeader}>Drinking</Text>
+                            <Text style={styles.txtHeader}>{t("Drinking")}</Text>
                         </View>
                         <Text style={styles.txtContent}>{drinking}</Text>
                     </View>
@@ -204,7 +205,7 @@ export default function imageDetail(props) {
                             <FontAwesomeIcons
                                 style={styles.icoInfo}
                                 name={"smoking"} size={Themes.Const.FONT_SIZE + 3} color={Themes.Colors.GRAY_BRIGHT_I} />
-                            <Text style={styles.txtHeader}>Smoking</Text>
+                            <Text style={styles.txtHeader}>{t("Smoking")}</Text>
                         </View>
                         <Text style={styles.txtContent}>{smoking}</Text>
                     </View>
@@ -328,3 +329,5 @@ const styles = StyleSheet.create({
         height: 200,
     }
 })
+
+export default withTranslation()(ImageDetail)

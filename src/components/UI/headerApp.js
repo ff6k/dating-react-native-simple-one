@@ -21,7 +21,7 @@ export default function headerApp(props) {
                     />
                 </TouchableOpacity>
                 <AvatarActive sizeAvatar={50} sizeActive={0} isRow={true} item={dataHeader}
-                    isShowActive={true}
+                    isShowActive={false}
                 />
             </View>
             <View style={styles.containerButtonHeader}>

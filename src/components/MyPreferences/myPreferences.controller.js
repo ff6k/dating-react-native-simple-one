@@ -6,6 +6,7 @@ import FontAwesomeIcons from 'react-native-vector-icons/SimpleLineIcons'
 import Themes from '/src/themes'
 import { saveDataUserStorage, removeKeyStorage } from '/src/configs/AsyncStorage'
 import { useSelector, useDispatch } from 'react-redux'
+import Utils from '/src/utils'
 import { pushDataAgeAndGender, changeDataAgeAndGender } from '/src/slice/preferenceSlice'
 
 const GENDER_ARRAY = [
@@ -30,7 +31,6 @@ export default function MyPreferencesController(props) {
 
     const codeLang = route.params === undefined ? code : route.params.code
     const dataPre = useSelector(state => state.preference)
-    console.log(`dataPre: ${JSON.stringify(dataPre)}`);
 
     const getDataStore = () => {
         // const [gender, minAge, maxAge] = dataPre
@@ -75,14 +75,22 @@ export default function MyPreferencesController(props) {
 
     const onPressSave = () => {
         // removeKeyStorage(Const.StorageKey.CODE_PREFERENCES)
-        saveDataUserStorage(Const.StorageKey.CODE_PREFERENCES, [genderData, minAgeData, maxAgeData])
-        setIsChange(false)
-        const data = {
-            gender: genderData,
-            minAge: minAgeData,
-            maxAge: maxAgeData
+        try {
+            saveDataUserStorage(Const.StorageKey.CODE_PREFERENCES, [genderData, minAgeData, maxAgeData])
+            setIsChange(false)
+            const data = {
+                gender: genderData,
+                minAge: minAgeData,
+                maxAge: maxAgeData
+            }
+            dispatch(changeDataAgeAndGender(data))
+            Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your setting successfully, You must restart your app to apply change', 3000)
         }
-        dispatch(changeDataAgeAndGender(data))
+        catch (err) {
+            console.log(err)
+            Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your setting fail, error: ${err}`, 3000)
+        }
+
     }
 
     const onChangeGender = (genderTemp) => {

@@ -105,7 +105,7 @@ function Chats(props) {
             </Header>
             <SearchBar
                 onChangeInput={onChangeInput}
-                placeholder={"Search 1 name"}
+                placeholder={t("Search 1 name")}
                 style={styles.search}
             />
             <View style={styles.containerBottomMessages}>

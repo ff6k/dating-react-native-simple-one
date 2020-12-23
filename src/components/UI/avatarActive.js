@@ -15,7 +15,7 @@ export default function avatarActive(props) {
             onPress={() => onPressAvatar && onPressAvatar(item)}
         >
             <CircleAvatarActive sizeActive={sizeActive} sizeAvatar={sizeAvatar} dataHeader={item} isShowActive={isShowActive} />
-            <View style={isRow && styles.containerChat}>
+            <View style={[isRow && styles.containerChat, !isShowActive && { justifyContent: 'center' }]}>
                 <Text style={[styles.txtName, { width: sizeAvatar },
                 isRow && styles.txtNameRow]}>
                     {nameUser}</Text>

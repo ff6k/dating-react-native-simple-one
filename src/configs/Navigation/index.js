@@ -77,6 +77,7 @@ export default function screensNavigation() {
                     headerShown: false
                 }}
             >
+
                 <Stack.Screen
                     name={Const.NameScreens.Splash}
                     component={Splash}

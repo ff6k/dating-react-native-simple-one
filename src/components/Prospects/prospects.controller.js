@@ -6,18 +6,35 @@ import Const from '/src/const'
 
 let token
 let idUser
+let minAgeData
+let maxAgeData
+let genderData
 export default function ProspectsController(props) {
     const { navigation, route } = props
+
     const dataStore = useSelector(state => state.login)
+    const dataPre = useSelector(state => state.preference)
+
     const [dataLikes, setDataLikes] = useState([])
     const [dataTopPick, setDataTopPick] = useState([])
     const [isShowAlertSuccess, setIsShowAlertSuccess] = useState(false)
     const [isShowAlertFail, setIsShowAlertFail] = useState(false)
+
+    // const [maxAge, setMaxAge] = useState()
+    // const [minAge, setMinAge] = useState()
+    // const [gender, setGender] = useState()
+
     const getDataStore = () => {
         if (dataStore.length > 0) {
             const { jwtToken, id } = dataStore[0]
             token = jwtToken
             idUser = id
+            minAgeData = dataPre[0].minAge
+            maxAgeData = dataPre[0].maxAge
+            genderData = dataPre[0].gender
+            // setMaxAge(maxAgeData)
+            // setMinAge(minAgeData)
+            // setGender(genderData)
         }
         else {
             return null // empty data
@@ -43,9 +60,9 @@ export default function ProspectsController(props) {
             token,
             pageNumber: 1,
             pageSize: 10,
-            gender: 'female',
-            minAge: 18,
-            maxAge: 99,
+            gender: genderData,
+            minAge: minAgeData,
+            maxAge: maxAgeData,
             topPicks: true
         }
         Api.RequestApi.getTopPickApiRequest(params)

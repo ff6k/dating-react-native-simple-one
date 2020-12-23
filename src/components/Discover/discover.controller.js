@@ -7,8 +7,12 @@ import { connectServerNotifier, listenerConnect } from '/src/configs/Signalr'
 
 let token
 let idUser
+let minAgeData
+let maxAgeData
+let genderData
 export default function DiscoverController(props) {
     const { navigation } = props
+    console.log(`props: ${JSON.stringify(props)}`);
     const [isModeDetail, setIsModeDetail] = useState(false)
     const [isSwipeRight, setIsSwipeRight] = useState(false)
     const [isSwipeLeft, setIsSwipeLeft] = useState(false)
@@ -19,11 +23,22 @@ export default function DiscoverController(props) {
     const [indexCurrentSwipe, setIndexCurrentSwipe] = useState(0)
     const [pageNumber, setPageNumber] = useState(1)
 
+    // const [maxAge, setMaxAge] = useState()
+    // const [minAge, setMinAge] = useState()
+    // const [gender, setGender] = useState()
+
     const dataStore = useSelector(state => state.login)
+    const dataPre = useSelector(state => state.preference)
 
     const getDataStore = () => {
         if (dataStore.length > 0) {
             const { jwtToken, id } = dataStore[0]
+            minAgeData = dataPre[0].minAge
+            maxAgeData = dataPre[0].maxAge
+            genderData = dataPre[0].gender
+            // setMaxAge(maxAgeData)
+            // setMinAge(minAgeData)
+            // setGender(genderData)
             token = jwtToken
             idUser = id
         }
@@ -37,7 +52,7 @@ export default function DiscoverController(props) {
         setIsLoading(true)
         getDataStore()
 
-        getDataApi('male', pageNumber, token).then(res => {
+        getDataApi(pageNumber, token).then(res => {
             setDataUserSwipe(res.data)
             setIdCurrentUserSwipe(res.data[0].id)
         })
@@ -59,7 +74,6 @@ export default function DiscoverController(props) {
     }
 
     const requestApiUserDetail = async () => {
-        console.log('dataUserSwipe', JSON.stringify())
         // const params = {
         //     id: idCurrentUserSwipe,
         //     token: token
@@ -82,19 +96,20 @@ export default function DiscoverController(props) {
         console.log('back')
     }
 
-    const getDataApi = async (gender, pageNumber, token) => {
+    const getDataApi = async (pageNumber, token) => {
         const params = {
-            gender: gender,
+            gender: genderData,
             pageNumber: pageNumber,
             pageSize: 10,
-            token
+            token,
+            maxAge: maxAgeData
         }
         return Api.RequestApi.getRequestImageSwipe(params)
     }
 
     //TODO: fix gender
     const updateData = () => {
-        getDataApi('male', pageNumber + 1, token).then(res => {
+        getDataApi(pageNumber + 1, token).then(res => {
             const data = dataUserSwipe.concat(res.data)
             setDataUserSwipe(data)
             setPageNumber(pageNumber => pageNumber + 1)

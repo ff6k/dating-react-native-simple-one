@@ -62,7 +62,7 @@ function Login(props) {
             <View
                 style={styles.inpPassword}>
                 <TextInput
-                    style={{ width: '90%' }}
+                    style={{ width: '90%', fontFamily: Themes.FontFamily.FontBoldSemi }}
                     onChangeText={(password) => setPassword(password)}
                     placeholder={t('Password')}
                     onSubmitEditing={() => !isVisible && onLogin()}
@@ -91,7 +91,7 @@ function Login(props) {
                 <TouchableOpacity style={styles.btnForgetPassword}
                     onPress={() => onPressForgotPassword && onPressForgotPassword()}
                 >
-                    <Text style={styles.txtForgetPassword}>Forgot Password ?</Text>
+                    <Text style={styles.txtForgetPassword}>{t("Forgot Password")} ?</Text>
                 </TouchableOpacity>
             </View>
 
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     },
     inpEmail: {
         ...Themes.Styles.TextInput,
-        marginTop: Themes.Const.MARGIN_TOP_V3
+        marginTop: Themes.Const.MARGIN_TOP_V3,
     },
     inpPassword: {
         ...Themes.Styles.TextInput,

@@ -5,7 +5,6 @@ import ButtonSend from '/src/components/UI/buttonSend'
 import { FloatingAction } from "react-native-floating-action";
 import Icon from '/src/components/UI/icon'
 import Themes from '/src/themes'
-import { withTranslation } from 'react-i18next';
 import ItemConversition from '/src/components/UI/itemConversition'
 import BottomModalSlide from '/src/components/UI/bottomModalSlide'
 import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
@@ -16,31 +15,6 @@ import Const from '/src/const'
 const btnPhoto = 'bt_photo'
 const btnLocation = 'bt_location'
 const btnGif = 'bt_gif'
-
-const actions = [
-    {
-        color: Themes.Colors.PINK,
-        text: "Send Photo",
-        icon: require("/src/assets/images/picture_127px.png"),
-        name: btnPhoto,
-        position: 1
-    },
-    {
-        color: Themes.Colors.PINK,
-        text: "Send Location",
-        icon: require("/src/assets/images/location_127px.png"),
-        name: btnLocation,
-        position: 2
-    },
-    {
-        color: Themes.Colors.PINK,
-        text: "Send Gif",
-        icon: require("/src/assets/images/gif_127px.png"),
-        name: btnGif,
-        position: 3
-    },
-
-];
 
 const renderFooter = (props) => {
     const { loading } = props
@@ -59,6 +33,30 @@ const Messages = React.forwardRef((props, ref) => {
         onPressReport, onPressCloseModal, onPressPostData, onPressLocation, onPressLocationLink
 
     } = props
+    const actions = [
+        {
+            color: Themes.Colors.PINK,
+            text: t("Send Photo"),
+            icon: require("/src/assets/images/picture_127px.png"),
+            name: btnPhoto,
+            position: 1
+        },
+        {
+            color: Themes.Colors.PINK,
+            text: t("Send Location"),
+            icon: require("/src/assets/images/location_127px.png"),
+            name: btnLocation,
+            position: 2
+        },
+        {
+            color: Themes.Colors.PINK,
+            text: t("Send Gif"),
+            icon: require("/src/assets/images/gif_127px.png"),
+            name: btnGif,
+            position: 3
+        },
+
+    ];
     const { name } = dataHeader
     const [newValue, setNewValue] = useState('')
     const [height, setHeight] = useState(50)
@@ -180,7 +178,7 @@ const Messages = React.forwardRef((props, ref) => {
                             color={'black'}
                             name="info-outline"></Icon>
                     </View>
-                    <Text style={styles.txtModal}>View {dataHeader.name}'s Profile</Text>
+                    <Text style={styles.txtModal}>{t("View")} {dataHeader.name} {t("'s Profile")}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.containItemModal}
                     onPress={() => onPressReport()}
@@ -191,7 +189,7 @@ const Messages = React.forwardRef((props, ref) => {
                             color={'black'}
                             name="flag-outline"></Icon>
                     </View>
-                    <Text style={styles.txtModal}>Report {dataHeader.name}</Text>
+                    <Text style={styles.txtModal}>{t("Report")} {dataHeader.name}</Text>
                 </TouchableOpacity>
             </BottomModalSlide>
             <UploadImageModal

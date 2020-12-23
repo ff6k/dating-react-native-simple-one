@@ -2,8 +2,9 @@ import React from 'react'
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import BottomHalfModel from '/src/components/Model/bottomHalfModel'
 import Themes from '/src/themes'
+import { withTranslation } from 'react-i18next';
 
-export default function uploadImageModal(props) {
+function UploadImageModal(props) {
     const { isVisible, setVisibleModel, t, onUploadPhoto, onTakePhoto } = props
     return (
         <BottomHalfModel
@@ -12,11 +13,11 @@ export default function uploadImageModal(props) {
         >
             <TouchableOpacity style={styles.btnBetweenContent}
                 onPress={() => onUploadPhoto && onUploadPhoto()}>
-                <Text style={styles.txtContentButton}>{"Upload photo from gallery"}</Text>
+                <Text style={styles.txtContentButton}>{t("Upload photo from gallery")}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btnBottomContent}
                 onPress={() => onTakePhoto && onTakePhoto()}>
-                <Text style={styles.txtContentButton}>{'Take photo with camera'}</Text>
+                <Text style={styles.txtContentButton}>{t('Take photo with camera')}</Text>
             </TouchableOpacity>
         </BottomHalfModel>
     )
@@ -33,3 +34,6 @@ const styles = StyleSheet.create({
         ...Themes.Styles.BtnBottomContent
     },
 })
+
+export default withTranslation()(UploadImageModal)
+

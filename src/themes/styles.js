@@ -185,6 +185,7 @@ export const Title = {
     color: Colors.PINK,
     fontSize: Const.FONT_SIZE_V1,
     marginLeft: 20,
+    marginTop: 10,
     fontFamily: FontFamily.FontBoldDefault
 }
 

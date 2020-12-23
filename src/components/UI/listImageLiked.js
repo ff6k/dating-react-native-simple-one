@@ -9,7 +9,7 @@ import EmptyPerform from '/src/components/UI/emptyPerform'
 const SIZE_ICON = 18
 const renderItemLiked = (props, item, index) => {
     const { onPressUserLikedMe, onPressLoveStatus } = props
-    const { photoUrl, name, isMale } = item
+    const { photoUrl, name, gender } = item
     return (
         <View>
             <TouchableOpacity style={{ marginTop: 7 }}
@@ -21,7 +21,7 @@ const renderItemLiked = (props, item, index) => {
                 }} />
                 <View style={styles.containBottom}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 3 }}>
-                        {!isMale ? <FontAwesomeIcons name={"symbol-female"} size={SIZE_ICON} color={Themes.Colors.PINK_DARK} />
+                        {gender === 'female' ? <FontAwesomeIcons name={"symbol-female"} size={SIZE_ICON} color={Themes.Colors.PINK_DARK} />
                             : <FontAwesomeIcons name={"symbol-male"} size={SIZE_ICON} color={Themes.Colors.PINK_DARK} />}
                         <Text style={styles.txtName}>{name}</Text>
                     </View>

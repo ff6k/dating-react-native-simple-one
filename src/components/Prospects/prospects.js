@@ -32,11 +32,11 @@ function Prospects(props) {
                     tabStyle={styles.tabStyle}
                     activeTabStyle={styles.activeTabStyle}
                     activeTextStyle={styles.activeTextStyle}
-                    heading={`${countLikes} Likes`}>
+                    heading={`${countLikes} ` + t("Likes")}>
                     <ListImageLiked data={dataLikes}
                         onPressUserLikedMe={onPressUserLikedMe}
                         onPressLoveStatus={onPressLoveStatus}
-                        title={"People who have already liked or super liked you"}
+                        title={t("People who have already liked")}
                     />
                 </Tab>
                 <Tab
@@ -44,11 +44,11 @@ function Prospects(props) {
                     tabStyle={styles.tabStyle}
                     activeTabStyle={styles.activeTabStyle}
                     activeTextStyle={styles.activeTextStyle}
-                    heading={"Top Picks"}>
+                    heading={t("Top Picks")}>
                     <ListImageLiked data={dataTopPicks}
                         onPressUserLikedMe={onPressUserLikedMe}
                         onPressLoveStatus={onPressLoveStatusTopPick}
-                        title={"Top Picks !"}
+                        title={t("Your Top Picks !")}
                     />
                 </Tab>
             </Tabs>
@@ -72,14 +72,14 @@ function Prospects(props) {
             />
             <AwesomeAlert
                 show={isShowAlertFail}
-                title={"Match Fail❗️"}
+                title={t("Match Fail❗️")}
                 message={
-                    "Please check your connection then try again"}
+                    t("Please check your connection then try again")}
                 closeOnTouchOutside={true}
                 closeOnHardwareBackPress={false}
                 showConfirmButton={true}
                 contentStyle={{ width: 300, height: 120, }}
-                confirmText={"Yes, i know"}
+                confirmText={t("Yes, i know")}
                 messageStyle={styles.txtMessageAlert}
                 confirmButtonColor={"#F86262"}
                 confirmButtonTextStyle={styles.txtConfirm}

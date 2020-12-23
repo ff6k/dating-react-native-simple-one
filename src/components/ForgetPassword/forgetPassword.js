@@ -3,9 +3,10 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView } from 
 import ButtonBack from '/src/components/UI/buttonBack'
 import Themes from '/src/themes'
 import SpinnerLoading from '/src/components/UI/spinnerLoading'
+import { withTranslation } from 'react-i18next';
 
-export default function forgetPassword(props) {
-    const { onPressReset, isLoading, onPressBack } = props
+function ForgetPassword(props) {
+    const { onPressReset, isLoading, onPressBack, t } = props
 
     const [email, setEmail] = useState('')
     return (
@@ -14,23 +15,23 @@ export default function forgetPassword(props) {
                 source={require('/src/assets/lotties/9844-loading-40-paperplane.json')}
             />
             <ButtonBack
-                title={'Forgot Password'}
+                title={t('Forgot Password')}
                 onPress={onPressBack}
             />
             <View style={styles.container}>
-                <Text style={styles.txtReset}>Reset Password</Text>
-                <Text style={styles.txtDetail}>Please enter the email you used at the time of registration to get the password reset instructions</Text>
+                <Text style={styles.txtReset}>{t("Reset Password")}</Text>
+                <Text style={styles.txtDetail}>{t("Please enter the email you used at the time of registration to get the password reset instructions")}</Text>
                 <TextInput
                     value={email}
                     onChangeText={(value) => setEmail(value)}
                     keyboardType={'email-address'}
-                    placeholder={'Your Email'}
+                    placeholder={t('Your Email')}
                     style={styles.inpEmail}
                 />
                 <TouchableOpacity style={styles.btnReset}
                     onPress={() => onPressReset && onPressReset(email)}
                 >
-                    <Text style={styles.txtBtnReset}>RESET</Text>
+                    <Text style={styles.txtBtnReset}>{t("RESET")}</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>
@@ -80,3 +81,4 @@ const styles = StyleSheet.create({
         marginBottom: 20
     }
 })
+export default withTranslation()(ForgetPassword)

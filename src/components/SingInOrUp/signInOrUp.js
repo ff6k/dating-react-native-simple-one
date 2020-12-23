@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     txtTitle: {
         color: Themes.Colors.PINK,
         fontSize: 23,
+        textAlign: 'center',
         fontFamily: Themes.FontFamily.FontBoldDefault
     },
     txtIntro: {

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import CircleAvatarActive from '/src/components/UI/circleAvatarActive'
+import { withTranslation } from 'react-i18next';
 import Utils from '/src/utils'
 import Themes from '/src/themes'
 import Const from '/src/const'
 const width_screen = Const.Common.deviceWidth
-export default function itemMessages(props) {
-    const { item, onPressMessages, idUser } = props
+function ItemMessages(props) {
+    const { t, item, onPressMessages, idUser } = props
     const { name, dateRead, content, messageSent, recipientId, type } = item
 
     const [dateMess, setDateMess] = useState(() => {
@@ -43,11 +44,11 @@ export default function itemMessages(props) {
         ) {
             switch (type) {
                 case Const.TypeSend.GIF:
-                    return 'You have got a gif'
+                    return t('You have got a gif')
                 case Const.TypeSend.IMAGE:
-                    return 'You have got a image'
+                    return t('You have got a image')
                 case Const.TypeSend.LOCATION:
-                    return 'You have got a location'
+                    return t('You have got a location')
                 default:
                     return content
             }
@@ -55,13 +56,13 @@ export default function itemMessages(props) {
         else {
             switch (type) {
                 case Const.TypeSend.GIF:
-                    return 'You have send a gif'
+                    return t('You have send a gif')
                 case Const.TypeSend.IMAGE:
-                    return 'You have send a image'
+                    return t('You have send a image')
                 case Const.TypeSend.LOCATION:
-                    return 'You have send a location'
+                    return t('You have send a location')
                 default:
-                    return 'Me: ' + content
+                    return t('Me') + " : " + content
             }
         }
     }
@@ -136,3 +137,4 @@ const styles = StyleSheet.create({
         marginLeft: Themes.Const.MARGIN_AVATAR,
     },
 })
+export default withTranslation()(ItemMessages)

@@ -6,6 +6,7 @@ import Api from '/src/api'
 import { useSelector } from 'react-redux'
 import { connectServerMess, listenerConnect } from '/src/configs/Signalr'
 import Utils from '/src/utils'
+import { withTranslation } from 'react-i18next';
 import Geolocation from '@react-native-community/geolocation';
 import { request, PERMISSIONS } from 'react-native-permissions';
 
@@ -18,7 +19,7 @@ const item = {
     isActive: true,
     name: "Long"
 }
-export default function MessagesController(props) {
+function MessagesController(props) {
 
     const { navigation, route } = props
     const dataStore = useSelector(state => state.login)
@@ -374,6 +375,7 @@ export default function MessagesController(props) {
 
     return (
         <Messages
+            t={props.t}
             onPressBack={onPressBack}
             dataMessages={dataMessages}
             idUser={idUser}
@@ -404,3 +406,4 @@ export default function MessagesController(props) {
     )
 }
 
+export default withTranslation()(MessagesController)
