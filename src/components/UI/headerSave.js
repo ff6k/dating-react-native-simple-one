@@ -2,9 +2,10 @@ import React from 'react'
 import { StyleSheet, TouchableOpacity, Text, View } from 'react-native'
 import Themes from '/src/themes'
 import Icon from '/src/components/UI/icon'
+import { withTranslation } from 'react-i18next';
 
-export default function headerSave(props) {
-    const { title, onPressBack, onPressSave, isChange } = props
+function HeaderSave(props) {
+    const { t, title, onPressBack, onPressSave, isChange } = props
     return (
         <View style={styles.header}>
             <View style={styles.containLeft}>
@@ -22,7 +23,7 @@ export default function headerSave(props) {
                 disabled={!isChange}
                 onPress={() => onPressSave && onPressSave()}
             >
-                <Text style={[styles.txtSave, !isChange && { color: 'gray' }]}>SAVE</Text>
+                <Text style={[styles.txtSave, !isChange && { color: 'gray' }]}>{t("SAVE")}</Text>
             </TouchableOpacity>
         </View>
     )
@@ -56,3 +57,4 @@ const styles = StyleSheet.create({
         fontFamily: Themes.FontFamily.FontBoldSemi
     },
 })
+export default withTranslation()(HeaderSave)

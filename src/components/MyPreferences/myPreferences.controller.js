@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import MyPreferences from './myPreferences'
 import { readStorage } from '/src/configs/AsyncStorage'
+import { withTranslation } from 'react-i18next';
 import Const from '/src/const'
 import FontAwesomeIcons from 'react-native-vector-icons/SimpleLineIcons'
 import Themes from '/src/themes'
@@ -9,7 +10,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Utils from '/src/utils'
 import { pushDataAgeAndGender, changeDataAgeAndGender } from '/src/slice/preferenceSlice'
 
-const GENDER_ARRAY = [
+const GENDER_ARRAY_EN = [
     {
         label: 'Male', value: 'male', icon: () => <FontAwesomeIcons name={"symbol-male"} size={18} color={Themes.Colors.PINK_DARK} />
     },
@@ -17,16 +18,33 @@ const GENDER_ARRAY = [
         label: 'Female', value: 'female', icon: () => <FontAwesomeIcons name={"symbol-female"} size={18} color={Themes.Colors.PINK_DARK} />
     },
 ]
+const GENDER_ARRAY_VI = [
+    {
+        label: 'Nam', value: 'male', icon: () => <FontAwesomeIcons name={"symbol-male"} size={18} color={Themes.Colors.PINK_DARK} />
+    },
+    {
+        label: 'Nữ', value: 'female', icon: () => <FontAwesomeIcons name={"symbol-female"} size={18} color={Themes.Colors.PINK_DARK} />
+    },
+]
 let minAgeData
 let maxAgeData
 let genderData
-export default function MyPreferencesController(props) {
-    const { navigation, route } = props
+function MyPreferencesController(props) {
+    const { t, navigation, route, i18n } = props
     const [code, setCode] = useState(null)
     const [maxAge, setMaxAge] = useState()
     const [minAge, setMinAge] = useState()
     const [gender, setGender] = useState()
     const [isChange, setIsChange] = useState(false)
+    const [dataGenderBegin, setDataGenderBegin] = useState(() => {
+        const { language } = i18n
+        switch (language) {
+            case "vi":
+                return GENDER_ARRAY_VI
+            default:
+                return GENDER_ARRAY_EN
+        }
+    })
     const dispatch = useDispatch()
 
     const codeLang = route.params === undefined ? code : route.params.code
@@ -111,7 +129,7 @@ export default function MyPreferencesController(props) {
             onPressSave={onPressSave}
             onChangeSlideAge={onChangeSlideAge}
             onChangeGender={onChangeGender}
-            dataGender={GENDER_ARRAY}
+            dataGender={dataGenderBegin}
             minAge={minAge}
             maxAge={maxAge}
             gender={gender}
@@ -120,3 +138,4 @@ export default function MyPreferencesController(props) {
     )
 }
 
+export default withTranslation()(MyPreferencesController)

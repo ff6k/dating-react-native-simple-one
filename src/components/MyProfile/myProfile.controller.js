@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import MyProfile from './myProfile'
 
+import { withTranslation } from 'react-i18next';
 import Const from '/src/const'
 import Api from '/src/api'
 import Utils from '/src/utils'
@@ -25,8 +26,8 @@ let jobBegin
 let educationBegin
 let dateOfBirthBegin
 // let genderBegin
-export default function MyProfileController(props) {
-    const { navigation, route } = props
+function MyProfileController(props) {
+    const { navigation, route, t } = props
     const [dataProfile, setDataProfile] = useState(null)
     const [dataPhotos, setDataPhotos] = useState(null)
     const refSlideModal = React.createRef()
@@ -399,6 +400,7 @@ export default function MyProfileController(props) {
 
     return (
         <MyProfile
+            t={t}
             onPressDrinking={onPressDrinking}
             onPressSmoking={onPressSmoking}
             onPressBack={onPressBack}
@@ -438,3 +440,4 @@ export default function MyProfileController(props) {
     )
 }
 
+export default withTranslation()(MyProfileController)

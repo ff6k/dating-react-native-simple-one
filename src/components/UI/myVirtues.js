@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect, useState, Component } from 'react'
 import { StyleSheet, TouchableOpacity, FlatList, Text, View, TextInput } from 'react-native'
-import ButtonNext from '/src/components/UI/buttonNext'
 import Themes from '/src/themes'
-import PreferNotSay from '/src/components/UI/preferNotSay'
 import ItemList from '/src/components/UI/itemList'
 import PropTypes from 'prop-types'
 import ButtonBack from '/src/components/UI/buttonBack'

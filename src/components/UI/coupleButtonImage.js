@@ -2,9 +2,10 @@ import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import Icon from '/src/components/UI/icon'
 import Themes from '/src/themes'
+import { withTranslation } from 'react-i18next';
 
-export default function coupleButtonImage(props) {
-    const { onTakePhoto, onUploadPhoto } = props
+function CoupleButtonImage(props) {
+    const { t, onTakePhoto, onUploadPhoto } = props
     return (
         <View>
             <TouchableOpacity style={styles.containItemModal}
@@ -16,7 +17,7 @@ export default function coupleButtonImage(props) {
                         color={'black'}
                         name="radio-button-on"></Icon>
                 </View>
-                <Text style={styles.txtModal}>Open Camera</Text>
+                <Text style={styles.txtModal}>{t("Open Camera")}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.containItemModal}
                 onPress={() => onUploadPhoto && onUploadPhoto()}
@@ -27,11 +28,14 @@ export default function coupleButtonImage(props) {
                         color={'black'}
                         name="image"></Icon>
                 </View>
-                <Text style={styles.txtModal}>Upload Gallery</Text>
+                <Text style={styles.txtModal}>{t("Upload Gallery")}</Text>
             </TouchableOpacity>
         </View>
     )
 }
+
+export default withTranslation()(CoupleButtonImage)
+
 const SIZE_RADIUS = 40
 
 const styles = StyleSheet.create({

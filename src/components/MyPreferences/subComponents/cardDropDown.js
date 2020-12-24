@@ -6,7 +6,7 @@ import Const from '/src/const'
 import Themes from '/src/themes'
 
 export default function cardDropDown(props) {
-    const { data, onChangeGender, itemDefault } = props
+    const { content, data, onChangeGender, itemDefault } = props
     // console.log(`data: ${data}`);
     // console.log(GENDER_ARRAY[0].label)
     const [item, setItem] = useState()
@@ -23,7 +23,7 @@ export default function cardDropDown(props) {
     }
 
     return (
-        <Card content={"Gender"}
+        <Card content={content}
             style={isScale ? styles.cardGenderScale : styles.cardGenderDefault}
             styleContent={isScale ? styles.dropDownGender : {
                 alignItems: 'flex-start'

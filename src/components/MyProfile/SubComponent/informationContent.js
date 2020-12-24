@@ -11,7 +11,9 @@ function areEqual(prevProps, nextProps) {
     /* Trả về true nếu nextProps bằng prevProps, ngược lại trả về false */
 }
 function InformationContent(props) {
-    const { onPressInterest, onPressGender, onPressLocation,
+    const {
+        t,
+        onPressInterest, onPressGender, onPressLocation,
         name,
         location,
         gender,
@@ -28,37 +30,37 @@ function InformationContent(props) {
 
     return (
         <View>
-            <ItemContent title={"Bio"} content={bio} isTextExpand={true}
+            <ItemContent title={t("Bio")} content={bio} isTextExpand={true}
                 typeContent={TYPE_CONTENT.TextExpand}
                 onBlurTextExpand={onBlurTextExpand}
             />
-            <ItemContent title={"Interest"} content={""}
+            <ItemContent title={t("Interest")} content={""}
                 onPressItem={onPressInterest}
                 typeContent={TYPE_CONTENT.TagSelect}
                 data={dataInterest}
             />
 
-            <ItemContent title={"Name"} content={name}
+            <ItemContent title={t("Name")} content={name}
                 typeContent={TYPE_CONTENT.TextInput}
                 onBlurTextInput={onBlurTextInputName}
             />
-            <ItemContent title={"Age"}
+            <ItemContent title={t("Age")}
                 typeContent={TYPE_CONTENT.DateTime}
                 dateBegin={dateBegin}
                 pickDate={pickDate}
             />
-            <ItemContent title={"Gender"} content={gender}
+            <ItemContent title={t("Gender")} content={gender}
                 onPressItem={onPressGender}
                 typeContent={TYPE_CONTENT.Button}
             />
-            <ItemContent title={"Phone"} content={phone} keyboardType={'phone-pad'}
+            <ItemContent title={t("Phone")} content={phone} keyboardType={'phone-pad'}
                 typeContent={TYPE_CONTENT.TextInput}
                 onBlurTextInput={onBlurTextInputPhone}
             />
             <ItemContent title={"Email"} content={email} keyboardType={'email-address'}
                 typeContent={TYPE_CONTENT.View}
             />
-            <ItemContent title={"Location"} content={location}
+            <ItemContent title={t("Location")} content={location}
                 onPressItem={onPressLocation}
                 typeContent={TYPE_CONTENT.Button}
             />

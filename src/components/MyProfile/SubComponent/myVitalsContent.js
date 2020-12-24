@@ -4,18 +4,18 @@ import ItemContent from './itemContent'
 import { TYPE_CONTENT } from '../typeContent'
 
 export default function MyVitalsContent(props) {
-    const { onPressEthnicity, onPressKids,
+    const { t, onPressEthnicity, onPressKids,
         // onPressFamilyPlans,
         ethnicity, kids,
         // familyPlans 
     } = props
     return (
         <View>
-            <ItemContent title={"Ethnicity"} content={ethnicity}
+            <ItemContent title={t("Ethnicity")} content={ethnicity}
                 typeContent={TYPE_CONTENT.Button}
                 onPressItem={onPressEthnicity}
             />
-            <ItemContent title={"Kids"} content={kids}
+            <ItemContent title={t("Kids")} content={kids}
                 typeContent={TYPE_CONTENT.Button}
                 onPressItem={onPressKids}
             />

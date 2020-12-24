@@ -3,8 +3,9 @@ import { StyleSheet, Text, View, Modal, TouchableOpacity, TextInput, FlatList } 
 import Themes from '/src/themes'
 import Icon from '/src/components/UI/icon'
 import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
+import { withTranslation } from 'react-i18next'
 
-const dataReportTemp = [
+const dataReportTempEn = [
     { id: 1, value: 'Nudity' },
     { id: 2, value: 'Violence' },
     { id: 3, value: 'Harassment' },
@@ -21,15 +22,42 @@ const dataReportTemp = [
     { id: 14, value: 'Sexual Activity' },
     { id: 19, value: 'Promoting Drug Use' },
     { id: 16, value: 'Sexual Exploitation' },
-
 ]
 
+const dataReportTempVi = [
+    { id: 1, value: 'Ảnh khoả thân' },
+    { id: 2, value: 'Bạo lực' },
+    { id: 3, value: 'Quấy rối' },
+    { id: 4, value: 'Tự tử hoặc tự gây thương tích' },
+    { id: 5, value: 'Tài khoản giả mạo' },
+    { id: 6, value: 'Thư rác' },
+    { id: 7, value: 'Bán hàng trái phép' },
+    { id: 8, value: 'Lời nói căm thù' },
+    { id: 9, value: 'Khủng bố' },
+    { id: 10, value: 'Gian lận hoặc lừa đảo' },
+    { id: 11, value: 'Bắt nạt' },
+    { id: 12, value: 'Lạm dụng trẻ em' },
+    { id: 13, value: 'Ngược đãi động vật' },
+    { id: 14, value: 'Hoạt động tình dục' },
+    { id: 19, value: 'Khuyến khích sử dụng ma túy' },
+    { id: 16, value: 'Bóc lột tình dục' },
+]
 
-
-export default function reportModal(props) {
-    const { visible, onPressCloseModal, onPressPostData } = props
+let dataReportTemp
+function ReportModal(props) {
+    const { visible, onPressCloseModal, onPressPostData, i18n, t } = props
     const [idSelect, setIdSelect] = useState(null)
-    const [dataReport, setDataReport] = useState(dataReportTemp)
+    const [dataReport, setDataReport] = useState(() => {
+        const { language } = i18n
+        switch (language) {
+            case "vi":
+                dataReportTemp = dataReportTempVi
+                return dataReportTempVi
+            default:
+                dataReportTemp = dataReportTempEn
+                return dataReportTempEn
+        }
+    })
     const [isDetail, setIsDetail] = useState(false)
     const [valueReport, setValueReport] = useState('')
     const [valueSearch, setValueSearch] = useState('')
@@ -109,7 +137,7 @@ export default function reportModal(props) {
                             name={'arrow-ios-back-outline'}
                         />
                     </TouchableOpacity>}
-                    <Text style={styles.txtHeader}>Report</Text>
+                    <Text style={styles.txtHeader}>{t("Report")}</Text>
                     <TouchableOpacity style={styles.btnClose}
                         onPress={() => onPressCloseModal && onPressCloseModal()}>
                         <Icon
@@ -151,7 +179,7 @@ export default function reportModal(props) {
                             <Text style={styles.txtDetailTitle}>{dataReportTemp.find(e => e.id === idSelect).value}</Text>
                         </View>
                         <AutoGrowingTextInput
-                            placeholder="Write Something About This Report"
+                            placeholder={t("Write Something About This Report")}
                             style={styles.inpReport}
                             onChangeText={(value) => setValueReport(value)}
                             maxLength={500}
@@ -164,7 +192,7 @@ export default function reportModal(props) {
                         disabled={(idSelect === null || idSelect < 0 || (isDetail && valueReport === '')) ? true : false}
                         style={[styles.btnNext, (idSelect === null || idSelect < 0 || (isDetail && valueReport === '')) && { backgroundColor: 'gray' }]}
                         onPress={() => !isDetail ? onPressNext() : onPressPost()}>
-                        <Text style={styles.txtNext}>{!isDetail ? 'Next' : 'Post'}</Text>
+                        <Text style={styles.txtNext}>{!isDetail ? t('Next') : t('Post')}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -172,6 +200,8 @@ export default function reportModal(props) {
         </Modal>
     )
 }
+
+export default withTranslation()(ReportModal)
 
 const SIZE_BUTTON = 40
 const SIZE_CHECK = 30

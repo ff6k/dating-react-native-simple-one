@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, ScrollView } from 'react-native'
 import Themes from '/src/themes'
+import { withTranslation } from 'react-i18next';
 import Const from '/src/const'
 import HeaderSave from '/src/components/UI/headerSave'
 import CardDropDown from './subComponents/cardDropDown'
@@ -10,8 +11,8 @@ import CardSlider from './subComponents/cardSlider'
 
 
 let nameLang
-export default function MyPreferences(props) {
-    const { dataGender, codeLanguage, onPressAppLanguages, onPressBack, onChangeSlideAge, onPressSave, onChangeGender,
+function MyPreferences(props) {
+    const { t, dataGender, codeLanguage, onPressAppLanguages, onPressBack, onChangeSlideAge, onPressSave, onChangeGender,
         minAge, maxAge, gender, isChange } = props
 
     if (codeLanguage === Const.Languages.languageCountry[0].code) {
@@ -31,16 +32,19 @@ export default function MyPreferences(props) {
             showsVerticalScrollIndicator={false}
             style={styles.container}>
             <HeaderSave
-                title={"Settings"}
+                t={t}
+                title={t("Settings")}
                 onPressBack={onPressBack}
                 onPressSave={onPressSave}
                 isChange={isChange}
             />
-            <Text style={styles.txtHeader}>My Preferences</Text>
-            <CardClick content={"Ho Chi Minh City, VietNam"}
-                title={"My current location"}
+            <Text style={styles.txtHeader}>{t("My Preferences")}</Text>
+            <CardClick content={t("Ho Chi Minh City, VietNam")}
+                title={t("My current location")}
             />
-            <CardDropDown data={dataGender}
+            <CardDropDown
+                content={t("Gender")}
+                data={dataGender}
                 onChangeGender={onChangeGender}
                 itemDefault={gender ? gender : 'male'}
             />
@@ -55,7 +59,7 @@ export default function MyPreferences(props) {
                 isSwitch={true}
             /> */}
             <CardSlider
-                content={"Age"}
+                content={t("Age")}
                 isSwitch={false}
                 onSlide={onSlideAge}
                 valueStart={minAge}
@@ -77,9 +81,9 @@ export default function MyPreferences(props) {
                 title={"Sex Orientation"}
                 nameIcon={"arrow-ios-forward-outline"}
             /> */}
-            <Text style={styles.txtHeader}>App Settings</Text>
+            <Text style={styles.txtHeader}>{t("App Settings")}</Text>
             <CardClick content={nameLang}
-                title={"Your App Languages"}
+                title={t("Your App Languages")}
                 nameIcon={"arrow-ios-forward-outline"}
                 onPress={onPressAppLanguages}
             />
@@ -87,7 +91,7 @@ export default function MyPreferences(props) {
     )
 }
 
-
+export default withTranslation()(MyPreferences)
 
 const FONT_SIZE = 18
 const styles = StyleSheet.create({

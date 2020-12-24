@@ -4,23 +4,23 @@ import ItemContent from './itemContent'
 import { TYPE_CONTENT } from '../typeContent'
 
 export default function MyVirtuesContent(props) {
-    const { onPressReligious, religion, job, work, education, onBlurTextInputJob, onBlurTextInputWorkAt,
+    const { t, onPressReligious, religion, job, work, education, onBlurTextInputJob, onBlurTextInputWorkAt,
         onBlurTextInputEducation } = props
     return (
         <View>
-            <ItemContent title={"Religious beliefs"} content={religion}
+            <ItemContent title={t("Religious belief")} content={religion}
                 typeContent={TYPE_CONTENT.Button}
                 onPressItem={onPressReligious}
             />
-            <ItemContent title={"Work At"} content={work}
+            <ItemContent title={t("Work")} content={work}
                 typeContent={TYPE_CONTENT.TextInput}
                 onBlurTextInput={onBlurTextInputWorkAt}
             />
-            <ItemContent title={"Job"} content={job}
+            <ItemContent title={t("Job")} content={job}
                 typeContent={TYPE_CONTENT.TextInput}
                 onBlurTextInput={onBlurTextInputJob}
             />
-            <ItemContent title={"Education"} content={education}
+            <ItemContent title={t("Education")} content={education}
                 typeContent={TYPE_CONTENT.TextInput}
                 onBlurTextInput={onBlurTextInputEducation}
             />

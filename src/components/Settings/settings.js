@@ -39,7 +39,7 @@ function Settings(props) {
                     <Text style={styles.txtDetail}>{emailTemp}</Text>
                     <View style={styles.containButton}>
                         <ButtonSetting
-                            title={"SETTINGS"}
+                            title={t("SETTINGS")}
                             style={styles.btnSetting}
                             name={"settings"}
                             isGradient={true}
@@ -47,7 +47,7 @@ function Settings(props) {
                         />
                         <ButtonSetting
                             onPress={onPressMyProfile}
-                            title={"EDIT INFO"}
+                            title={t("EDIT INFO")}
                             style={styles.btnInfo}
                             isGradient={true}
                             name={"edit-2"}
@@ -63,7 +63,7 @@ function Settings(props) {
             <TouchableOpacity style={styles.btnLogout}
                 onPress={() => onPressLogout()}
             >
-                <Text style={styles.txtSignOut}>LOGOUT</Text>
+                <Text style={styles.txtSignOut}>{t("LOGOUT")}</Text>
             </TouchableOpacity>
             <ConfirmModal
                 isVisible={isShowConfirmModal}

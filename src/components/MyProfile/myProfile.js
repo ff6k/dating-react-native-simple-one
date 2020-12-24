@@ -13,7 +13,7 @@ import AnimLottieView from '/src/components/UI/animLottieView'
 import BottomModalSlide from '/src/components/UI/bottomModalSlide'
 
 const headerComponent = (props) => {
-    const { onPressBack } = props
+    const { t, onPressBack } = props
     return (
         <View>
 
@@ -21,13 +21,13 @@ const headerComponent = (props) => {
                 onPress={onPressBack}
                 title={"Edit Profile"}
             />
-            <Text style={styles.headerText}>Photos Show</Text>
-            <Text style={styles.detailHeader}>Your photos here will be displayed in your profile swipe.</Text>
+            <Text style={styles.headerText}>{t("Photos Show")}</Text>
+            <Text style={styles.detailHeader}>{t("Your photos here will be displayed in your profile swipe")}</Text>
         </View>
     )
 }
 const footerComponent = (props) => {
-    const { onPressInterest, onPressGender, onPressReligious, onPressEthnicity,
+    const { t, onPressInterest, onPressGender, onPressReligious, onPressEthnicity,
         onPressKids, onPressFamilyPlans, onPressSmoking, onPressDrinking, data, onBlurTextExpand,
         onBlurTextInputName, pickDate, gender, onBlurTextInputPhone, dataInterest, religion,
         onBlurTextInputJob, jobBegin, onBlurTextInputWorkAt, onBlurTextInputEducation, ethnicity, kids, drinking,
@@ -46,8 +46,9 @@ const footerComponent = (props) => {
     }
     return (
         <View>
-            <Text style={styles.headerText}>Your Information</Text>
+            <Text style={styles.headerText}>{t("Your Information")}</Text>
             <InformationContent
+                t={t}
                 onPressInterest={onPressInterest}
                 onPressGender={onPressGender}
                 onPressLocation={onPressLocation}
@@ -64,8 +65,9 @@ const footerComponent = (props) => {
                 pickDate={pickDate}
                 dataInterest={dataInterest}
             />
-            <Text style={styles.headerText}>Your Virtues</Text>
+            <Text style={styles.headerText}>{t("Your Virtues")}</Text>
             <MyVirtuesContent
+                t={t}
                 onPressReligious={onPressReligious}
                 religion={religion}
                 job={jobBegin}
@@ -75,8 +77,9 @@ const footerComponent = (props) => {
                 onBlurTextInputWorkAt={onBlurTextInputWorkAt}
                 onBlurTextInputEducation={onBlurTextInputEducation}
             />
-            <Text style={styles.headerText}>Your Vitals</Text>
+            <Text style={styles.headerText}>{t("Your Vitals")}</Text>
             <MyVitalsContent
+                t={t}
                 onPressEthnicity={onPressEthnicity}
                 onPressKids={onPressKids}
                 onPressFamilyPlans={onPressFamilyPlans}
@@ -84,8 +87,9 @@ const footerComponent = (props) => {
                 kids={kids}
             // familyPlans={familyPlan}
             />
-            <Text style={styles.headerText}>Your Vices</Text>
+            <Text style={styles.headerText}>{t("Your Vices")}</Text>
             <MyVicesContent
+                t={t}
                 onPressDrinking={onPressDrinking}
                 onPressSmoking={onPressSmoking}
                 drinking={drinking}
@@ -133,7 +137,7 @@ const emptyComponent = () => {
 }
 
 const MyProfile = React.forwardRef((props, ref) => {
-    const { dataPhotos, onUploadPhoto, onTakePhoto, isRemoving
+    const { dataPhotos, onUploadPhoto, onTakePhoto, t
     } = props
     return (
         <View>
