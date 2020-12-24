@@ -59,13 +59,13 @@ export default function EditLocationController(props) {
                 }, (error) => {
                     console.log(error.message)
                 }, {
-                enableHighAccuracy: true, timeout: 20000, maximumAge: 1000
+                enableHighAccuracy: false, timeout: 20000, maximumAge: 1000
             }
             );
         }
         if (isMounted) { getLocation() }
         return () => {
-            isMounted = true
+            isMounted = false
         }
 
 

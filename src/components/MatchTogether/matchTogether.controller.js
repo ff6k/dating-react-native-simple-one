@@ -25,7 +25,7 @@ export default function MatchTogetherController(props) {
         <MatchTogether
             nameMatched={route.params.data.name}
             urlPhotoMatched={route.params.data.photoUrl}
-            urlPhotoMe={dataStore[0].photoProfile[0].url}
+            urlPhotoMe={dataStore[0].photos[0].url}
             onPressGoBack={onPressGoBack}
             onPressGoChat={onPressGoChat}
         />
