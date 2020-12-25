@@ -11,22 +11,7 @@ function ItemMessages(props) {
     const { name, dateRead, content, messageSent, recipientId, type } = item
 
     const [dateMess, setDateMess] = useState(() => {
-        const date = new Date(messageSent)
-        const today = new Date()
-        if (date.getUTCFullYear() === today.getUTCFullYear()) {
-            if (date.getUTCMonth() === today.getUTCMonth()) {
-                if (date.getUTCDate() === today.getUTCDate()) {
-                    return Utils.Format.formatDateUTC(date, Const.DateFormat.TIME)
-                }
-                else {
-                    return Utils.Format.formatDateUTC(date, Const.DateFormat.MONTH_DAY)
-                }
-            } else {
-                return Utils.Format.formatDateUTC(date, Const.DateFormat.MONTH_DAY)
-            }
-        } else {
-            return Utils.Format.formatDateUTC(date, Const.DateFormat.DATE_LONG)
-        }
+        return Utils.Calculator.getFormatDayFlexible(messageSent)
     });
 
     const checkIsRead = () => {

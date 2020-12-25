@@ -90,12 +90,14 @@ const width_screen = Const.Common.deviceWidth
 export default function itemConversition(props) {
     const { item, idUser, dataMessages, index, onPressLocationLink } = props
     // console.log(`item: ${JSON.stringify(item)}`);
-    const { senderPhotoUrl, content, senderId, type, senderName, recipientName } = item
+    const { senderPhotoUrl, content, senderId, type, senderName, messageSent } = item
     // const dt = dataMessages.filter(e => e.id === id)
     // if (dt > 0) {
     //     return null
     // }
-
+    const [dateMess, setDateMess] = useState(() => {
+        return Utils.Calculator.getFormatDayFlexible(messageSent)
+    });
     const [width, setWidth] = useState(null)
     let stylesMess
     let isShowImage = false
@@ -151,56 +153,34 @@ export default function itemConversition(props) {
                 alignSelf: 'center', marginVertical: 10, color: Themes.Colors.GRAY_BRIGHT_III,
                 fontFamily: Themes.FontFamily.FontMediumDefault
             }}>{getTime(messageSent)}</Text> */}
-            <View style={[
-                senderId !== idUser
-                    ? { flexWrap: 'wrap' }
-                    : { flexWrap: 'wrap-reverse' }
+            <View style={[{ marginBottom: 5 },
+            senderId !== idUser
+                ? { flexWrap: 'wrap' }
+                : { flexWrap: 'wrap-reverse' }
             ]
             }
             >
-                {senderId !== idUser ? <View style={[styles.containMessage]}>
-                    {isShowImage && <Image
-                        style={styles.image}
-                        source={{ uri: senderPhotoUrl }}
-                    />}
-                    <View style={[stylesMess, !isShowImage ? { marginLeft: 45 + MARGIN_LEFT } : {
-                        marginLeft: MARGIN_LEFT,
-                    }, width !== null && { width: width }]}
-                        onLayout={(event) => {
-                            var { x, y, width, height } = event.nativeEvent.layout;
-                            if (width > width_screen - 90) {
-                                setWidth(width_screen - 90)
-                            }
-                        }}
-                    >
-                        {(type === Const.TypeSend.IMAGE || type === Const.TypeSend.GIF) && <Image source={{ uri: content }}
-                            style={{ width: 150, height: 150 }}
-                            resizeMode={'stretch'}
+                {senderId !== idUser ? <View>
+                    <View style={[styles.containMessage]}>
+                        {isShowImage && <Image
+                            style={styles.image}
+                            source={{ uri: senderPhotoUrl }}
                         />}
-                        {type === Const.TypeSend.TEXT && <Text style={[styles.txtMessage, width !== null && { width: width_screen - 110 }]}>{content}</Text>}
-                        {type === Const.TypeSend.LOCATION && <TouchableOpacity
-                            onPress={() => onPressLocationLink && onPressLocationLink(item)}
+                        <View style={[stylesMess, !isShowImage ? { marginLeft: 45 + MARGIN_LEFT } : {
+                            marginLeft: MARGIN_LEFT,
+                        }, width !== null && { width: width }, type === Const.TypeSend.TEXT && { ...Themes.Styles.shadowButton }]}
+                            onLayout={(event) => {
+                                var { x, y, width, height } = event.nativeEvent.layout;
+                                if (width > width_screen - 90) {
+                                    setWidth(width_screen - 90)
+                                }
+                            }}
                         >
-                            <Text style={styles.linkLocation}>Open Location {senderName}</Text>
-                        </TouchableOpacity>
-                        }
-                    </View>
-                </View> :
-                    <View style={[styles.containMessage, width !== null && { width: width, marginRight: 50 }]}
-                        onLayout={(event) => {
-                            var { x, y, width, height } = event.nativeEvent.layout;
-                            if (width > width_screen - 50) {
-                                setWidth(width_screen - 50)
-                            }
-                        }}
-                    >
-                        <View style={[stylesMess, !isShowImage ? { marginRight: 40 + MARGIN_LEFT } : {},
-                            width !== null && { width: width_screen - 120 }]}>
                             {(type === Const.TypeSend.IMAGE || type === Const.TypeSend.GIF) && <Image source={{ uri: content }}
                                 style={{ width: 150, height: 150 }}
                                 resizeMode={'stretch'}
                             />}
-                            {type === Const.TypeSend.TEXT && <Text style={styles.txtMessage}>{content}</Text>}
+                            {type === Const.TypeSend.TEXT && <Text style={[styles.txtMessage, width !== null && { width: width_screen - 110 }]}>{content}</Text>}
                             {type === Const.TypeSend.LOCATION && <TouchableOpacity
                                 onPress={() => onPressLocationLink && onPressLocationLink(item)}
                             >
@@ -208,10 +188,39 @@ export default function itemConversition(props) {
                             </TouchableOpacity>
                             }
                         </View>
-                        {isShowImage && <Image
-                            style={[styles.image, { marginRight: 12 }]}
-                            source={{ uri: senderPhotoUrl }}
-                        />}
+                    </View>
+                    <Text style={styles.txtTimeReceive}>{dateMess}</Text>
+                </View> :
+                    <View style={[width !== null && { width: width, marginRight: 50 }]}
+                        onLayout={(event) => {
+                            var { x, y, width, height } = event.nativeEvent.layout;
+                            if (width > width_screen - 50) {
+                                setWidth(width_screen - 50)
+                            }
+                        }}
+                    >
+                        <View style={styles.containMessage}>
+                            <View style={[stylesMess, !isShowImage ? { marginRight: 40 + MARGIN_LEFT } : {},
+                                width !== null && { width: width_screen - 120 }, type === Const.TypeSend.TEXT && { backgroundColor: '#009AFF' }]}>
+                                {(type === Const.TypeSend.IMAGE || type === Const.TypeSend.GIF) && <Image source={{ uri: content }}
+                                    style={{ width: 150, height: 150 }}
+                                    resizeMode={'stretch'}
+                                />}
+                                {type === Const.TypeSend.TEXT && <Text style={[styles.txtMessage, { color: 'white' }]}>{content}</Text>}
+                                {type === Const.TypeSend.LOCATION && <TouchableOpacity
+                                    onPress={() => onPressLocationLink && onPressLocationLink(item)}
+                                >
+                                    <Text style={styles.linkLocation}>Open Location {senderName}</Text>
+                                </TouchableOpacity>
+                                }
+                            </View>
+                            {isShowImage && <Image
+                                style={[styles.image, { marginRight: 12 }]}
+                                source={{ uri: senderPhotoUrl }}
+                            />}
+                        </View>
+                        <Text style={styles.txtTimeSender}>{dateMess}</Text>
+
                     </View>}
             </View>
         </View>
@@ -229,6 +238,17 @@ const SIZE_IMAGE = 35
 const SIZE_RADIUS = 15
 const MARGIN_LEFT = 15
 const styles = StyleSheet.create({
+    txtTimeSender: {
+        fontFamily: Themes.FontFamily.FontThinDefault,
+        fontSize: 12,
+        marginLeft: 10,
+    },
+    txtTimeReceive: {
+        fontFamily: Themes.FontFamily.FontThinDefault,
+        fontSize: 12,
+        marginLeft: 10,
+        alignSelf: 'flex-end'
+    },
     linkLocation: {
         color: 'blue',
         fontSize: 14,

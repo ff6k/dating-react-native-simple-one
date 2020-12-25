@@ -125,7 +125,6 @@ export default function ChatsController(props) {
     }
 
     const onPressMessages = (item) => {
-        console.log(`item: ${JSON.stringify(item)}`);
         const { dateRead, id, recipientId, senderId } = item
 
         if (dateRead === null && recipientId === idUser) {
