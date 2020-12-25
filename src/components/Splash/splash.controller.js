@@ -19,22 +19,24 @@ export default function SplashController(props) {
                 .then(res => {
                     console.log(JSON.stringify(res.data))
                     const { dateOfBirth, gender, photos, name } = res.data
-                    if ((preferences === null || preferences === undefined) && gender !== null) {
+                    if ((preferences === null || preferences === undefined)) {
                         console.log('save gender')
-                        let genderOpposite
-                        if (gender === 'male') {
-                            genderOpposite = 'female'
+                        if (gender !== null) {
+                            let genderOpposite
+                            if (gender === 'male') {
+                                genderOpposite = 'female'
+                            }
+                            else {
+                                genderOpposite = 'male'
+                            }
+                            const data = {
+                                gender: genderOpposite,
+                                minAge: 18,
+                                maxAge: 22
+                            }
+                            saveDataUserStorage(Const.StorageKey.CODE_PREFERENCES, [genderOpposite, 18, 22])
+                            dispatch(pushDataAgeAndGender(data))
                         }
-                        else {
-                            genderOpposite = 'male'
-                        }
-                        const data = {
-                            gender: genderOpposite,
-                            minAge: 18,
-                            maxAge: 22
-                        }
-                        saveDataUserStorage(Const.StorageKey.CODE_PREFERENCES, [genderOpposite, 18, 22])
-                        dispatch(pushDataAgeAndGender(data))
                     }
                     if (dateOfBirth === null) {
                         navigation.replace(Const.NameScreens.Birthday)

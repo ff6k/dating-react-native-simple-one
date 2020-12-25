@@ -16,7 +16,8 @@ export default function SettingController(props) {
 
     const logoutUser = () => {
         const isSuccess = removeKeyStorage(Const.StorageKey.CODE_LOGIN_TOKEN)
-        if (isSuccess) {
+        const isSuccessPre = removeKeyStorage(Const.StorageKey.CODE_PREFERENCES)
+        if (isSuccess && isSuccessPre) {
             navigation.replace(Const.NameScreens.SingInOrUp)
         }
     }

@@ -55,9 +55,11 @@ export default function DiscoverController(props) {
     const getDataStore = () => {
         if (dataStore.length > 0) {
             const { jwtToken, id } = dataStore[0]
-            minAgeData = dataPre[0].minAge
-            maxAgeData = dataPre[0].maxAge
-            genderData = dataPre[0].gender
+            if (dataPre.length > 0) {
+                minAgeData = dataPre[0].minAge
+                maxAgeData = dataPre[0].maxAge
+                genderData = dataPre[0].gender
+            }
             // setMaxAge(maxAgeData)
             // setMinAge(minAgeData)
             // setGender(genderData)

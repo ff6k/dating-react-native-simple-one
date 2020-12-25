@@ -4,6 +4,7 @@ import Const from '/src/const'
 import { LoginManager, AccessToken } from "react-native-fbsdk";
 import { useDispatch, useSelector } from 'react-redux'
 import { pushDataLoginFB, pushDataLoginEmail } from '/src/slice/loginSlice'
+import { pushDataAgeAndGender } from '/src/slice/preferenceSlice'
 import Api from '/src/api'
 import jwt_decode from "jwt-decode";
 import { saveStorage, saveDataUserStorage } from '/src/configs/AsyncStorage'
@@ -68,10 +69,28 @@ export default function LoginController(props) {
      *  job, education, politics, hight level .., ethnicity, kids, family plan, 
      */
     const requestApiFacebookSuccess = (json) => {
-        const { jwtToken, id } = json
+        const { jwtToken, id, gender } = json
         handleBeforeLogin(jwtToken, id)
         dispatch(pushDataLoginFB(json))
+        saveGender(gender)
         switchNavigationScreen(json)
+    }
+
+    const saveGender = (gender) => {
+        let genderOpposite
+        if (gender === 'male') {
+            genderOpposite = 'female'
+        }
+        else {
+            genderOpposite = 'male'
+        }
+        const data = {
+            gender: genderOpposite,
+            minAge: 18,
+            maxAge: 22
+        }
+        saveDataUserStorage(Const.StorageKey.CODE_PREFERENCES, [genderOpposite, 18, 22])
+        dispatch(pushDataAgeAndGender(data))
     }
 
     const switchNavigationScreen = (json) => {
@@ -93,15 +112,16 @@ export default function LoginController(props) {
         }
     }
 
-    const handleBeforeLogin = (jwtToken, id) => {
+    const handleBeforeLogin = (jwtToken, id, gender) => {
         const dataToken = jwt_decode(jwtToken)
         saveDataUserStorage(Const.StorageKey.CODE_LOGIN_TOKEN, [jwtToken, id, dataToken.exp])
+        saveGender(gender)
     }
 
     const requestApiSuccess = (json) => {
         if (json.status === "Active") {
-            const { jwtToken, id, dateOfBirth, gender, photos, name } = json
-            handleBeforeLogin(jwtToken, id)
+            const { jwtToken, id, dateOfBirth, gender, name } = json
+            handleBeforeLogin(jwtToken, id, gender)
             dispatch(pushDataLoginEmail(json))
             switchNavigationScreen(json)
         } else {
