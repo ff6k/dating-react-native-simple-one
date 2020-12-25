@@ -50,7 +50,7 @@ export default function LoginController(props) {
         const { accessToken, userID } = data
         setIsLoading(true)
         Api.RequestApi.postRequestApi(Api.Url.URL_SIGN_IN_FACEBOOK, {
-            facebookUserId: userID,
+            facebookUID: userID,
             facebookToken: accessToken
         })
             .then((response) => response.json())
@@ -99,7 +99,6 @@ export default function LoginController(props) {
     }
 
     const requestApiSuccess = (json) => {
-        console.log(`json: ${JSON.stringify(json)}`);
         if (json.status === "Active") {
             const { jwtToken, id, dateOfBirth, gender, photos, name } = json
             handleBeforeLogin(jwtToken, id)

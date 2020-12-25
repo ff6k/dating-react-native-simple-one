@@ -17,7 +17,7 @@ export default function SplashController(props) {
         const setDataStoreReduxProfile = (token, id, preferences, data) => {
             Api.RequestApi.getProfileApiRequest({ token, id })
                 .then(res => {
-                    // console.log(JSON.stringify(res.data))
+                    console.log(JSON.stringify(res.data))
                     const { dateOfBirth, gender, photos, name } = res.data
                     if ((preferences === null || preferences === undefined) && gender !== null) {
                         console.log('save gender')

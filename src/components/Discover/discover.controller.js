@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { BackHandler, Alert } from "react-native";
 import Discover from './discover'
 import Const from '/src/const'
 import Api from '/src/api'
@@ -11,8 +12,8 @@ let minAgeData
 let maxAgeData
 let genderData
 export default function DiscoverController(props) {
-    const { navigation } = props
-    console.log(`props: ${JSON.stringify(props)}`);
+    const { navigation, route } = props
+    console.log(`route: ${JSON.stringify(route)}`);
     const [isModeDetail, setIsModeDetail] = useState(false)
     const [isSwipeRight, setIsSwipeRight] = useState(false)
     const [isSwipeLeft, setIsSwipeLeft] = useState(false)
@@ -29,6 +30,27 @@ export default function DiscoverController(props) {
 
     const dataStore = useSelector(state => state.login)
     const dataPre = useSelector(state => state.preference)
+
+    useEffect(() => {
+        if (route.name === Const.NameScreens.Discover) {
+            const onBackPress = () => {
+                // Alert.alert("Hold on!", "Are you sure you want to go back?", [
+                //     {
+                //         text: "Cancel",
+                //         onPress: () => null,
+                //         style: "cancel"
+                //     },
+                //     { text: "YES", onPress: () => BackHandler.exitApp() }
+                // ]);
+                // return true;
+                console.log('back back')
+            }
+            BackHandler.addEventListener('hardwareBackPress', onBackPress);
+            return () => {
+                BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+            }
+        }
+    }, [])
 
     const getDataStore = () => {
         if (dataStore.length > 0) {
