@@ -4,7 +4,6 @@ import Const from '/src/const'
 import Api from '/src/api'
 import Utils from '/src/utils'
 import { useDispatch, useSelector } from 'react-redux'
-// import { BackHandler } from 'react-native'
 import { removeKeyStorage } from '/src/configs/AsyncStorage'
 import { resetData } from '/src/slice/loginSlice'
 
@@ -23,7 +22,6 @@ export default function BirthdayController(props) {
     const [isShowConfirmModal, setIsShowConfirmModal] = useState(true)
 
     const dataStore = useSelector(state => state.login)
-    console.log(`dataStore: ${JSON.stringify(dataStore)}`);
 
     const getDataStore = (dataStore) => {
         if (dataStore.length > 0) {
@@ -46,7 +44,6 @@ export default function BirthdayController(props) {
             token: token,
             dateOfBirth: dateSave
         }
-        console.log(`params: ${JSON.stringify(params)}`);
         Api.RequestApi.putProfileBirthdayApiRequest(params)
             .then(res => {
                 navigation.navigate(Const.NameScreens.Gender)

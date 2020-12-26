@@ -10,7 +10,6 @@ export default function SettingController(props) {
     const dispatch = useDispatch()
 
     const dataStore = useSelector(state => state.login)
-    console.log(`dataStore: ${JSON.stringify(dataStore)}`);
     const onPressLogout = () => {
         setIsShowConfirmModal(true)
     }
