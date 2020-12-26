@@ -118,8 +118,6 @@ function ReportModal(props) {
         setIsDetail(false)
     }
 
-    // console.log(idSelect)
-    console.log(idSelect)
     return (
         <Modal
             visible={visible}

@@ -50,7 +50,6 @@ export default function BirthdayController(props) {
             })
             .catch(err => {
                 setIsShowAlertFail(true)
-                console.log(err)
             })
     }
 

@@ -15,7 +15,6 @@ function Discover(props) {
         onPressLike, getUserCurrent, isSwipeRight, isSwipeLeft, onPressUnlike,
         dataDetailUser, arrImage
     } = props
-    console.log(JSON.stringify(dataDetailUser))
     let interests, name, work, location, religiousBelief, job, education, ethnicity, kids, height, drinking, smoking, familyPlans, gender, oldYear, dateOfBirth, bio, id
     if (dataDetailUser !== null) {
         name = dataDetailUser['name'] ? dataDetailUser['name'] : 'NA'

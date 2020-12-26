@@ -12,7 +12,6 @@ export default function MultiLanguagesController(props) {
     const [code, setCode] = useState(() => {
         const params = route.params
         const { code } = params
-        console.log("MultiLanguagesController -> code", code)
         return code
     })
 
@@ -21,7 +20,6 @@ export default function MultiLanguagesController(props) {
         setIsLoading(true)
         saveStorage(Const.StorageKey.CODE_LANGUAGES, item.code)
         changeLanguage(item.code)
-        console.log('123', item.code)
         setCode(item.code)
         setIsLoading(false)
     }

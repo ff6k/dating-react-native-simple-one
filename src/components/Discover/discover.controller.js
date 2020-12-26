@@ -13,7 +13,6 @@ let maxAgeData
 let genderData
 export default function DiscoverController(props) {
     const { navigation, route } = props
-    console.log(`route: ${JSON.stringify(route)}`);
     const [isModeDetail, setIsModeDetail] = useState(false)
     const [isSwipeRight, setIsSwipeRight] = useState(false)
     const [isSwipeLeft, setIsSwipeLeft] = useState(false)
@@ -30,27 +29,6 @@ export default function DiscoverController(props) {
 
     const dataStore = useSelector(state => state.login)
     const dataPre = useSelector(state => state.preference)
-
-    useEffect(() => {
-        if (route.name === Const.NameScreens.Discover) {
-            const onBackPress = () => {
-                // Alert.alert("Hold on!", "Are you sure you want to go back?", [
-                //     {
-                //         text: "Cancel",
-                //         onPress: () => null,
-                //         style: "cancel"
-                //     },
-                //     { text: "YES", onPress: () => BackHandler.exitApp() }
-                // ]);
-                // return true;
-                console.log('back back')
-            }
-            BackHandler.addEventListener('hardwareBackPress', onBackPress);
-            return () => {
-                BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-            }
-        }
-    }, [])
 
     const getDataStore = () => {
         if (dataStore.length > 0) {
@@ -82,8 +60,6 @@ export default function DiscoverController(props) {
         })
             .catch(err => console.log(err))
             .finally(() => setIsLoading(false))
-        // }
-        // return () => { unmounted = true }
     }, [])
 
     useEffect(() => {
@@ -98,26 +74,15 @@ export default function DiscoverController(props) {
     }
 
     const requestApiUserDetail = async () => {
-        // const params = {
-        //     id: idCurrentUserSwipe,
-        //     token: token
-        // }
-        // Api.RequestApi.getUserDetailApiRequest(params)
-        //     .then(res => {
         setDataDetailUser(dataUserSwipe[indexCurrentSwipe])
-        //     })
-        //     .catch(err => console.log(err))
     }
 
     const onPressInfo = () => {
         setIsModeDetail(!isModeDetail)
         requestApiUserDetail()
-        // .then(res => setDataDetailUser(res.data))
-        // .catch(err => console.log(err))
     }
 
     const onPressBack = () => {
-        console.log('back')
     }
 
     const getDataApi = async (pageNumber, token) => {

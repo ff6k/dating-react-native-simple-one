@@ -11,14 +11,12 @@ function CodePhone(props) {
     const { onSendCodePhone, t } = props
 
     const onSendCode = () => {
-        // console.log(numberPhoneValue)
         if (numberPhoneValue !== undefined) {
             onSendCodePhone && onSendCodePhone(numberPhoneValue)
         }
     }
 
     const onChangeValue = (numberPhone) => {
-        console.log("onChangeValue -> numberPhone", numberPhone)
         numberPhoneValue = numberPhone
     }
 

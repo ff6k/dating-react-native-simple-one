@@ -36,7 +36,6 @@ export default function EditKidsController(props) {
     const [indexKids, setIndexKids] = useState(() => {
         return data.findIndex(e => e.label == route.params.kids)
     })
-    console.log(indexKids)
     const onPressBack = () => {
         if (idClick === undefined || data[indexKids].id === idClick) {
             navigation.goBack()
@@ -64,7 +63,6 @@ export default function EditKidsController(props) {
                     Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your children successfully', 3000)
                 }).catch(err => {
                     Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your children fail, error: ${err}`, 3000)
-                    console.log(err)
                 })
         }
     }

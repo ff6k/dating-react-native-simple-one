@@ -17,13 +17,10 @@ export default function SplashController(props) {
         const setDataStoreReduxProfile = (token, id, preferences, data) => {
             Api.RequestApi.getProfileApiRequest({ token, id })
                 .then(res => {
-                    console.log('vo day')
-                    console.log(JSON.stringify(res.data))
                     const { dateOfBirth, gender, photos, name } = res.data
                     dispatch(pushDataLoginEmail(res.data))
 
                     if ((preferences === null || preferences === undefined)) {
-                        console.log('save gender')
                         if (gender !== null) {
                             let genderOpposite
                             if (gender === 'male') {
@@ -51,8 +48,6 @@ export default function SplashController(props) {
                         navigation.replace(Const.NameScreens.Picture)
                     }
                     else {
-                        // const dataTemp = { ...data, photos: photos, name: name, dateOfBirth }
-                        // console.log(`dataTemp: ${JSON.stringify(dataTemp)}`);
                         navigation.replace(Const.NameScreens.BottomNavigation)
                     }
                 })
@@ -64,7 +59,6 @@ export default function SplashController(props) {
         const checkNavigationScreen = (dataLogin, codeApp, preferences) => {
             if (dataLogin !== undefined) {
                 const [jwtToken, id, exp] = JSON.parse(dataLogin)
-                console.log(`jwtToken: ${jwtToken}`);
                 const timeNow = Math.round(new Date().getTime() / 1000)
                 if (timeNow < exp) {
                     const data = {

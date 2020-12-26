@@ -50,7 +50,7 @@ export const connectServerNotifier = (token, CODE_LISTEN, getData) => {
 
 //'receiveMessage'
 export const listenerConnect = (_hubConnection, CODE_LISTEN, getData) => {
-    console.log('connect sucess')
+    console.log('listener sucess')
     try {
         _hubConnection.on(CODE_LISTEN, (data) => {
             getData(data)

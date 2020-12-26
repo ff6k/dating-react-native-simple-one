@@ -30,8 +30,6 @@ export default function InterestInfomationController(props) {
         getDataStore()
     }, [])
     const onPressBack = () => {
-        console.log(JSON.stringify(arrInterest))
-        console.log(JSON.stringify(route.params.data))
         if (JSON.stringify(arrInterest) === JSON.stringify(route.params.data)) {
             navigation.goBack()
         }
@@ -48,7 +46,6 @@ export default function InterestInfomationController(props) {
         }
         Api.RequestApi.postInterestApiRequest(params)
             .then(response => {
-                console.log(`response: ${response}`);
             }).catch(err => {
                 console.log(err)
             })
@@ -62,7 +59,6 @@ export default function InterestInfomationController(props) {
         }
         Api.RequestApi.deleteInterestApiRequest(params)
             .then(response => {
-                console.log(`response: ${response}`);
             }).catch(err => {
                 console.log(err)
             })

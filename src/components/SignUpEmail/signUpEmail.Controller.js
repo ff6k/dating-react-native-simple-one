@@ -28,7 +28,6 @@ export default function SignUpEmailController() {
 
     // network fail
     const requestApiFail = (error) => {
-        console.log("requestApiFail", error)
         setIsShowModalFail(true)
         setMessage("Network connect fail")
     }

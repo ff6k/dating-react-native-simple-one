@@ -5,96 +5,12 @@ import Themes from '/src/themes'
 import Utils from '/src/utils'
 import Const from '/src/const'
 import moment from 'moment'
-const getTime = (date) => {
-    console.log(`date: ${date}`);
-
-    // const test = new Date('2020-12-12T10:54:59.335153+07:00')
-
-
-    const dateCheck = new Date(date)
-
-    const tt = Utils.Format.formatDate(dateCheck, 'LT')
-    console.log(`tt: ${tt}`);
-
-    const now = new Date()
-    const dn = now.getUTCDate()
-    const mn = now.getUTCMonth()
-    const yn = now.getUTCFullYear()
-    const hn = now.getUTCHours()
-    const minn = now.getUTCMinutes()
-    const wn = moment(now).weeks()
-
-    const d = dateCheck.getUTCDate()
-    const m = dateCheck.getUTCMonth()
-    const y = dateCheck.getUTCFullYear()
-    const h = dateCheck.getUTCHours()
-    const min = dateCheck.getUTCMinutes()
-    const w = moment(dateCheck).weeks()
-
-    let flag = false
-    // if (dn == d && mn == m && yn == y && hn == h && minn - min > 10) {
-    //     if (!flag) {
-    //         return Utils.Format.formatDate(dateCheck, 'LT')
-    //     }
-    //     else {
-    //         return
-    //     }
-    // }
-
-    // if (flag) {
-    //     flag = false
-    // }
-
-    if (mn == m && yn == y && wn == w) {
-        if (!flag) {
-            return Utils.Format.formatDate(dateCheck, 'ddd') + " AT " + Utils.Format.formatDate(dateCheck, 'LT')
-        }
-        else {
-            return
-        }
-    }
-
-    // if (flag) {
-    //     flag = false
-    // }
-
-    // if (mn == m && yn == y) {
-    //     if (!flag) {
-    //         return Utils.Format.formatDate(dateCheck, 'ddd DD') + " AT " + Utils.Format.formatDate(dateCheck, 'LT')
-    //     }
-    //     else {
-    //         return
-    //     }
-    // }
-
-    // if (flag) {
-    //     flag = false
-    // }
-
-    // if (yn == y) {
-    //     if (!flag) {
-    //         return Utils.Format.formatDate(dateCheck, 'MMM DD') + " AT " + Utils.Format.formatDate(dateCheck, 'LT')
-    //     }
-    //     else {
-    //         return
-    //     }
-    // }
-    //         return Utils.Format.formatDate(dateCheck, 'LT')
-    //         return Utils.Format.formatDate(dateCheck, 'ddd') + " AT " + Utils.Format.formatDate(dateCheck, 'LT')
-    //         return Utils.Format.formatDate(dateCheck, 'ddd DD') + " AT " + Utils.Format.formatDate(dateCheck, 'LT')
-    //         return Utils.Format.formatDate(dateCheck, 'MMM DD') + " AT " + Utils.Format.formatDate(dateCheck, 'LT')
-    // return Utils.Format.formatDate(dateCheck, 'MMM DD, YYYY') + " AT " + Utils.Format.formatDate(dateCheck, 'LT')
-}
 
 const width_screen = Const.Common.deviceWidth
 export default function itemConversition(props) {
     const { item, idUser, dataMessages, index, onPressLocationLink } = props
-    // console.log(`item: ${JSON.stringify(item)}`);
     const { senderPhotoUrl, content, senderId, type, senderName, messageSent } = item
-    // const dt = dataMessages.filter(e => e.id === id)
-    // if (dt > 0) {
-    //     return null
-    // }
+
     const [dateMess, setDateMess] = useState(() => {
         return Utils.Calculator.getFormatDayFlexible(messageSent)
     });

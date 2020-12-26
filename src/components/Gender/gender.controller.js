@@ -67,7 +67,6 @@ export default function GenderController(props) {
         }
         Api.RequestApi.putProfileGenderApiRequest(params)
             .then(res => {
-                console.log(JSON.stringify(res.data))
                 navigation.navigate(Const.NameScreens.Picture)
             })
             .catch(err => {

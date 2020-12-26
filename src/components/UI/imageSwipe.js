@@ -237,9 +237,6 @@ export default class ImageSwipe extends React.Component {
         if (this.state.currentIndex < this.props.data.length) {
             length = this.props.data[this.state.currentIndex].photos.length
         }
-        else {
-            console.log('empty data image swipe')
-        }
         return this.props.data.map((item, index) => {
             if (index < this.state.currentIndex) {
                 return null

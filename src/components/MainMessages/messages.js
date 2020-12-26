@@ -160,7 +160,6 @@ const Messages = React.forwardRef((props, ref) => {
                 styleButton={{ left: 10, bottom: 10 }}
                 color={Themes.Colors.PINK}
                 onPressItem={name => {
-                    // console.log(`selected button: ${name}`);
                     checkPressButton(name)
                 }}
             />

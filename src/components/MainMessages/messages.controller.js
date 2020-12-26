@@ -32,17 +32,12 @@ function MessagesController(props) {
     const [isLoadingSend, setIsLoadingSend] = useState(false)
     const [isVisibleGif, setIsVisibleGif] = useState(false)
     const [isVisibleReport, setIsVisibleReport] = useState(false)
-    // const [isConnected, setIsConnected] = useState(false)
+
     const [dataItem, setDataItem] = useState(() => {
         return route.params.item
     })
     const refModalSlide = React.createRef()
-    // console.log(JSON.stringify(dataMessages))
-    // const itemHeader = {
-    //     uriImage: ,
-    // isActive: true,
-    // name: "Long"
-    // }
+
 
     const getDataStore = () => {
         if (dataStore.length > 0) {
@@ -115,10 +110,7 @@ function MessagesController(props) {
         let _hubConnection
         let isMounted = true;
         _hubConnection = connectServerMess(token)
-        // _hubConnection.onclose(() => {
-        //     console.log('reconnect...')
-        //     _hubConnection = connectServerMess(token)
-        // });
+
         listenerConnect(_hubConnection, Const.CodeListener.CODE_RECEIVE_MESSAGE, data => {
             if (isMounted) {
                 const { senderId } = data
@@ -164,7 +156,6 @@ function MessagesController(props) {
                 }
             }
             else {
-                console.log('ok chua')
             }
         }
     }
@@ -198,7 +189,6 @@ function MessagesController(props) {
     const saveMessageApi = (params) => {
         Api.RequestApi.postMessagesConversationApiRequest(params)
             .then(res => {
-                console.log(res.data)
                 isChange = true
                 loadDataApi(1)
                 setPageNumber(1)
@@ -304,7 +294,6 @@ function MessagesController(props) {
     const locateCurrentPosition = () => {
         Geolocation.getCurrentPosition(
             (position) => {
-                console.log('send location')
                 const currentLongitude =
                     JSON.stringify(position.coords.longitude);
                 const currentLatitude =
@@ -315,7 +304,6 @@ function MessagesController(props) {
 
             }, (error) => {
                 setIsLoadingSend(false)
-                console.log(error.message)
             }, {
             enableHighAccuracy: false, timeout: 20000, maximumAge: 1000
         }

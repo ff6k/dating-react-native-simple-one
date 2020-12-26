@@ -74,7 +74,6 @@ function MyPreferencesController(props) {
     }
 
     const onPressBack = () => {
-        // console.log('back')
         navigation.goBack()
     }
 

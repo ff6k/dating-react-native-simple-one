@@ -81,12 +81,10 @@ export default function EditLocationController(props) {
         }
         Api.RequestApi.putProfileLocationApiRequest(params)
             .then(res => {
-                console.log('success')
                 Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your location successfully', 500)
             })
             .catch(err => {
                 Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your location fail, error: ${err}`, 500)
-                console.log(err)
             })
 
     }

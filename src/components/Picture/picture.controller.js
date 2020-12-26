@@ -82,7 +82,6 @@ export default function PictureController(props) {
             id: idUser,
             token: token
         }
-        console.log(`params: ${JSON.stringify(params)}`);
 
         Api.RequestApi.putPhotosApiRequest(params)
             .then(response => {

@@ -5,7 +5,6 @@ export default function EmailAddressController(props) {
     const { route, navigation } = props
     const params = route.params
     const { email } = params
-    console.log("EmailAddressController -> email", email)
     const [isVisible, setIsVisible] = useState(false)
 
     const onPressLetsGo = () => {

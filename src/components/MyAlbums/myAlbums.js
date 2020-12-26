@@ -33,7 +33,6 @@ export default function myAlbums(props) {
     }
 
     const onLongPress = () => {
-        console.log('long')
     }
 
     return (

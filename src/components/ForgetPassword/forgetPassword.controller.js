@@ -15,7 +15,6 @@ export default function ForgetPasswordController(props) {
             }
             Api.RequestApi.postForgotPasswordApiRequest(params)
                 .then(res => {
-                    console.log(`res: ${JSON.stringify(res.data)}`);
                     Utils.Toast.ToastModal('success', 'top', 'Success', res.data.message, 3000)
                 })
                 .catch(err => {

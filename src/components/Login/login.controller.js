@@ -34,7 +34,6 @@ export default function LoginController(props) {
         ]).then(
             (result) => {
                 if (result.isCancelled) {
-                    console.log('Login cancelled');
                 } else {
                     AccessToken.getCurrentAccessToken().then((data) => {
                         requestApiLoginFacebook(data)
@@ -132,7 +131,6 @@ export default function LoginController(props) {
     }
 
     const requestApiFail = (error) => {
-        console.log("requestApiFail", error)
         setIsShowModalFail(true)
         setMessage("Network connect fail")
     }

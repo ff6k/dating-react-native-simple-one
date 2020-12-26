@@ -45,7 +45,6 @@ export default function EditSmokingController(props) {
         }
         else {
             const temp = data.find(e => e.id == idClick)
-            console.log(`temp: ${temp}`);
             if (temp === undefined) {
                 navigation.goBack()
             }
@@ -69,7 +68,6 @@ export default function EditSmokingController(props) {
                     Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your smoking status successfully', 3000)
                 }).catch(err => {
                     Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your smoking status fail, error: ${err}`, 3000)
-                    console.log(err)
                 })
         }
     }

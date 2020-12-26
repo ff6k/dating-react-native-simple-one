@@ -38,7 +38,6 @@ export default function EditFamilyPlanController(props) {
     })
 
     const onPressBack = () => {
-        console.log(idClick)
         if (idClick === undefined || idClick === null || (indexFamilyPlan === -1 && idClick === undefined)
             || (indexFamilyPlan !== -1 && data[indexFamilyPlan].id === idClick)) {
             navigation.goBack()
@@ -63,11 +62,9 @@ export default function EditFamilyPlanController(props) {
             }
             Api.RequestApi.putProfileFamilyPlanApiRequest(params)
                 .then(response => {
-                    console.log(response.data)
                     Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your children successfully', 3000)
                 }).catch(err => {
                     Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your children fail, error: ${err}`, 3000)
-                    console.log(err)
                 })
         }
     }

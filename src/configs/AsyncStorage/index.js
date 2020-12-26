@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-community/async-storage'
 export const saveStorage = async (STORAGE_KEY, value) => {
     try {
         await AsyncStorage.setItem(STORAGE_KEY, value)
-        console.log('SaveData storage success')
         return true
     } catch (e) {
         console.log('SaveData storage fail', e)
@@ -27,7 +26,6 @@ export const readStorage = async (STORAGE_KEY) => {
 export const removeKeyStorage = async (STORAGE_KEY) => {
     try {
         await AsyncStorage.removeItem(STORAGE_KEY)
-        console.log('remove key storage success')
         return true
     } catch (e) {
         console.log('remove key storage fail', e)
@@ -48,9 +46,7 @@ export const getDataUserStorage = (STORAGE_KEY) => {
 export const clearStorage = async () => {
     try {
         await AsyncStorage.clear()
-        console.log('Storage successfully cleared!')
     } catch (e) {
-        console.log('Failed to clear the async storage.')
     }
 }
 

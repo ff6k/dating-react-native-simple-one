@@ -64,9 +64,6 @@ export default function ImageDetailController(props) {
             setDataDetailUser(res.data)
         })
             .catch(err => console.log(err))
-        // requestApiUserDetail(params.item.id)
-        //     .then(res => setDataDetailUser(res.data))
-        //     .catch(err => console.log(err))
     }, [])
 
     useEffect(() => {

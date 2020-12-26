@@ -24,7 +24,6 @@ export default function SettingController(props) {
     }
 
     const onPressMyProfile = () => {
-        // console.log('object')
         navigation.navigate(Const.NameScreens.MyProfile)
     }
 

@@ -25,10 +25,4 @@ function Main() {
     )
 }
 
-// import LinkingTest from '/test/linkingTest'
-// import GoogleMapTest from '/test/GoogleMapTest/googleMapTest'
-// import MapViewTest from '/test/mapViewTest'
-// import BottomModalTest from '/test/RefTest/refTest'
-// import DocumentPickerTest from '/test/DocumentPickerTest'
-// import ConnectTest from '/test/chatTest1'
 AppRegistry.registerComponent(appName, () => Main)

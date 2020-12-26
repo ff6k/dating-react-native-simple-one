@@ -7,10 +7,7 @@ import Themes from '/src/themes'
 
 export default function cardDropDown(props) {
     const { content, data, onChangeGender, itemDefault } = props
-    // console.log(`data: ${data}`);
-    // console.log(GENDER_ARRAY[0].label)
     const [item, setItem] = useState()
-    // console.log(`item: ${item}`);
     const [isScale, setIsScale] = useState(false)
 
     const onChangeItemDropDown = (item) => {

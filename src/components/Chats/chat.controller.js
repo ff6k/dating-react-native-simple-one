@@ -33,15 +33,8 @@ export default function ChatsController(props) {
     }, [route.params])
     useEffect(() => {
         let unmounted = false;
-        console.log('chat connect')
         const _hubConnection = connectServerMess(token)
-        // _hubConnection.onclose(() => {
-        //     console.log('reconnect...')
-        //     _hubConnection = connectServerMess(token)
-
-        // });
         listenerConnect(_hubConnection, Const.CodeListener.CODE_RECEIVE_MESSAGE, data => {
-            console.log(data)
             loadDataMessApi()
         })
 
@@ -54,7 +47,6 @@ export default function ChatsController(props) {
         return Api.RequestApi.getMatchedMeApiRequest(params)
     }
     const loadDataMatchedMe = () => {
-        console.log(idUser)
         const params = {
             isMatched: true,
             pageNumber: 1,

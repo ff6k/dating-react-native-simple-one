@@ -193,10 +193,6 @@ function MyProfileController(props) {
     }
     const handleDataImage = (res, index) => {
         setIndexLoading(index)
-        // console.log(`url: ${res}`);
-        // const data = [...dataPhotos]
-        // data[index].url = url
-        // setDataPhotos(data)
         savePhotoCloudinary(res, index)
 
     }
@@ -233,7 +229,6 @@ function MyProfileController(props) {
                 Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your photo successfully', 3000)
             }).catch(err => {
                 Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your photo fail, error: ${err}`, 3000)
-                console.log(err)
             })
             .finally(() => setIndexLoading(null))
     }
@@ -251,7 +246,6 @@ function MyProfileController(props) {
                     Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your bio successfully', 3000)
                 }).catch(err => {
                     Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your bio fail, error: ${err}`, 3000)
-                    console.log(err)
                 })
         }
     }
@@ -269,7 +263,6 @@ function MyProfileController(props) {
                     Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your name successfully', 3000)
                 }).catch(err => {
                     Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your name fail, error: ${err}`, 3000)
-                    console.log(err)
                 })
         }
     }
@@ -291,7 +284,6 @@ function MyProfileController(props) {
                     Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your date of birth successfully', 3000)
                 }).catch(err => {
                     Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your date of birth fail, error: ${err}`, 3000)
-                    console.log(err)
                 })
         }
     }
@@ -310,11 +302,9 @@ function MyProfileController(props) {
                     Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your phone number successfully', 3000)
                 }).catch(err => {
                     Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your phone number fail, error: ${err}`, 3000)
-                    console.log(err)
                 })
         }
         else {
-            console.log('err')
         }
     }
 
@@ -331,7 +321,6 @@ function MyProfileController(props) {
                     jobBegin = value
                 }).catch(err => {
                     Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your job fail, error: ${err}`, 3000)
-                    console.log(err)
                 })
         }
     }
@@ -349,7 +338,6 @@ function MyProfileController(props) {
                     workAtBegin = value
                 }).catch(err => {
                     Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your company fail, error: ${err}`, 3000)
-                    console.log(err)
                 })
         }
     }
@@ -367,7 +355,6 @@ function MyProfileController(props) {
                     educationBegin = value
                 }).catch(err => {
                     Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your education fail, error: ${err}`, 3000)
-                    console.log(err)
                 })
         }
     }

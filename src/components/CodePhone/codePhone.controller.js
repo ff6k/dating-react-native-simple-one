@@ -19,15 +19,10 @@ export default function CodePhoneController() {
             auth()
                 .signInWithPhoneNumber(phoneNumber)
                 .then(confirmResult => {
-                    console.log(JSON.stringify(confirmResult))
                     auth().onAuthStateChanged((user) => {
                         if (user) {
-                            console.log('Login success')
                             const id = auth().currentUser.uid
-                            console.log("signInWithPhoneNumber -> id", id)
-                            // setConfirm(confirmResult)
                         } else {
-                            console.log('Confirm code')
                             setConfirm(confirmResult)
                         }
                     })
@@ -41,7 +36,6 @@ export default function CodePhoneController() {
 
     //TODO: error
     function confirmCode(code) {
-        console.log('confirmCode')
         confirm.confirm(code)
             .then(
                 user => console.log("user", user)

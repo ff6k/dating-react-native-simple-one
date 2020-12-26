@@ -9,7 +9,6 @@ import PropTypes from 'prop-types'
 export default function switchGrid(props) {
 
     const { style } = props
-    console.log("switchGrid -> style", style)
 
     const [valueTransLeft, setValueTransLeft] = useState(new Animated.Value(0))
     const [isRight, setIsRight] = useState(false)
