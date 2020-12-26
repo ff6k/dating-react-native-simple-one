@@ -4,7 +4,9 @@ import Const from '/src/const'
 import Api from '/src/api'
 import Utils from '/src/utils'
 import { useDispatch, useSelector } from 'react-redux'
-import { BackHandler } from 'react-native'
+// import { BackHandler } from 'react-native'
+import { removeKeyStorage } from '/src/configs/AsyncStorage'
+import { resetData } from '/src/slice/loginSlice'
 
 const DATE_ADULT = 18
 let dateSave = ""
@@ -13,12 +15,15 @@ let token
 let idUser
 export default function BirthdayController(props) {
 
+    const dispatch = useDispatch()
+
     const { navigation } = props
     const [isShowAlert, setIsShowAlert] = useState(false)
     const [isShowAlertFail, setIsShowAlertFail] = useState(false)
-    // const [isShowConfirmModal, setIsShowConfirmModal] = useState(false)
+    const [isShowConfirmModal, setIsShowConfirmModal] = useState(true)
 
     const dataStore = useSelector(state => state.login)
+    console.log(`dataStore: ${JSON.stringify(dataStore)}`);
 
     const getDataStore = (dataStore) => {
         if (dataStore.length > 0) {
@@ -41,6 +46,7 @@ export default function BirthdayController(props) {
             token: token,
             dateOfBirth: dateSave
         }
+        console.log(`params: ${JSON.stringify(params)}`);
         Api.RequestApi.putProfileBirthdayApiRequest(params)
             .then(res => {
                 navigation.navigate(Const.NameScreens.Gender)
@@ -52,26 +58,35 @@ export default function BirthdayController(props) {
     }
 
     const onPressBackButton = () => {
-        // setIsShowConfirmModal(true)
-        if (navigation.canGoBack()) {
-            navigation.goBack()
-        } else {
-            BackHandler.exitApp()
+        setIsShowConfirmModal(true)
+        // if (navigation.canGoBack()) {
+        //     navigation.goBack()
+        // } else {
+        //     BackHandler.exitApp()
+        // }
+    }
+
+    const onPressButtonLeft = () => {
+        setIsShowConfirmModal(false)
+    }
+
+    const logoutUser = () => {
+        dispatch(resetData())
+        const isSuccess = removeKeyStorage(Const.StorageKey.CODE_LOGIN_TOKEN)
+        const isSuccessPre = removeKeyStorage(Const.StorageKey.CODE_PREFERENCES)
+        if (isSuccess && isSuccessPre) {
+            if (navigation.canGoBack()) {
+                navigation.goBack()
+            } else {
+                navigation.replace(Const.NameScreens.Login)
+            }
         }
     }
 
-    // const onPressButtonLeft = () => {
-    //     setIsShowConfirmModal(false)
-    // }
-
-    // const onPressButtonRight = () => {
-    //     setIsShowConfirmModal(false)
-    //     if (navigation.canGoBack()) {
-    //         navigation.goBack()
-    //     } else {
-    //         BackHandler.exitApp()
-    //     }
-    // }
+    const onPressButtonRight = () => {
+        setIsShowConfirmModal(false)
+        logoutUser()
+    }
 
     const onPressNextButton = () => {
         if (dateSave !== "") {
@@ -109,6 +124,11 @@ export default function BirthdayController(props) {
             changeShowAlert={changeShowAlert}
             isShowAlertFail={isShowAlertFail}
             changeShowAlertFail={changeShowAlertFail}
+            isShowConfirmModal={isShowConfirmModal}
+            setIsShowConfirmModal={setIsShowConfirmModal}
+            onPressButtonLeft={onPressButtonLeft}
+            onPressButtonRight={onPressButtonRight}
+
         />
     )
 }

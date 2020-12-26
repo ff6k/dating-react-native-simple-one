@@ -9,7 +9,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import PropTypes from 'prop-types'
 export default function buttonNext(props) {
-    const { isGradient, isCheck, onPress } = props;
+    const { isGradient, isCheck, onPress, style } = props;
 
     return (
         isGradient ?
@@ -18,7 +18,7 @@ export default function buttonNext(props) {
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 colors={[Themes.Colors.PINK_DARK, Themes.Colors.RED_DARK]}
-                style={[styles.btnArrowRight]}>
+                style={[styles.btnArrowRight, { ...style }]}>
                 <View style={styles.btnNext}
                 >
                     {
@@ -30,7 +30,7 @@ export default function buttonNext(props) {
                 </View>
             </LinearGradient>
             :
-            <TouchableOpacity style={styles.btnArrowRight}
+            <TouchableOpacity style={[styles.btnArrowRight, { ...style }]}
                 disabled={true}
             >
                 <SimpleLineIcons name="arrow-right" size={Themes.Const.SIZE_ICON} color={'white'} style={styles.iconNext} />

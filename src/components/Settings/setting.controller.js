@@ -15,6 +15,7 @@ export default function SettingController(props) {
     }
 
     const logoutUser = () => {
+        dispatch(resetData())
         const isSuccess = removeKeyStorage(Const.StorageKey.CODE_LOGIN_TOKEN)
         const isSuccessPre = removeKeyStorage(Const.StorageKey.CODE_PREFERENCES)
         if (isSuccess && isSuccessPre) {
@@ -38,7 +39,6 @@ export default function SettingController(props) {
 
     const onPressButtonRight = () => {
         setIsShowConfirmModal(false)
-        dispatch(resetData())
         logoutUser()
     }
 

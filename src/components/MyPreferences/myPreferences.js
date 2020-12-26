@@ -39,9 +39,9 @@ function MyPreferences(props) {
                 isChange={isChange}
             />
             <Text style={styles.txtHeader}>{t("My Preferences")}</Text>
-            <CardClick content={t("Ho Chi Minh City, VietNam")}
+            {/* <CardClick content={t("Ho Chi Minh City, VietNam")}
                 title={t("My current location")}
-            />
+            /> */}
             <CardDropDown
                 content={t("Gender")}
                 data={dataGender}

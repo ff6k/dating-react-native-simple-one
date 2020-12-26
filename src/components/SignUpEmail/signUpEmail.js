@@ -213,7 +213,8 @@ const styles = StyleSheet.create({
     inpEnter: {
         ...Themes.Styles.TextInput,
         marginTop: Themes.Const.MARGIN_TOP,
-        flexDirection: 'row', justifyContent: 'space-between'
+        alignItems: 'center',
+        flexDirection: 'row', justifyContent: 'space-between',
     },
     btnSignUpEmail: {
         ...Themes.Styles.Button,

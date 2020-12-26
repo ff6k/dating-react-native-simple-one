@@ -6,9 +6,10 @@ import DateTimePicker from '/src/components/UI/dateTimePicker'
 import { withTranslation } from 'react-i18next'
 import ButtonBack from '/src/components/UI/buttonBack'
 import AwesomeAlert from 'react-native-awesome-alerts';
-
 function BirthDay(props) {
     const { t, onPressBackButton, onPressNextButton, onGetDate, isShowAlert, changeShowAlert, isShowAlertFail, changeShowAlertFail,
+        isShowConfirmModal,
+        setIsShowConfirmModal, onPressButtonLeft, onPressButtonRight
     } = props
     const onPressBack = () => {
         onPressBackButton && onPressBackButton()
@@ -35,7 +36,8 @@ function BirthDay(props) {
                 />
                 <Text style={styles.txtDetail}>{t("Your age will be public")}</Text>
             </View>
-            <ButtonNext isGradient={true}
+            <ButtonNext
+                isGradient={true}
                 onPress={onPressNextButton}
             />
             <AwesomeAlert
@@ -71,6 +73,15 @@ function BirthDay(props) {
                 onConfirmPressed={() => {
                     changeShowAlertFail();
                 }}
+            />
+            <ConfirmModal
+                isVisible={isShowConfirmModal}
+                setVisibleModel={setIsShowConfirmModal}
+                title={"Are you sure you want to log out?"}
+                textButtonLeft={"Cancel"}
+                txtButtonRight={"Quit"}
+                onPressButtonLeft={onPressButtonLeft}
+                onPressButtonRight={onPressButtonRight}
             />
         </View>
     )

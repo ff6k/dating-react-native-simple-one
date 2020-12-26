@@ -19,6 +19,8 @@ export default function SplashController(props) {
                 .then(res => {
                     console.log(JSON.stringify(res.data))
                     const { dateOfBirth, gender, photos, name } = res.data
+                    dispatch(pushDataLoginEmail(res.data))
+
                     if ((preferences === null || preferences === undefined)) {
                         console.log('save gender')
                         if (gender !== null) {
@@ -48,9 +50,8 @@ export default function SplashController(props) {
                         navigation.replace(Const.NameScreens.Picture)
                     }
                     else {
-                        const dataTemp = { ...data, photos: photos, name: name, dateOfBirth }
-                        console.log(`dataTemp: ${JSON.stringify(dataTemp)}`);
-                        dispatch(pushDataLoginEmail(dataTemp))
+                        // const dataTemp = { ...data, photos: photos, name: name, dateOfBirth }
+                        // console.log(`dataTemp: ${JSON.stringify(dataTemp)}`);
                         navigation.replace(Const.NameScreens.BottomNavigation)
                     }
                 })
@@ -69,7 +70,7 @@ export default function SplashController(props) {
                         jwtToken: jwtToken,
                         id: id
                     }
-                    // dispatch(pushDataLoginEmail(data))
+                    dispatch(pushDataLoginEmail(data))
                     setDataStoreReduxProfile(jwtToken, id, preferences, data)
 
                 } else {

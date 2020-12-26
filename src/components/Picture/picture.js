@@ -8,10 +8,14 @@ import ButtonBack from '/src/components/UI/buttonBack'
 import Const from '/src/const'
 import BottomModalSlide from '/src/components/UI/bottomModalSlide'
 import CoupleButtonImage from '/src/components/UI/coupleButtonImage'
+import ConfirmModal from '/src/components/Model/confirmModal'
 import SpinnerLoading from '/src/components/UI/spinnerLoading'
 const Picture = React.forwardRef((props, ref) => {
     const { onPressBack, pressUploadPhoto, pressTakePhoto,
-        uri, onPressNext, onPressAddButton, isLoading, onShowModalSlide } = props
+        uri, onPressNext, onPressAddButton, isLoading, onShowModalSlide,
+        isShowConfirmModal,
+        setIsShowConfirmModal, onPressButtonLeft, onPressButtonRight
+    } = props
 
 
     const onChangeImage = () => {
@@ -31,7 +35,9 @@ const Picture = React.forwardRef((props, ref) => {
     }
 
     return (
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={{ flex: 1 }}>
             <SpinnerLoading isLoading={isLoading}
                 source={require('/src/assets/lotties/9844-loading-40-paperplane.json')}
             />
@@ -54,7 +60,9 @@ const Picture = React.forwardRef((props, ref) => {
                     <Text style={styles.txtChange}>{"Change"}</Text>
                 </TouchableOpacity> :
                     <View></View>}
-                <ButtonNext isGradient={uri ? true : false}
+                <ButtonNext
+                    style={{ position: 'relative', marginTop: -40, marginRight: -20 }}
+                    isGradient={uri ? true : false}
                     onPress={() => onPressNext && onPressNext()}
                 />
             </View>
@@ -68,6 +76,15 @@ const Picture = React.forwardRef((props, ref) => {
                     onUploadPhoto={onUploadPhoto}
                 />
             </BottomModalSlide>
+            <ConfirmModal
+                isVisible={isShowConfirmModal}
+                setVisibleModel={setIsShowConfirmModal}
+                title={"Are you sure you want to log out?"}
+                textButtonLeft={"Cancel"}
+                txtButtonRight={"Quit"}
+                onPressButtonLeft={onPressButtonLeft}
+                onPressButtonRight={onPressButtonRight}
+            />
         </ScrollView>
     )
 }
@@ -84,6 +101,8 @@ const styles = StyleSheet.create({
         // position: 'absolute',
         // left: Themes.Const.ABSOLUTE_BOTTOM,
         // bottom: Themes.Const.ABSOLUTE_BOTTOM + 20,
+        marginTop: -60,
+        marginLeft: 10
     },
     txtChange: {
         fontSize: 22,

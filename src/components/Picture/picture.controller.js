@@ -3,18 +3,21 @@ import Picture from './picture'
 import { launchCamera, launchImageLibrary } from '/src/configs/Camera'
 import Api from '/src/api'
 import Const from '/src/const'
-import { useSelector } from 'react-redux'
 import Utils from '/src/utils'
-import { BackHandler } from 'react-native'
-
+// import { BackHandler } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+import { removeKeyStorage } from '/src/configs/AsyncStorage'
+import { resetData } from '/src/slice/loginSlice'
 
 let token
 let idUser
 export default function PictureController(props) {
+    const dispatch = useDispatch()
     const { navigation } = props
     const [uriImage, setUriImage] = useState(null)
     const [isLoading, setIsLoading] = useState(false);
     const [dataImage, setDataImage] = useState(null)
+    const [isShowConfirmModal, setIsShowConfirmModal] = useState(false)
 
     const refModalSlide = React.createRef()
     const dataStore = useSelector(state => state.login)
@@ -32,14 +35,6 @@ export default function PictureController(props) {
     useEffect(() => {
         getDataStore()
     }, [])
-
-    const onPressBack = () => {
-        if (navigation.canGoBack()) {
-            navigation.goBack()
-        } else {
-            BackHandler.exitApp()
-        }
-    }
 
     const handImageData = (res) => {
         const { path, mime } = res
@@ -87,6 +82,8 @@ export default function PictureController(props) {
             id: idUser,
             token: token
         }
+        console.log(`params: ${JSON.stringify(params)}`);
+
         Api.RequestApi.putPhotosApiRequest(params)
             .then(response => {
                 navigation.replace(Const.NameScreens.BottomNavigation)
@@ -105,9 +102,40 @@ export default function PictureController(props) {
         refModalSlide.current.close()
     }
 
+    const onPressBackButton = () => {
+        setIsShowConfirmModal(true)
+        // if (navigation.canGoBack()) {
+        //     navigation.goBack()
+        // } else {
+        //     BackHandler.exitApp()
+        // }
+    }
+
+    const onPressButtonLeft = () => {
+        setIsShowConfirmModal(false)
+    }
+
+    const logoutUser = () => {
+        dispatch(resetData())
+        const isSuccess = removeKeyStorage(Const.StorageKey.CODE_LOGIN_TOKEN)
+        const isSuccessPre = removeKeyStorage(Const.StorageKey.CODE_PREFERENCES)
+        if (isSuccess && isSuccessPre) {
+            if (navigation.canGoBack()) {
+                navigation.goBack()
+            } else {
+                navigation.replace(Const.NameScreens.Login)
+            }
+        }
+    }
+
+    const onPressButtonRight = () => {
+        setIsShowConfirmModal(false)
+        logoutUser()
+    }
+
     return (
         <Picture
-            onPressBack={onPressBack}
+            onPressBack={onPressBackButton}
             pressUploadPhoto={pressUploadPhoto}
             pressTakePhoto={pressTakePhoto}
             uri={uriImage}
@@ -116,6 +144,10 @@ export default function PictureController(props) {
             isLoading={isLoading}
             ref={refModalSlide}
             onShowModalSlide={onOpenModalSlide}
+            isShowConfirmModal={isShowConfirmModal}
+            setIsShowConfirmModal={setIsShowConfirmModal}
+            onPressButtonLeft={onPressButtonLeft}
+            onPressButtonRight={onPressButtonRight}
         />
     )
 }

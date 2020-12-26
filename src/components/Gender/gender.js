@@ -5,13 +5,17 @@ import ButtonNext from '/src/components/UI/buttonNext'
 import { withTranslation } from 'react-i18next'
 import ButtonBack from '/src/components/UI/buttonBack'
 import Icon from '/src/components/UI/icon'
+import ConfirmModal from '/src/components/Model/confirmModal'
 
 const GENDER = {
     MALE: "male",
     FEMALE: "female"
 }
 function Gender(props) {
-    const { t, onPressBack, onPressNext, getGender } = props
+    const { t, onPressBack, onPressNext, getGender,
+        isShowConfirmModal,
+        setIsShowConfirmModal, onPressButtonLeft, onPressButtonRight
+    } = props
     const [gender, setGender] = useState(GENDER.MALE);
     const onCheck = (gender) => {
         setGender(gender);
@@ -58,6 +62,15 @@ function Gender(props) {
             </View>
             <ButtonNext isGradient={true}
                 onPress={() => onPressNext && onPressNext()}
+            />
+            <ConfirmModal
+                isVisible={isShowConfirmModal}
+                setVisibleModel={setIsShowConfirmModal}
+                title={"Are you sure you want to log out?"}
+                textButtonLeft={"Cancel"}
+                txtButtonRight={"Quit"}
+                onPressButtonLeft={onPressButtonLeft}
+                onPressButtonRight={onPressButtonRight}
             />
         </View>
     )

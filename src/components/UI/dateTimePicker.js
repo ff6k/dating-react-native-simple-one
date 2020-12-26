@@ -17,7 +17,7 @@ export default function dateTimePicker(props) {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === 'ios');
         setDate(currentDate);
-        pickDate(currentDate)
+        pickDate && pickDate(currentDate)
     };
 
     useEffect(() => {

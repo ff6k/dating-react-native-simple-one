@@ -165,7 +165,11 @@ export default function LoginController(props) {
     }
 
     const onBack = () => {
-        navigation.goBack()
+        if (navigation.canGoBack()) {
+            navigation.goBack()
+        } else {
+            navigation.replace(Const.NameScreens.SingInOrUp)
+        }
     }
 
     const onPressForgotPassword = () => {
