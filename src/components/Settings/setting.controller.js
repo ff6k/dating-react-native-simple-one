@@ -10,6 +10,7 @@ export default function SettingController(props) {
     const dispatch = useDispatch()
 
     const dataStore = useSelector(state => state.login)
+    console.log(`dataStore: ${JSON.stringify(dataStore)}`);
     const onPressLogout = () => {
         setIsShowConfirmModal(true)
     }
@@ -51,7 +52,7 @@ export default function SettingController(props) {
             onPressMyPreferences={onPressMyPreferences}
             onPressButtonLeft={onPressButtonLeft}
             onPressButtonRight={onPressButtonRight}
-            dataInfo={dataStore[0]}
+            dataInfo={dataStore[1]}
         />
     )
 }

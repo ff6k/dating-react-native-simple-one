@@ -27,13 +27,7 @@ export default function avatarCircle(props) {
     )
 }
 
-avatarCircle.propTypes = {
-    url: PropTypes.string,
-}
 
-avatarCircle.defaultProps = {
-    url: require('/src/assets/images/my_avatar.jpg')
-}
 const sizeImage = 130;
 const sizeIcon = 30;
 
