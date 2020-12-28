@@ -26,6 +26,7 @@ export const readStorage = async (STORAGE_KEY) => {
 export const removeKeyStorage = async (STORAGE_KEY) => {
     try {
         await AsyncStorage.removeItem(STORAGE_KEY)
+        console.log('remove key success')
         return true
     } catch (e) {
         console.log('remove key storage fail', e)
@@ -34,6 +35,7 @@ export const removeKeyStorage = async (STORAGE_KEY) => {
 }
 
 export const saveDataUserStorage = (STORAGE_KEY, arrData) => {
+    console.log('save key success')
     saveStorage(STORAGE_KEY, JSON.stringify(arrData))
 }
 

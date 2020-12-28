@@ -224,6 +224,9 @@ dependencies {
     implementation 'com.facebook.fresco:fresco:2.0.0'
     implementation 'com.facebook.fresco:animated-gif:2.0.0'
 
+    implementation "com.google.firebase:firebase-messaging:17.3.4"
+    implementation 'me.leolin:ShortcutBadger:1.1.21@aar'
+
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
     }

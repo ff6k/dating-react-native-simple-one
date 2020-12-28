@@ -13,7 +13,7 @@ import CardSlider from './subComponents/cardSlider'
 let nameLang
 function MyPreferences(props) {
     const { t, dataGender, codeLanguage, onPressAppLanguages, onPressBack, onChangeSlideAge, onPressSave, onChangeGender,
-        minAge, maxAge, gender, isChange } = props
+        minAge, maxAge, gender, isChange, onChangeSlideDistance } = props
 
     if (codeLanguage === Const.Languages.languageCountry[0].code) {
         nameLang = Const.Languages.languageCountry[0].country
@@ -25,6 +25,10 @@ function MyPreferences(props) {
     const onSlideAge = (arrange) => {
         // let arrangeSplice = arrange.split(',')
         onChangeSlideAge && onChangeSlideAge(arrange[0], arrange[1])
+    }
+
+    const onSlideDistance = (arrange) => {
+        onChangeSlideDistance && onChangeSlideDistance(arrange[0], arrange[1])
     }
 
     return (
@@ -65,18 +69,19 @@ function MyPreferences(props) {
                 valueStart={minAge}
                 valueEnd={maxAge}
                 minValue={18}
-                maxValue={44}
+                maxValue={100}
             />
-            {/* <CardSlider
+            <CardSlider
                 content={"Distance"}
                 textSwitchLeft={"km"}
                 textSwitchRight={"mi"}
+                onSlide={onSlideDistance}
                 valueStart={10}
                 valueEnd={20}
                 minValue={0}
                 maxValue={100}
                 isSwitch={true}
-            /> */}
+            />
             {/* <CardClick content={"Hetero"}
                 title={"Sex Orientation"}
                 nameIcon={"arrow-ios-forward-outline"}

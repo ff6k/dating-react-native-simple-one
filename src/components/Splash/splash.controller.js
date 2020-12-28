@@ -4,9 +4,12 @@ import { readStorage, saveStorage, saveDataUserStorage, removeKeyStorage } from 
 import Const from '/src/const'
 import { changeLanguage } from '/src/translations'
 import { useDispatch } from 'react-redux'
-import { pushDataLoginEmail } from '/src/slice/loginSlice'
+import { pushDataLoginEmail, insertDataLoginEmail } from '/src/slice/loginSlice'
 import { pushDataAgeAndGender } from '/src/slice/preferenceSlice'
 import Api from '/src/api'
+
+let minAgeInit = 18
+let maxAgeInit = 44
 
 export default function SplashController(props) {
     const { navigation } = props
@@ -18,7 +21,7 @@ export default function SplashController(props) {
             Api.RequestApi.getProfileApiRequest({ token, id })
                 .then(res => {
                     const { dateOfBirth, gender, photos, name } = res.data
-                    dispatch(pushDataLoginEmail(res.data))
+                    dispatch(insertDataLoginEmail(res.data))
 
                     if ((preferences === null || preferences === undefined)) {
                         if (gender !== null) {
@@ -31,10 +34,10 @@ export default function SplashController(props) {
                             }
                             const data = {
                                 gender: genderOpposite,
-                                minAge: 18,
-                                maxAge: 22
+                                minAge: minAgeInit,
+                                maxAge: maxAgeInit
                             }
-                            saveDataUserStorage(Const.StorageKey.CODE_PREFERENCES, [genderOpposite, 18, 22])
+                            saveDataUserStorage(Const.StorageKey.CODE_PREFERENCES, [genderOpposite, minAgeInit, maxAgeInit])
                             dispatch(pushDataAgeAndGender(data))
                         }
                     }

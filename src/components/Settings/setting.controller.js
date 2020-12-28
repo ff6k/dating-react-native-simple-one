@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import Settings from './settings'
 import { removeKeyStorage } from '/src/configs/AsyncStorage'
 import Const from '/src/const'
-import { resetData } from '/src/slice/loginSlice'
+import { resetData as resetDataPre } from '/src/slice/preferenceSlice'
+import { resetData as resetDataLogin } from '/src/slice/loginSlice'
 import { useDispatch, useSelector } from 'react-redux'
 export default function SettingController(props) {
     const { navigation } = props
@@ -10,12 +11,14 @@ export default function SettingController(props) {
     const dispatch = useDispatch()
 
     const dataStore = useSelector(state => state.login)
+    console.log(`dataStore: ${JSON.stringify(dataStore)}`);
     const onPressLogout = () => {
         setIsShowConfirmModal(true)
     }
 
     const logoutUser = () => {
-        dispatch(resetData())
+        dispatch(resetDataLogin())
+        dispatch(resetDataPre())
         const isSuccess = removeKeyStorage(Const.StorageKey.CODE_LOGIN_TOKEN)
         const isSuccessPre = removeKeyStorage(Const.StorageKey.CODE_PREFERENCES)
         if (isSuccess && isSuccessPre) {
@@ -50,7 +53,7 @@ export default function SettingController(props) {
             onPressMyPreferences={onPressMyPreferences}
             onPressButtonLeft={onPressButtonLeft}
             onPressButtonRight={onPressButtonRight}
-            dataInfo={dataStore[1]}
+            dataInfo={dataStore[0]}
         />
     )
 }

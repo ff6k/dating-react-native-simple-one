@@ -23,6 +23,9 @@ import java.util.List;
 import com.wix.interactable.Interactable;
 import com.airbnb.android.react.lottie.LottiePackage;
 import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
+
+// import io.invertase.firebase.messaging.RNFirebaseMessagingPackage; 
+// import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 // import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 // import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 // import com.reactcommunity.rnlocalize.RNLocalizePackage;
@@ -47,6 +50,8 @@ public class MainApplication extends Application implements ReactApplication {
           packages.add(new LottiePackage());
           packages.add(new Interactable()); 
           packages.add(new LinearGradientPackage()); 
+          // packages.add(new RNFirebaseMessagingPackage()); //add this
+          //  packages.add(new RNFirebaseNotificationsPackage()); //add this
           // packages.add(new ReactNativePushNotificationPackage()); 
           // packages.add(new AsyncStoragePackage());
           // packages.add(new RNLocalizePackage());

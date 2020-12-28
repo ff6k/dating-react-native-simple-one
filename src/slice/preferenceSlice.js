@@ -10,11 +10,12 @@ const preferenceSlice = createSlice(
             },
             changeDataAgeAndGender(state, action) {
                 return [{ ...action.payload }]
-            }
+            },
+            resetData: () => []
         }
     }
 )
 
 const { actions, reducer } = preferenceSlice
-export const { pushDataAgeAndGender, changeDataAgeAndGender } = actions
+export const { pushDataAgeAndGender, changeDataAgeAndGender, resetData } = actions
 export default reducer

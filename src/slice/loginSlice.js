@@ -11,11 +11,16 @@ const loginSlice = createSlice(
             pushDataLoginEmail(state, action) {
                 state.push(action.payload)
             },
-            resetData: (state) => []
+            insertDataLoginEmail(state, action) {
+                const newState = [...state]
+                const obj = Object.assign(action.payload, newState[0]);
+                return [{ ...obj }]
+            },
+            resetData: () => []
         }
     }
 )
 
 const { actions, reducer } = loginSlice
-export const { pushDataLoginFB, pushDataLoginEmail, resetData } = actions
+export const { pushDataLoginFB, pushDataLoginEmail, resetData, insertDataLoginEmail } = actions
 export default reducer
