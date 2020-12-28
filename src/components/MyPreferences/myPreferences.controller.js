@@ -32,10 +32,13 @@ let genderData
 let minAgeData
 let maxAgeData
 let maxDistanceData
+let minDistanceData
 
 let isChangeGender
 let isChangeAge
 let isChangeDistance
+
+const DISTANCE_KM_TO_MILES = 0.5
 function MyPreferencesController(props) {
     const { t, navigation, route, i18n } = props
     const [code, setCode] = useState(null)
@@ -65,11 +68,13 @@ function MyPreferencesController(props) {
         minAgeData = dataPre[0].minAge
         maxAgeData = dataPre[0].maxAge
         genderData = dataPre[0].gender
+        maxDistanceData = dataPre[0].maxDistance
+        minDistanceData = dataPre[0].minDistance
         setMaxAge(maxAgeData)
         setMinAge(minAgeData)
         setGender(genderData)
-        setMinDistance(10)
-        setMaxDistance(22)
+        setMinDistance(minDistanceData)
+        setMaxDistance(maxDistanceData)
     }
     useEffect(() => {
         getDataStore()
@@ -109,12 +114,13 @@ function MyPreferencesController(props) {
     const onPressSave = () => {
         // removeKeyStorage(Const.StorageKey.CODE_PREFERENCES)
         try {
-            saveDataUserStorage(Const.StorageKey.CODE_PREFERENCES, [genderData, minAgeData, maxAgeData, maxDistanceData])
+            saveDataUserStorage(Const.StorageKey.CODE_PREFERENCES, [genderData, minAgeData, maxAgeData, minDistanceData, maxDistanceData])
             setIsChange(false)
             const data = {
                 gender: genderData,
                 minAge: minAgeData,
                 maxAge: maxAgeData,
+                minDistance: minDistanceData,
                 maxDistance: maxDistanceData
             }
             dispatch(changeDataAgeAndGender(data))
@@ -153,6 +159,7 @@ function MyPreferencesController(props) {
             isChangeDistance = false
         }
         maxDistanceData = maxDistanceTemp
+        minDistanceData = minDistanceTemp
     }
 
     return (
@@ -169,6 +176,8 @@ function MyPreferencesController(props) {
             gender={gender}
             isChange={isChange}
             onChangeSlideDistance={onChangeSlideDistance}
+            minDistance={minDistance}
+            maxDistance={maxDistance}
         />
     )
 }

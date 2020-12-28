@@ -13,7 +13,7 @@ import CardSlider from './subComponents/cardSlider'
 let nameLang
 function MyPreferences(props) {
     const { t, dataGender, codeLanguage, onPressAppLanguages, onPressBack, onChangeSlideAge, onPressSave, onChangeGender,
-        minAge, maxAge, gender, isChange, onChangeSlideDistance } = props
+        minAge, maxAge, gender, isChange, onChangeSlideDistance, minDistance, maxDistance } = props
 
     if (codeLanguage === Const.Languages.languageCountry[0].code) {
         nameLang = Const.Languages.languageCountry[0].country
@@ -74,10 +74,10 @@ function MyPreferences(props) {
             <CardSlider
                 content={"Distance"}
                 textSwitchLeft={"km"}
-                textSwitchRight={"mi"}
+                // textSwitchRight={"mi"}
                 onSlide={onSlideDistance}
-                valueStart={10}
-                valueEnd={20}
+                valueStart={minDistance}
+                valueEnd={maxDistance}
                 minValue={0}
                 maxValue={100}
                 isSwitch={true}

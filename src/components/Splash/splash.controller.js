@@ -10,7 +10,8 @@ import Api from '/src/api'
 
 let minAgeInit = 18
 let maxAgeInit = 44
-
+let maxDistanceInit = 30
+let minDistanceInit = 0
 export default function SplashController(props) {
     const { navigation } = props
 
@@ -35,9 +36,11 @@ export default function SplashController(props) {
                             const data = {
                                 gender: genderOpposite,
                                 minAge: minAgeInit,
-                                maxAge: maxAgeInit
+                                maxAge: maxAgeInit,
+                                minDistanceInit: minDistanceInit,
+                                maxDistance: maxDistanceInit
                             }
-                            saveDataUserStorage(Const.StorageKey.CODE_PREFERENCES, [genderOpposite, minAgeInit, maxAgeInit])
+                            saveDataUserStorage(Const.StorageKey.CODE_PREFERENCES, [genderOpposite, minAgeInit, maxAgeInit, minDistanceInit, maxDistanceInit])
                             dispatch(pushDataAgeAndGender(data))
                         }
                     }
@@ -88,11 +91,14 @@ export default function SplashController(props) {
         }
 
         const savePreferencesStore = (dataPre) => {
-            const [gender, minAge, maxAge] = JSON.parse(dataPre)
+            const [gender, minAge, maxAge, minDistance, maxDistance] = JSON.parse(dataPre)
+            console.log(`minDistance: ${JSON.parse(dataPre)}`);
             const data = {
                 gender,
                 minAge,
-                maxAge
+                maxAge,
+                minDistance,
+                maxDistance
             }
             dispatch(pushDataAgeAndGender(data))
         }

@@ -5,18 +5,21 @@ import Themes from '/src/themes'
 export default function CustomHeader(props) {
     const { textSwitchLeft, textSwitchRight, textLeft, textRight, isSwitch } = props
     const [isLeft, setIsLeft] = useState(true)
-    const onPressLeft = () => {
-        !isLeft && setIsLeft(true)
-    }
+    // const onPressLeft = () => {
+    //     !isLeft && setIsLeft(true)
+    //     onChangeSwitch && onChangeSwitch(textSwitchLeft)
+    // }
 
-    const onPressRight = () => {
-        isLeft && setIsLeft(false)
-    }
+    // const onPressRight = () => {
+    //     isLeft && setIsLeft(false)
+    //     onChangeSwitch && onChangeSwitch(textSwitchRight)
+    // }
 
     return (
         <View style={styles.container}>
             <Text style={styles.txtContent}>{`${textLeft} - ${textRight}`}</Text>
-            {isSwitch && <View style={styles.containerSwitch}>
+            {isSwitch && <Text style={styles.txtKm}>Km</Text>}
+            {/* {isSwitch && <View style={styles.containerSwitch}>
                 <TouchableOpacity style={[styles.btnLeft, isLeft ? styles.active : styles.unActive]}
                     onPress={() => onPressLeft()}
                 >
@@ -27,7 +30,7 @@ export default function CustomHeader(props) {
                 >
                     <Text style={[!isLeft ? styles.txtActive : styles.txtUnActive]}>{textSwitchRight}</Text>
                 </TouchableOpacity>
-            </View>}
+            </View>} */}
         </View>
     )
 }
@@ -35,6 +38,11 @@ export default function CustomHeader(props) {
 const FONT_SIZE = 15
 const SIZE_RADIUS = 4
 const styles = StyleSheet.create({
+    txtKm: {
+        color: Themes.Colors.PINK_DARK,
+        fontFamily: Themes.FontFamily.FontBoldSemi,
+        marginLeft: 10
+    },
     btnRight: {
         borderTopRightRadius: SIZE_RADIUS,
         borderBottomRightRadius: SIZE_RADIUS

@@ -34,7 +34,7 @@ export default function cardSlider(props) {
             styleContent={styles.containSlider}
             customHeader={<CustomHeader
                 textSwitchLeft={textSwitchLeft}
-                textSwitchRight={textSwitchRight}
+                // textSwitchRight={textSwitchRight}
                 textLeft={nonCollidingMultiSliderValue[0]}
                 textRight={nonCollidingMultiSliderValue[1]}
                 isSwitch={isSwitch}

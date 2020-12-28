@@ -19,6 +19,8 @@ import { saveStorage, saveDataUserStorage } from '/src/configs/AsyncStorage'
 
 let minAgeInit = 18
 let maxAgeInit = 44
+let minDistanceInit = 0
+let maxDistanceInit = 30
 export default function LoginController(props) {
     const { navigation } = props
     const [isLoading, setIsLoading] = useState(false)
@@ -90,9 +92,11 @@ export default function LoginController(props) {
         const data = {
             gender: genderOpposite,
             minAge: minAgeInit,
-            maxAge: maxAgeInit
+            maxAge: maxAgeInit,
+            minDistance: minDistanceInit,
+            maxDistance: maxDistanceInit
         }
-        saveDataUserStorage(Const.StorageKey.CODE_PREFERENCES, [genderOpposite, minAgeInit, maxAgeInit])
+        saveDataUserStorage(Const.StorageKey.CODE_PREFERENCES, [genderOpposite, minAgeInit, maxAgeInit, minDistanceInit, maxDistanceInit])
         dispatch(pushDataAgeAndGender(data))
     }
 
