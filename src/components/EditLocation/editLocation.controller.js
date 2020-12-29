@@ -9,6 +9,9 @@ import { useSelector } from 'react-redux'
 let token
 let idUser
 let locationSelect
+
+let longitudeData
+let latitudeData
 export default function EditLocationController(props) {
     const { navigation } = props
     const [dataLocation, setDataLocation] = useState([])
@@ -52,6 +55,10 @@ export default function EditLocationController(props) {
                         latitude: currentLatitude,
                         longitude: currentLongitude
                     }
+
+                    longitudeData = currentLongitude
+                    latitude = currentLatitude
+
                     Api.RequestApi.getLocationDetailApiRequest(params)
                         .then(res => setDataLocation(res.data.data))
                         .catch(err => console.log(err))
@@ -77,7 +84,9 @@ export default function EditLocationController(props) {
         const params = {
             id: idUser,
             token,
-            location: label
+            location: label,
+            latitude: latitudeData,
+            longitude: longitudeData
         }
         Api.RequestApi.putProfileLocationApiRequest(params)
             .then(res => {

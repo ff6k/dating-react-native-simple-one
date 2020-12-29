@@ -11,6 +11,7 @@ let idUser
 let minAgeData
 let maxAgeData
 let genderData
+let maxDistanceData
 export default function DiscoverController(props) {
     const { navigation, route } = props
     const [isModeDetail, setIsModeDetail] = useState(false)
@@ -37,6 +38,7 @@ export default function DiscoverController(props) {
                 minAgeData = dataPre[0].minAge
                 maxAgeData = dataPre[0].maxAge
                 genderData = dataPre[0].gender
+                maxDistanceData = dataPre[0].maxDistance
             }
             // setMaxAge(maxAgeData)
             // setMinAge(minAgeData)
@@ -91,8 +93,11 @@ export default function DiscoverController(props) {
             pageNumber: pageNumber,
             pageSize: 10,
             token,
-            maxAge: maxAgeData
+            maxAge: maxAgeData,
+            maxDistance: maxDistanceData
         }
+        console.log(`params: ${JSON.stringify(params)}`);
+
         return Api.RequestApi.getRequestImageSwipe(params)
     }
 

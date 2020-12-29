@@ -29,7 +29,7 @@ const Footer = (props) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.containSubInfo}>
-                <Text style={styles.txtSubInfo}>{data && data[current].location}</Text>
+                <Text style={styles.txtSubInfo}>{data && data[current].bio}</Text>
             </View>
         </View>
     )
@@ -309,7 +309,8 @@ const styles = StyleSheet.create({
         marginTop: 5
     },
     txtSubInfo: {
-        fontSize: 20, color: 'white', fontFamily: Themes.FontFamily.FontThinDefault
+        fontSize: 20, color: 'white', fontFamily: Themes.FontFamily.FontThinDefault,
+        width: SCREEN_WIDTH - 70
     },
     txtOlds: {
         fontSize: 22, color: 'white', marginLeft: 7, marginTop: 5, fontFamily: Themes.FontFamily.FontMediumDefault

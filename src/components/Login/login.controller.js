@@ -18,9 +18,9 @@ import { saveStorage, saveDataUserStorage } from '/src/configs/AsyncStorage'
 
 
 let minAgeInit = 18
-let maxAgeInit = 44
+let maxAgeInit = 60
+let maxDistanceInit = 100
 let minDistanceInit = 0
-let maxDistanceInit = 30
 export default function LoginController(props) {
     const { navigation } = props
     const [isLoading, setIsLoading] = useState(false)

@@ -9,8 +9,8 @@ import { pushDataAgeAndGender } from '/src/slice/preferenceSlice'
 import Api from '/src/api'
 
 let minAgeInit = 18
-let maxAgeInit = 44
-let maxDistanceInit = 30
+let maxAgeInit = 60
+let maxDistanceInit = 100
 let minDistanceInit = 0
 export default function SplashController(props) {
     const { navigation } = props
@@ -92,7 +92,6 @@ export default function SplashController(props) {
 
         const savePreferencesStore = (dataPre) => {
             const [gender, minAge, maxAge, minDistance, maxDistance] = JSON.parse(dataPre)
-            console.log(`minDistance: ${JSON.parse(dataPre)}`);
             const data = {
                 gender,
                 minAge,

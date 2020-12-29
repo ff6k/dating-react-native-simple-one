@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View, ScrollView, Image } from 'react-native'
-import { deviceHeight } from '/src/const/common'
+import { deviceHeight, deviceWidth } from '/src/const/common'
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from '/src/components/UI/icon'
 import Themes from '/src/themes';
@@ -48,7 +48,7 @@ const ListImageSwipe = (arrImage) => {
 function ImageDetail(props) {
     const { t, onPressInfo, name, interests,
         work, location, religiousBelief, job, education, dateOfBirth, ethnicity, oldYear,
-        kids, height, drinking, smoking, familyPlans, arrImage, gender, bio, onPressLike, isShowOffButton
+        kids, height, drinking, smoking, familyPlans, arrImage, gender, bio, onPressLike, isShowOffButton, distance
     } = props
     return (
         <ScrollView style={styles.container}
@@ -87,11 +87,18 @@ function ImageDetail(props) {
                             <Text style={styles.txtInfo}>{dateOfBirth}</Text>
                         </View>
                         <View style={styles.containInfo}>
-                            <Icon style={styles.icoInfo}
+                            <Icon style={[styles.icoInfo, { marginRight: 5 }]}
+                                size={Themes.Const.FONT_SIZE + 10}
+                                color={Themes.Colors.GRAY_BRIGHT_I}
+                                name="home-outline"></Icon>
+                            <Text style={styles.txtInfo}>{location}</Text>
+                        </View>
+                        <View style={styles.containInfo}>
+                            <Icon style={[styles.icoInfo, { marginRight: 5 }]}
                                 size={Themes.Const.FONT_SIZE + 10}
                                 color={Themes.Colors.GRAY_BRIGHT_I}
                                 name="pin-outline"></Icon>
-                            <Text style={styles.txtInfo}>{location}</Text>
+                            <Text style={styles.txtInfo}>{distance} Km away</Text>
                         </View>
                         <InterestContentInfo
                             data={interests ? interests : []}
@@ -137,10 +144,9 @@ function ImageDetail(props) {
                     </View>
                     <View style={styles.containRow}>
                         <View style={styles.containHeaderContent}>
-                            <Icon style={styles.icoInfo}
-                                size={Themes.Const.FONT_SIZE + 10}
-                                color={Themes.Colors.GRAY_BRIGHT_I}
-                                name="home-outline"></Icon>
+                            <FontAwesomeIcons
+                                style={[styles.icoInfo, { marginLeft: 5 }]}
+                                name={"school"} size={Themes.Const.FONT_SIZE + 3} color={Themes.Colors.GRAY_BRIGHT_I} />
                             <Text style={styles.txtHeader}>{t("Education")}</Text>
                         </View>
                         <Text style={styles.txtContent}>{education}</Text>
@@ -211,25 +217,27 @@ function ImageDetail(props) {
                     </View>
                 </View>
             </View>
-            {isShowOffButton && <View style={styles.containFooterBottom}>
-                {/* <ButtonStatus
+            {
+                isShowOffButton && <View style={styles.containFooterBottom}>
+                    {/* <ButtonStatus
                     onPress={() => onPressBack()}
                     color={Themes.Colors.YELLOW} size={25} nameFontAwesome5={"undo-alt"} /> */}
-                {/* <ButtonStatus
+                    {/* <ButtonStatus
                     onPress={onPressUnlike}
                     style={styles.icoBigger}
                     color={Themes.Colors.BROWN_DARK} size={55} name={"close"} /> */}
-                {/* <ButtonStatus
+                    {/* <ButtonStatus
                     onPress={() => onPressBack()}
                     color={Themes.Colors.PURPLE} size={30} name={"flash"} /> */}
-                <ButtonStatus style={styles.icoBigger}
-                    onPress={onPressLike}
-                    color={Themes.Colors.GREEN_DARK} size={45} name={"heart"} />
-                {/* <ButtonStatus
+                    <ButtonStatus style={styles.icoBigger}
+                        onPress={onPressLike}
+                        color={Themes.Colors.GREEN_DARK} size={45} name={"heart"} />
+                    {/* <ButtonStatus
                     color={Themes.Colors.BLUE_DARK} size={30} name={"star"} /> */}
-            </View>}
+                </View>
+            }
 
-        </ScrollView>
+        </ScrollView >
     )
 }
 
@@ -294,7 +302,8 @@ const styles = StyleSheet.create({
     },
     txtInfo: {
         fontSize: FONT_SIZE, color: 'black',
-        fontFamily: Themes.FontFamily.FontThinDefault
+        fontFamily: Themes.FontFamily.FontThinDefault,
+        width: deviceWidth - 40,
     },
     icoInfo: {
         marginRight: 8

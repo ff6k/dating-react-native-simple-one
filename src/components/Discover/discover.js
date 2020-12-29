@@ -15,7 +15,8 @@ function Discover(props) {
         onPressLike, getUserCurrent, isSwipeRight, isSwipeLeft, onPressUnlike,
         dataDetailUser, arrImage
     } = props
-    let interests, name, work, location, religiousBelief, job, education, ethnicity, kids, height, drinking, smoking, familyPlans, gender, oldYear, dateOfBirth, bio, id
+    let interests, name, work, location, religiousBelief, job, education, ethnicity, kids, height,
+        drinking, smoking, familyPlans, gender, oldYear, dateOfBirth, bio, id, distance
     if (dataDetailUser !== null) {
         name = dataDetailUser['name'] ? dataDetailUser['name'] : 'NA'
         work = dataDetailUser['company'] ? dataDetailUser['company'] : 'NA'
@@ -36,6 +37,7 @@ function Discover(props) {
         bio = dataDetailUser['bio'] ? dataDetailUser['bio'] : ''
         id = dataDetailUser['id'] ? dataDetailUser['id'] : ''
         interests = dataDetailUser['interests']
+        distance = dataDetailUser['distance']
     }
 
     return (
@@ -73,6 +75,7 @@ function Discover(props) {
                         gender={gender}
                         bio={bio}
                         interests={interests}
+                        distance={distance}
                     />}
             </View>
             {!isModeDetail && <View style={styles.containFooter}>

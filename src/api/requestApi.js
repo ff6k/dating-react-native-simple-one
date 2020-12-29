@@ -41,8 +41,8 @@ export const postLikeImageSwipe = async (params) => {
 
 //TODO: fix gender
 export const getRequestImageSwipe = async (params) => {
-    const { gender, pageNumber, pageSize, token, maxAge } = params
-    const Url = URL_GET_IMAGE_SWIPE + `?pageNumber=${pageNumber}&pageSize=${pageSize}&forCards=true&gender=${gender}&maxAge=${maxAge}`
+    const { gender, pageNumber, pageSize, token, maxAge, maxDistance } = params
+    const Url = URL_GET_IMAGE_SWIPE + `?pageNumber=${pageNumber}&pageSize=${pageSize}&forCards=true&gender=${gender}&maxAge=${maxAge}&maxDistance=${maxDistance}`
     const client = getAxios('Bearer ' + token)
     return client.get(Url)
 }
@@ -85,11 +85,13 @@ export const putProfileReligiousApiRequest = async (params) => {
 }
 
 export const putProfileLocationApiRequest = async (params) => {
-    const { id, token, location } = params
+    const { id, token, location, latitude, longitude } = params
     const Url = URL_PUT_PROFILE + `/${id}`
     const client = getAxios('Bearer ' + token)
     return client.put(Url, {
-        "location": location
+        location: location,
+        latitude: latitude,
+        longitude: longitude
     })
 }
 
