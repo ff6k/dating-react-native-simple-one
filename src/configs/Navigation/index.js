@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Introduction from '/src/components/Introduction/introduction';
 import SingInOrUp from '/src/components/SingInOrUp/signInOrUp.Controller'
 import Login from '/src/components/Login/login.controller'
-import CodePhone from '/src/components/CodePhone/codePhone.controller'
+// import CodePhone from '/src/components/CodePhone/codePhone.controller'
 import MyProfile from '/src/components/MyProfile/myProfile.controller'
 import BottomNavigation from './bottomNavigation'
 import SignUpPhone from '/src/components/SignUpPhone/signUpPhone'
@@ -146,10 +146,6 @@ export default function screensNavigation() {
                 <Stack.Screen
                     name={Const.NameScreens.SignUpPhone}
                     component={SignUpPhone}
-                />
-                <Stack.Screen
-                    name={Const.NameScreens.CodePhone}
-                    component={CodePhone}
                 />
                 <Stack.Screen
                     name={Const.NameScreens.MyProfile}

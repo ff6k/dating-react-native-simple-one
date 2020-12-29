@@ -209,7 +209,7 @@ dependencies {
 
     implementation project(path: ":react-native-interactable")
 
-    implementation project(path: ":@react-native-firebase_app")
+    // implementation project(path: ":@react-native-firebase_app")
     implementation 'com.google.firebase:firebase-auth:19.4.0'
     implementation 'com.google.firebase:firebase-firestore:21.7.0'
 
