@@ -8,7 +8,7 @@ export default function pushNotification() {
         const fcmToken = await firebase.messaging().getToken();
         if (fcmToken) {
             console.log(fcmToken);
-            showAlert('Your Firebase Token is:', fcmToken);
+            // showAlert('Your Firebase Token is:', fcmToken);
         } else {
             showAlert('Failed', 'No token received');
         }
@@ -25,24 +25,37 @@ export default function pushNotification() {
 
     const messageListener = async () => {
         firebase.notifications().onNotification((notification) => {
-            const { title, body } = notification;
+            console.log('onNotification')
+            const { title, body, data } = notification;
+            console.log(`data: ${JSON.stringify(data)}`);
+            // console.log(`notification: ${JSON.stringify(notification)}`);
             showAlert(title, body);
         });
 
-        firebase.notifications().onNotificationOpened((notificationOpen) => {
-            const { title, body } = notificationOpen.notification;
-            showAlert(title, body);
-        });
+        // ???
+        // firebase.notifications().onNotificationOpened((notificationOpen) => {
+        //     console.log('onNotificationOpened')
+        //     const { title, body } = notificationOpen.notification;
+        //     showAlert(title, body);
+        // });
 
         const notificationOpen = await firebase.notifications().getInitialNotification();
         if (notificationOpen) {
-            const { title, body } = notificationOpen.notification;
-            showAlert(title, body);
+            const { title, body, data } = notificationOpen.notification;
+            console.log(`data: ${JSON.stringify(data)}`);
+            // const data = notificationOpen.data
+            // console.log(`notification: ${JOSN. notificationOpen.notification}`);
+            // console.log(`body: ${body}`);
+            // console.log(`title: ${title}`);
+            // console.log(`title: ${title}`);
+            console.log('notificationOpen')
+            // showAlert(title, body);
         }
 
-        firebase.messaging().onMessage((message) => {
-            console.log(JSON.stringify(message));
-        });
+        // ?????
+        // firebase.messaging().onMessage((message) => {
+        //     console.log('message', JSON.stringify(message));
+        // });
     }
 
     const showAlert = (title, message) => {

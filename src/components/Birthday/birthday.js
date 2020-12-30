@@ -6,6 +6,8 @@ import DateTimePicker from '/src/components/UI/dateTimePicker'
 import { withTranslation } from 'react-i18next'
 import ButtonBack from '/src/components/UI/buttonBack'
 import AwesomeAlert from 'react-native-awesome-alerts';
+import ConfirmModal from '/src/components/Model/confirmModal'
+
 function BirthDay(props) {
     const { t, onPressBackButton, onPressNextButton, onGetDate, isShowAlert, changeShowAlert, isShowAlertFail, changeShowAlertFail,
         isShowConfirmModal,

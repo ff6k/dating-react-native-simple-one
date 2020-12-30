@@ -16,6 +16,10 @@ const loginSlice = createSlice(
                 const obj = Object.assign(action.payload, newState[0]);
                 return [{ ...obj }]
             },
+            changeDataLoginEmail(state, action) {
+                const newState = [...state]
+
+            },
             resetData: () => []
         }
     }

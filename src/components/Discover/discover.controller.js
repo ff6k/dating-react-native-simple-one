@@ -57,6 +57,7 @@ export default function DiscoverController(props) {
         getDataStore()
 
         getDataApi(pageNumber, token).then(res => {
+            // console.log('asd', JSON.stringify(res.data))
             setDataUserSwipe(res.data)
             setIdCurrentUserSwipe(res.data[0].id)
         })

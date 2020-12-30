@@ -21,6 +21,7 @@ function Settings(props) {
         genderTemp = gender
         oldYearTemp = Utils.Calculator.getOldYear(dateOfBirth)
         photoTemp = photos
+        console.log(`photoTemp: ${photoTemp}`);
     }
     return (
         <View style={styles.container}>

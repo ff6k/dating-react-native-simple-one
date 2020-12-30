@@ -12,6 +12,7 @@ import Settings from '/src/components/Settings/setting.controller'
 import { connectServerMess } from '/src/configs/Signalr'
 import Const from '/src/const'
 import { withTranslation } from 'react-i18next';
+import { checkPermission, messageListener } from '/src/configs/FirebaseMessage'
 import { useSelector } from 'react-redux'
 
 
@@ -39,9 +40,20 @@ function MyTabs(props) {
             return null // empty data
         }
     }
+
+    const connectFirebaseMessages = () => {
+        checkPermission(idDevice => {
+            console.log(idDevice)
+        })
+        messageListener(dataMessages => {
+            console.log('dataMessages', dataMessages)
+        })
+    }
+
     useEffect(() => {
         getDataStore()
         connectServerMess(token)
+        connectFirebaseMessages()
     }, [])
     return (
         <PaperProvider theme={theme}>

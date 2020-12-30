@@ -6,6 +6,7 @@ import Utils from '/src/utils'
 import { useDispatch, useSelector } from 'react-redux'
 import { removeKeyStorage } from '/src/configs/AsyncStorage'
 import { resetData } from '/src/slice/loginSlice'
+// import { pushDataLoginEmail, insertDataLoginEmail } from '/src/slice/loginSlice'
 
 const DATE_ADULT = 18
 let dateSave = ""
