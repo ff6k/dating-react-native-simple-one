@@ -6,7 +6,6 @@ import { changeLanguage } from '/src/translations'
 import { useDispatch } from 'react-redux'
 import { pushDataLoginEmail, insertDataLoginEmail } from '/src/slice/loginSlice'
 import { pushDataAgeAndGender } from '/src/slice/preferenceSlice'
-import { checkPermission, messageListener } from '/src/configs/FirebaseMessage'
 import Api from '/src/api'
 
 let minAgeInit = 18
@@ -110,32 +109,13 @@ export default function SplashController(props) {
             dispatch(pushDataAgeAndGender(data))
         }
 
-        //TODO: update key
-        const checkFrmToken = (frmToken) => {
-            checkPermission()
-                .then(frmKey => {
-                    if (frmToken !== undefined) {
-                        if (frmToken !== frmKey) {
-                            console.log('update key')
-                        }
-                    }
-                    else {
-                        console.log('save frmKey')
-                        saveStorage(Const.StorageKey.CODE_FRM_TOKEN, frmKey)
-                    }
-                    messageListener()
-                })
-                .catch(err => console.log(err))
-        }
-
         const run = async () => {
             Promise.all([
                 readStorage(Const.StorageKey.CODE_LANGUAGES),
                 readStorage(Const.StorageKey.CODE_LOGIN_TOKEN),
                 readStorage(Const.StorageKey.CODE_OPEN_APP),
                 readStorage(Const.StorageKey.CODE_PREFERENCES),
-                readStorage(Const.StorageKey.CODE_FRM_TOKEN)
-            ]).then(async ([codeLang, dataLogin, codeApp, preferences, frmToken]) => {
+            ]).then(async ([codeLang, dataLogin, codeApp, preferences]) => {
                 if (codeLang !== null && codeLang !== undefined) {
                     changeLanguage(codeLang)
                 } else {
@@ -144,7 +124,6 @@ export default function SplashController(props) {
                 if (preferences !== null && preferences !== undefined) {
                     savePreferencesStore(preferences)
                 }
-                checkFrmToken(frmToken)
                 checkNavigationScreen(dataLogin, codeApp, preferences)
 
             })

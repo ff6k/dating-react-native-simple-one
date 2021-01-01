@@ -12,6 +12,9 @@ import Settings from '/src/components/Settings/setting.controller'
 import { connectServerMess } from '/src/configs/Signalr'
 import Const from '/src/const'
 import { withTranslation } from 'react-i18next';
+import { checkPermission, messageListener } from '/src/configs/FirebaseMessage'
+import { readStorage, saveStorage } from '/src/configs/AsyncStorage'
+import Api from '/src/api'
 // import { messageListener } from '/src/configs/FirebaseMessage'
 import { useSelector } from 'react-redux'
 
@@ -39,15 +42,44 @@ function MyTabs(props) {
             return null // empty data
         }
     }
-
-    // const connectFirebaseMessages = () => {
-    //     messageListener()
-    // }
+    //TODO: update key + remove key
+    const connectFirebaseMessages = (frmToken) => {
+        checkPermission()
+            .then(frmKey => {
+                if (frmToken !== undefined) {
+                    if (frmToken !== frmKey) {
+                        console.log('update key')
+                    }
+                }
+                else {
+                    console.log('save frmKey')
+                    const params = {
+                        token: token,
+                        tokenFcm: frmKey
+                    }
+                    Api.RequestApi.postFcmTokenApiRequest(params)
+                        .then(res => {
+                            saveStorage(Const.StorageKey.CODE_FRM_TOKEN, frmKey)
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                }
+                messageListener()
+            })
+            .catch(err => console.log(err))
+    }
 
     useEffect(() => {
+
+        const getFcmToken = async () => {
+            const fcmToken = await readStorage(Const.StorageKey.CODE_FRM_TOKEN)
+            connectFirebaseMessages(fcmToken)
+        }
+
         getDataStore()
         connectServerMess(token)
-        // connectFirebaseMessages()
+        getFcmToken()
     }, [])
     return (
         <PaperProvider theme={theme}>

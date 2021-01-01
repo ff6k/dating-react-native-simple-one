@@ -3,7 +3,8 @@ import {
     URL_GET_USER_DETAIL, URL_GET_PROFILE, URL_PUT_PROFILE, URL_POST_PHOTOS,
     URL_GET_USER_LIKED_ME, URL_GET_MESSAGES_CONVERSATION, URL_POST_MESSAGES_CONVERSATION,
     URL_POST_REPORT, URL_GET_TOP_PICK, URL_GET_USER_MATCHED_ME, URL_GET_INTERESTS, URL_GET_LOCATION_DETAIL,
-    URL_REMOVE_PHOTOS, URL_POST_FORGOT_PASSWORD, URL_SIGN_UP_EMAIL, URL_PUSH_FIREBASE_MESSAGES
+    URL_REMOVE_PHOTOS, URL_POST_FORGOT_PASSWORD, URL_SIGN_UP_EMAIL, URL_PUSH_FIREBASE_MESSAGES,
+    URL_POST_FCM_TOKEN
 } from './url'
 import axios from 'axios';
 import Const from '/src/const'
@@ -82,7 +83,6 @@ export const postMarkMessagesApiRequest = async (params) => {
 export const getProfileApiRequest = async (params) => {
     const { id, token } = params
     const Url = URL_GET_PROFILE + `/${id}`
-    console.log(`Url: ${Url}`);
     const client = getAxios('Bearer ' + token)
     return client.get(Url)
 }
@@ -331,6 +331,15 @@ export const postForgotPasswordApiRequest = async (params) => {
     const client = getAxios()
     return client.post(Url, {
         email: email
+    })
+}
+
+export const postFcmTokenApiRequest = async (params) => {
+    const { token, tokenFcm } = params
+    const Url = URL_POST_FCM_TOKEN
+    const client = getAxios('Bearer ' + token)
+    return client.put(Url, {
+        token: tokenFcm
     })
 }
 

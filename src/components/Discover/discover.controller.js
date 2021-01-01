@@ -129,14 +129,20 @@ export default function DiscoverController(props) {
     const handleLikeUser = (res) => {
         const { data } = res
         if (data !== '') {
-            // const params = {
-            //     fcmToken: ,
-            //     bodyNotification: "Congratulation! You have a new match!",
-            //     titleNotification: "Match Success",
-            //     bodyData: JSON.stringify(data),
-            // titleData:  JSON.stringify(data)
-            // }
-            // Api.RequestApi.postFirebaseMessage()
+            console.log(`data: ${JSON.stringify(data)}`);
+            const { fcmTokens } = data
+            if (fcmTokens.length > 0) {
+                fcmTokens.forEach(element => {
+                    const params = {
+                        fcmToken: element,
+                        bodyNotification: "Congratulation! You have a new match!",
+                        titleNotification: "Match Success",
+                        bodyData: JSON.stringify(data),
+                        titleData: 'dataMatch'
+                    }
+                    Api.RequestApi.postFirebaseMessage(params)
+                });
+            }
             navigation.navigate(Const.NameScreens.MatchTogether, { data })
         }
     }

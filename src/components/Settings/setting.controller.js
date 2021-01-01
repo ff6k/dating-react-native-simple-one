@@ -21,7 +21,8 @@ export default function SettingController(props) {
         dispatch(resetDataPre())
         const isSuccess = removeKeyStorage(Const.StorageKey.CODE_LOGIN_TOKEN)
         const isSuccessPre = removeKeyStorage(Const.StorageKey.CODE_PREFERENCES)
-        if (isSuccess && isSuccessPre) {
+        const isSuccessFcm = removeKeyStorage(Const.StorageKey.CODE_FRM_TOKEN)
+        if (isSuccess && isSuccessPre && isSuccessFcm) {
             navigation.replace(Const.NameScreens.SingInOrUp)
         }
     }
