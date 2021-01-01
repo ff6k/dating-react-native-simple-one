@@ -79,7 +79,7 @@ function MyPreferences(props) {
                 valueStart={minDistance}
                 valueEnd={maxDistance}
                 minValue={0}
-                maxValue={100}
+                maxValue={255}
                 isSwitch={true}
             />
             {/* <CardClick content={"Hetero"}

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Splash from './splash'
-import { readStorage, saveStorage, saveDataUserStorage, removeKeyStorage } from '/src/configs/AsyncStorage'
+import { readStorage, saveStorage, saveDataUserStorage, removeKeyStorage, clearStorage } from '/src/configs/AsyncStorage'
 import Const from '/src/const'
 import { changeLanguage } from '/src/translations'
 import { useDispatch } from 'react-redux'
@@ -10,7 +10,7 @@ import Api from '/src/api'
 
 let minAgeInit = 18
 let maxAgeInit = 60
-let maxDistanceInit = 100
+let maxDistanceInit = 255
 let minDistanceInit = 0
 export default function SplashController(props) {
     const { navigation } = props
@@ -18,11 +18,14 @@ export default function SplashController(props) {
     const dispatch = useDispatch()
 
     useEffect(() => {
+        // clearStorage()
         const setDataStoreReduxProfile = (token, id, preferences, data) => {
+            console.log(`id: ${id}`);
+            console.log(`token: ${token}`);
             Api.RequestApi.getProfileApiRequest({ token, id })
                 .then(res => {
-                    const { dateOfBirth, gender, photos, name } = res.data
-                    console.log(`res: ${JSON.stringify(res.data)}`);
+                    const { dateOfBirth, gender, photos, location } = res.data
+                    // console.log(`res: ${JSON.stringify(res.data)}`);
                     dispatch(insertDataLoginEmail(res.data))
 
                     if ((preferences === null || preferences === undefined)) {
@@ -53,6 +56,9 @@ export default function SplashController(props) {
                     }
                     else if (photos === null || photos.length === 0) {
                         navigation.replace(Const.NameScreens.Picture)
+                    }
+                    else if (location === null) {
+                        navigation.replace(Const.NameScreens.EditLocation, { isLogin: true })
                     }
                     else {
                         navigation.replace(Const.NameScreens.BottomNavigation)

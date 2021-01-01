@@ -4,7 +4,9 @@ import Geolocation from '@react-native-community/geolocation';
 import Api from '/src/api'
 import Utils from '/src/utils'
 import Const from '/src/const'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { resetData } from '/src/slice/loginSlice'
+import { removeKeyStorage } from '/src/configs/AsyncStorage'
 
 let token
 let idUser
@@ -13,16 +15,27 @@ let locationSelect
 let longitudeData
 let latitudeData
 export default function EditLocationController(props) {
-    const { navigation } = props
+    const { navigation, route } = props
     const [dataLocation, setDataLocation] = useState([])
     const dataStore = useSelector(state => state.login)
+    const dispatch = useDispatch()
 
     const onPressBack = () => {
         if (locationSelect !== undefined) {
             navigation.navigate(Const.NameScreens.MyProfile, { locationSelect })
         }
         else {
-            navigation.goBack()
+            if (navigation.canGoBack()) {
+                navigation.goBack()
+            }
+            else {
+                dispatch(resetData())
+                const isSuccess = removeKeyStorage(Const.StorageKey.CODE_LOGIN_TOKEN)
+                const isSuccessPre = removeKeyStorage(Const.StorageKey.CODE_PREFERENCES)
+                if (isSuccess && isSuccessPre) {
+                    navigation.replace(Const.NameScreens.Login)
+                }
+            }
         }
     }
 
@@ -57,7 +70,7 @@ export default function EditLocationController(props) {
                     }
 
                     longitudeData = currentLongitude
-                    latitude = currentLatitude
+                    latitudeData = currentLatitude
 
                     Api.RequestApi.getLocationDetailApiRequest(params)
                         .then(res => setDataLocation(res.data.data))
@@ -90,6 +103,11 @@ export default function EditLocationController(props) {
         }
         Api.RequestApi.putProfileLocationApiRequest(params)
             .then(res => {
+                if (route.params) {
+                    if (route.params.isLogin) {
+                        navigation.replace(Const.NameScreens.BottomNavigation)
+                    }
+                }
                 Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your location successfully', 500)
             })
             .catch(err => {

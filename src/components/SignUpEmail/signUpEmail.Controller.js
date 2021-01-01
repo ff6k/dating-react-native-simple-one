@@ -34,12 +34,13 @@ export default function SignUpEmailController() {
 
     const requestPostSignUpApi = async (name, email, confirmPassword, password) => {
         setIsLoading(true)
-        Api.RequestApi.postRequestApi(Api.Url.URL_SIGN_UP_EMAIL, {
-            Email: email.toLowerCase(),
-            ConfirmPassword: confirmPassword,
-            Password: password,
-            Name: name,
-        })
+        const params = {
+            email,
+            confirmPassword: confirmPassword,
+            password: password,
+            name: name,
+        }
+        Api.RequestApi.signUpEmail(params)
             .then((response) => response.json())
             .then((json) => requestApiSuccess(json))
             .catch((error) => requestApiFail(error))

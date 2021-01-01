@@ -3,7 +3,7 @@ import {
     URL_GET_USER_DETAIL, URL_GET_PROFILE, URL_PUT_PROFILE, URL_POST_PHOTOS,
     URL_GET_USER_LIKED_ME, URL_GET_MESSAGES_CONVERSATION, URL_POST_MESSAGES_CONVERSATION,
     URL_POST_REPORT, URL_GET_TOP_PICK, URL_GET_USER_MATCHED_ME, URL_GET_INTERESTS, URL_GET_LOCATION_DETAIL,
-    URL_REMOVE_PHOTOS, URL_POST_FORGOT_PASSWORD
+    URL_REMOVE_PHOTOS, URL_POST_FORGOT_PASSWORD, URL_SIGN_UP_EMAIL
 } from './url'
 import axios from 'axios';
 import Const from '/src/const'
@@ -38,6 +38,17 @@ export const postLikeImageSwipe = async (params) => {
     return client.post(Url)
 }
 
+export const signUpEmail = async (params) => {
+    const { email, confirmPassword, password, name } = params
+    const Url = URL_SIGN_UP_EMAIL
+    const client = getAxios()
+    return client.post(Url, {
+        email: email.toLowerCase(),
+        confirmPassword: confirmPassword,
+        password: password,
+        name: name,
+    })
+}
 
 //TODO: fix gender
 export const getRequestImageSwipe = async (params) => {
@@ -71,6 +82,7 @@ export const postMarkMessagesApiRequest = async (params) => {
 export const getProfileApiRequest = async (params) => {
     const { id, token } = params
     const Url = URL_GET_PROFILE + `/${id}`
+    console.log(`Url: ${Url}`);
     const client = getAxios('Bearer ' + token)
     return client.get(Url)
 }
@@ -86,6 +98,8 @@ export const putProfileReligiousApiRequest = async (params) => {
 
 export const putProfileLocationApiRequest = async (params) => {
     const { id, token, location, latitude, longitude } = params
+    console.log(`longitude 123: ${longitude}`);
+    console.log(`latitude 123: ${latitude}`);
     const Url = URL_PUT_PROFILE + `/${id}`
     const client = getAxios('Bearer ' + token)
     return client.put(Url, {

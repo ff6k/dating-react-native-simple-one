@@ -86,8 +86,9 @@ function PictureController(props) {
         }
         Api.RequestApi.putPhotosApiRequest(params)
             .then(response => {
+                console.log('object')
                 dispatch(changePictureLoginEmail({ picture: { publicId: public_id, url: url } }))
-                navigation.replace(Const.NameScreens.BottomNavigation)
+                navigation.replace(Const.NameScreens.EditLocation, { isLogin: true })
             }).catch(err => console.log(err))
     }
 

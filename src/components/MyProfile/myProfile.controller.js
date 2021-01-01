@@ -360,7 +360,7 @@ function MyProfileController(props) {
     }
 
     const onPressLocation = () => {
-        navigation.navigate(Const.NameScreens.EditLocation)
+        navigation.navigate(Const.NameScreens.EditLocation, { isLogin: false })
     }
 
     const removeItemInDataPhotos = (index) => {

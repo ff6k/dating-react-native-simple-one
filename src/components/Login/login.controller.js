@@ -3,7 +3,7 @@ import Login from './login'
 import Const from '/src/const'
 import { LoginManager, AccessToken } from "react-native-fbsdk";
 import { useDispatch, useSelector } from 'react-redux'
-import { pushDataLoginFB, pushDataLoginEmail } from '/src/slice/loginSlice'
+import { pushDataLoginFB, insertDataLoginEmail } from '/src/slice/loginSlice'
 import { pushDataAgeAndGender } from '/src/slice/preferenceSlice'
 import Api from '/src/api'
 import jwt_decode from "jwt-decode";
@@ -19,7 +19,7 @@ import { saveStorage, saveDataUserStorage } from '/src/configs/AsyncStorage'
 
 let minAgeInit = 18
 let maxAgeInit = 60
-let maxDistanceInit = 100
+let maxDistanceInit = 255
 let minDistanceInit = 0
 export default function LoginController(props) {
     const { navigation } = props
@@ -101,7 +101,7 @@ export default function LoginController(props) {
     }
 
     const switchNavigationScreen = (json) => {
-        const { email, dateOfBirth, gender, photoUrl } = json
+        const { email, dateOfBirth, gender, photoUrl, location } = json
         if (email === null) {
             navigation.navigate(Const.NameScreens.EmailAddress)
         }
@@ -113,6 +113,9 @@ export default function LoginController(props) {
         }
         else if (photoUrl === null) {
             navigation.navigate(Const.NameScreens.Picture)
+        }
+        else if (location === null) {
+            navigation.replace(Const.NameScreens.EditLocation, { isLogin: true })
         }
         else {
             navigation.navigate(Const.NameScreens.BottomNavigation)
@@ -129,7 +132,7 @@ export default function LoginController(props) {
         if (json.status === "Active") {
             const { jwtToken, id, dateOfBirth, gender, name } = json
             handleBeforeLogin(jwtToken, id, gender)
-            dispatch(pushDataLoginEmail(json))
+            dispatch(insertDataLoginEmail(json))
             switchNavigationScreen(json)
         } else {
             setIsShowModalFail(true)
