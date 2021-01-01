@@ -21,19 +21,19 @@ const requestPermission = async () => {
     }
 }
 
-export const messageListener = async (dataMessages) => {
+export const messageListener = async () => {
     firebase.notifications().onNotification((notification) => {
         const { title, body, data } = notification;
         console.log(`data: ${JSON.stringify(data)}`);
         // showAlert(title, body);
-        dataMessages = data
+        // dataMessages = data
     });
 
     const notificationOpen = await firebase.notifications().getInitialNotification();
     if (notificationOpen) {
         const { title, body, data } = notificationOpen.notification;
         console.log(`data open app------------------: ${JSON.stringify(data)}`);
-        dataMessages = data
+        // dataMessages = data
     }
 }
 
@@ -47,10 +47,10 @@ const showAlert = (title, message) => {
         { cancelable: false },
     );
 }
-export const checkPermission = async (idDevice) => {
+export const checkPermission = async () => {
     const enabled = await firebase.messaging().hasPermission();
     if (enabled) {
-        idDevice = getFcmToken();
+        return getFcmToken()
     } else {
         requestPermission();
     }

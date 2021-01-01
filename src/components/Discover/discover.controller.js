@@ -129,6 +129,14 @@ export default function DiscoverController(props) {
     const handleLikeUser = (res) => {
         const { data } = res
         if (data !== '') {
+            // const params = {
+            //     fcmToken: ,
+            //     bodyNotification: "Congratulation! You have a new match!",
+            //     titleNotification: "Match Success",
+            //     bodyData: JSON.stringify(data),
+            // titleData:  JSON.stringify(data)
+            // }
+            // Api.RequestApi.postFirebaseMessage()
             navigation.navigate(Const.NameScreens.MatchTogether, { data })
         }
     }

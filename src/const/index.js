@@ -16,6 +16,7 @@ import * as Cloudinary from './cloudinary'
 import * as CodeListener from './codeListener'
 import * as TypeSend from './typeSend'
 import * as PositionStackKey from './positionStackKey'
+import * as FcmKey from './fcmKey'
 const Const = {
     Common,
     PhoneAreas,
@@ -34,7 +35,8 @@ const Const = {
     Cloudinary,
     CodeListener,
     TypeSend,
-    PositionStackKey
+    PositionStackKey,
+    FcmKey
 }
 
 export default Const;

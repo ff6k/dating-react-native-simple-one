@@ -34,5 +34,7 @@ export const URL_CONNECT_SERVER_NOTIFICATION = URL_NETWORK + "/hubs/notification
 //LOCATION
 export const URL_GET_LOCATION_DETAIL = "http://api.positionstack.com/v1/reverse"
 
+//Firebase Messages
+export const URL_PUSH_FIREBASE_MESSAGES = "https://fcm.googleapis.com/fcm/send"
 //http://localhost:5000/api/users/pagination?pageNumber=1&pageSize=10&likers=true
 //http://localhost:5000/api/users/3/messages/16/read

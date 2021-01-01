@@ -12,9 +12,8 @@ import Settings from '/src/components/Settings/setting.controller'
 import { connectServerMess } from '/src/configs/Signalr'
 import Const from '/src/const'
 import { withTranslation } from 'react-i18next';
-import { checkPermission, messageListener } from '/src/configs/FirebaseMessage'
+// import { messageListener } from '/src/configs/FirebaseMessage'
 import { useSelector } from 'react-redux'
-
 
 const Tab = createMaterialBottomTabNavigator();
 const theme = {
@@ -41,19 +40,14 @@ function MyTabs(props) {
         }
     }
 
-    const connectFirebaseMessages = () => {
-        checkPermission(idDevice => {
-            console.log(idDevice)
-        })
-        messageListener(dataMessages => {
-            console.log('dataMessages', dataMessages)
-        })
-    }
+    // const connectFirebaseMessages = () => {
+    //     messageListener()
+    // }
 
     useEffect(() => {
         getDataStore()
         connectServerMess(token)
-        connectFirebaseMessages()
+        // connectFirebaseMessages()
     }, [])
     return (
         <PaperProvider theme={theme}>

@@ -3,7 +3,7 @@ import {
     URL_GET_USER_DETAIL, URL_GET_PROFILE, URL_PUT_PROFILE, URL_POST_PHOTOS,
     URL_GET_USER_LIKED_ME, URL_GET_MESSAGES_CONVERSATION, URL_POST_MESSAGES_CONVERSATION,
     URL_POST_REPORT, URL_GET_TOP_PICK, URL_GET_USER_MATCHED_ME, URL_GET_INTERESTS, URL_GET_LOCATION_DETAIL,
-    URL_REMOVE_PHOTOS, URL_POST_FORGOT_PASSWORD, URL_SIGN_UP_EMAIL
+    URL_REMOVE_PHOTOS, URL_POST_FORGOT_PASSWORD, URL_SIGN_UP_EMAIL, URL_PUSH_FIREBASE_MESSAGES
 } from './url'
 import axios from 'axios';
 import Const from '/src/const'
@@ -332,4 +332,26 @@ export const postForgotPasswordApiRequest = async (params) => {
     return client.post(Url, {
         email: email
     })
+}
+
+export const postFirebaseMessage = async (params) => {
+    const { fcmToken, bodyNotification, titleNotification, bodyData, titleData } = params
+    const body = {
+        "to": fcmToken,
+        "notification": {
+            "body": bodyNotification,
+            "title": titleNotification,
+            "content_available": true,
+            "priority": "high"
+        },
+        "data": {
+            "body": bodyData,
+            "title": titleData,
+            "content_available": true,
+            "priority": "high"
+        }
+    }
+    const Url = URL_PUSH_FIREBASE_MESSAGES
+    const client = getAxios('key=' + Const.FcmKey.FCM_KEY)
+    return client.post(Url, body)
 }
