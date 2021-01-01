@@ -29,7 +29,8 @@
      android:name="com.google.android.geo.API_KEY"
      android:value="AIzaSyC1ya0ad4FTj3-Lp7o_0foEznHMdo-4H78"/>
 
-    <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@mipmap/ic_launcher" />
+    <meta-data android:name="com.google.firebase.messaging.default_notification_icon" 
+    android:resource="@mipmap/ic_launcher" />
             <receiver android:name="io.invertase.firebase.notifications.RNFirebaseNotificationReceiver" />
             <receiver
                 android:name="io.invertase.firebase.notifications.RNFirebaseNotificationsRebootReceiver"

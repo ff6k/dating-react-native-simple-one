@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Gender from './gender'
 import Const from '/src/const'
 import Api from '/src/api'
-import { BackHandler } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { resetData } from '/src/slice/loginSlice'
+import { resetData, changeGenderLoginEmail } from '/src/slice/loginSlice'
 import { removeKeyStorage } from '/src/configs/AsyncStorage'
 
 let genderTemp = ""
@@ -67,6 +66,7 @@ export default function GenderController(props) {
         }
         Api.RequestApi.putProfileGenderApiRequest(params)
             .then(res => {
+                dispatch(changeGenderLoginEmail({ gender: genderTemp }))
                 navigation.navigate(Const.NameScreens.Picture)
             })
             .catch(err => {

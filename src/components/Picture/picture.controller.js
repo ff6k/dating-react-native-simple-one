@@ -5,15 +5,16 @@ import Api from '/src/api'
 import Const from '/src/const'
 import Utils from '/src/utils'
 // import { BackHandler } from 'react-native'
+import { withTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { removeKeyStorage } from '/src/configs/AsyncStorage'
-import { resetData } from '/src/slice/loginSlice'
+import { resetData, changePictureLoginEmail } from '/src/slice/loginSlice'
 
 let token
 let idUser
-export default function PictureController(props) {
+function PictureController(props) {
     const dispatch = useDispatch()
-    const { navigation } = props
+    const { navigation, t } = props
     const [uriImage, setUriImage] = useState(null)
     const [isLoading, setIsLoading] = useState(false);
     const [dataImage, setDataImage] = useState(null)
@@ -21,6 +22,7 @@ export default function PictureController(props) {
 
     const refModalSlide = React.createRef()
     const dataStore = useSelector(state => state.login)
+    console.log(`dataStore: ${JSON.stringify(dataStore)}`);
     const getDataStore = () => {
         if (dataStore.length > 0) {
             const { jwtToken, id } = dataStore[0]
@@ -82,9 +84,9 @@ export default function PictureController(props) {
             id: idUser,
             token: token
         }
-
         Api.RequestApi.putPhotosApiRequest(params)
             .then(response => {
+                dispatch(changePictureLoginEmail({ picture: { publicId: public_id, url: url } }))
                 navigation.replace(Const.NameScreens.BottomNavigation)
             }).catch(err => console.log(err))
     }
@@ -119,11 +121,11 @@ export default function PictureController(props) {
         const isSuccess = removeKeyStorage(Const.StorageKey.CODE_LOGIN_TOKEN)
         const isSuccessPre = removeKeyStorage(Const.StorageKey.CODE_PREFERENCES)
         if (isSuccess && isSuccessPre) {
-            if (navigation.canGoBack()) {
-                navigation.goBack()
-            } else {
-                navigation.replace(Const.NameScreens.Login)
-            }
+            // if (navigation.canGoBack()) {
+            //     navigation.goBack()
+            // } else {
+            navigation.replace(Const.NameScreens.Login)
+            // }
         }
     }
 
@@ -134,6 +136,7 @@ export default function PictureController(props) {
 
     return (
         <Picture
+            t={t}
             onPressBack={onPressBackButton}
             pressUploadPhoto={pressUploadPhoto}
             pressTakePhoto={pressTakePhoto}
@@ -150,3 +153,5 @@ export default function PictureController(props) {
         />
     )
 }
+
+export default withTranslation()(PictureController)

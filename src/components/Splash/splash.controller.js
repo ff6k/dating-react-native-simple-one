@@ -22,6 +22,7 @@ export default function SplashController(props) {
             Api.RequestApi.getProfileApiRequest({ token, id })
                 .then(res => {
                     const { dateOfBirth, gender, photos, name } = res.data
+                    console.log(`res: ${JSON.stringify(res.data)}`);
                     dispatch(insertDataLoginEmail(res.data))
 
                     if ((preferences === null || preferences === undefined)) {

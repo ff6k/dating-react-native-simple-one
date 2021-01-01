@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import { StyleSheet, TouchableOpacity, Image, Text, View, TextInput } from 'react-native'
 import Themes from '/src/themes'
 import Icon from '/src/components/UI/icon'
+import { withTranslation } from 'react-i18next'
 
-export default function imagePicker(props) {
-    const { onPressAdd, urlImage } = props;
+function ImagePicker(props) {
+    const { t, onPressAdd, urlImage } = props;
 
     return (
         <View style={styles.containerViewImage}>
@@ -25,13 +26,13 @@ export default function imagePicker(props) {
                                 color={"#BDB6BB"}
                             />
                         </TouchableOpacity>
-                        <Text style={styles.txtAddPhoto}>{"Add your photo"}</Text>
+                        <Text style={styles.txtAddPhoto}>{t("Add your photo")}</Text>
                     </View>)
             }
         </View>
     )
 }
-
+export default withTranslation()(ImagePicker)
 const styles = StyleSheet.create({
     containerImagePicker: {
         elevation: 7,
@@ -54,6 +55,7 @@ const styles = StyleSheet.create({
         color: '#BDB6BB',
         fontSize: 22,
         alignSelf: 'center',
+        textAlign: 'center',
         fontFamily: Themes.FontFamily.FontMediumDefault
     },
     icoAdd: {

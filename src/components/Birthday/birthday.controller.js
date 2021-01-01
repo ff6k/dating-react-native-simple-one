@@ -5,7 +5,7 @@ import Api from '/src/api'
 import Utils from '/src/utils'
 import { useDispatch, useSelector } from 'react-redux'
 import { removeKeyStorage } from '/src/configs/AsyncStorage'
-import { resetData } from '/src/slice/loginSlice'
+import { resetData, changeDateOfBirthLoginEmail, insertDataLoginEmail } from '/src/slice/loginSlice'
 // import { pushDataLoginEmail, insertDataLoginEmail } from '/src/slice/loginSlice'
 
 const DATE_ADULT = 18
@@ -20,7 +20,7 @@ export default function BirthdayController(props) {
     const { navigation } = props
     const [isShowAlert, setIsShowAlert] = useState(false)
     const [isShowAlertFail, setIsShowAlertFail] = useState(false)
-    const [isShowConfirmModal, setIsShowConfirmModal] = useState(true)
+    const [isShowConfirmModal, setIsShowConfirmModal] = useState(false)
 
     const dataStore = useSelector(state => state.login)
 
@@ -47,6 +47,7 @@ export default function BirthdayController(props) {
         }
         Api.RequestApi.putProfileBirthdayApiRequest(params)
             .then(res => {
+                dispatch(changeDateOfBirthLoginEmail({ dateOfBirth: dateSave.toString() }))
                 navigation.navigate(Const.NameScreens.Gender)
             })
             .catch(err => {
@@ -88,6 +89,7 @@ export default function BirthdayController(props) {
     const onPressNextButton = () => {
         if (dateSave !== "") {
             if (checkDateAdult(dateSave)) {
+                // navigation.navigate(Const.NameScreens.Gender)
                 const dateTemp = Utils.Format.formatDate(dateSave)
                 saveDataApi(idUser, token, dateTemp)
             }

@@ -16,6 +16,7 @@ function Gender(props) {
         isShowConfirmModal,
         setIsShowConfirmModal, onPressButtonLeft, onPressButtonRight
     } = props
+
     const [gender, setGender] = useState(GENDER.MALE);
     const onCheck = (gender) => {
         setGender(gender);

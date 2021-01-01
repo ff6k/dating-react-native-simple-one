@@ -44,13 +44,13 @@ function BirthDay(props) {
             />
             <AwesomeAlert
                 show={isShowAlert}
-                title={"FBI Warning ! ⛔️"}
-                message={"Only users who are 18 or older can use our app"}
+                title={t("FBI Warning") + "! ⛔️"}
+                message={t("Only users who are 18 or older can use our app")}
                 closeOnTouchOutside={true}
                 closeOnHardwareBackPress={false}
                 showConfirmButton={true}
                 contentStyle={{ width: 300, height: 120, }}
-                confirmText="Yes, i agree"
+                confirmText={t("Yes, i agree")}
                 messageStyle={styles.txtMessageAlert}
                 confirmButtonColor="#DD6B55"
                 confirmButtonTextStyle={styles.txtConfirm}

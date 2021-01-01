@@ -3,7 +3,6 @@ import { StyleSheet, TouchableOpacity, Image, Text, View, ScrollView } from 'rea
 import Themes from '/src/themes'
 import ButtonNext from '/src/components/UI/buttonNext'
 import ImagePicker from '/src/components/UI/imagePicker'
-import { withTranslation } from 'react-i18next'
 import ButtonBack from '/src/components/UI/buttonBack'
 import Const from '/src/const'
 import BottomModalSlide from '/src/components/UI/bottomModalSlide'
@@ -11,7 +10,7 @@ import CoupleButtonImage from '/src/components/UI/coupleButtonImage'
 import ConfirmModal from '/src/components/Model/confirmModal'
 import SpinnerLoading from '/src/components/UI/spinnerLoading'
 const Picture = React.forwardRef((props, ref) => {
-    const { onPressBack, pressUploadPhoto, pressTakePhoto,
+    const { t, onPressBack, pressUploadPhoto, pressTakePhoto,
         uri, onPressNext, onPressAddButton, isLoading, onShowModalSlide,
         isShowConfirmModal,
         setIsShowConfirmModal, onPressButtonLeft, onPressButtonRight
@@ -46,8 +45,8 @@ const Picture = React.forwardRef((props, ref) => {
                 onPress={() => onPressBack && onPressBack()}
             />
             <View style={styles.containerContent}>
-                <Text style={styles.txtTitle}>{"My best"}</Text>
-                <Text style={styles.txtTitle2}>{"Picture"}</Text>
+                <Text style={styles.txtTitle}>{t("My best")}</Text>
+                <Text style={styles.txtTitle2}>{t("Picture")}</Text>
                 <ImagePicker
                     urlImage={uri}
                     onPressAdd={onPressAdd} />
@@ -57,7 +56,7 @@ const Picture = React.forwardRef((props, ref) => {
                     onPress={() => onChangeImage()}
                     style={styles.btnChange}
                 >
-                    <Text style={styles.txtChange}>{"Change"}</Text>
+                    <Text style={styles.txtChange}>{t("Change")}</Text>
                 </TouchableOpacity> :
                     <View></View>}
                 <ButtonNext

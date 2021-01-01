@@ -97,8 +97,6 @@ export default function DiscoverController(props) {
             maxAge: maxAgeData,
             maxDistance: maxDistanceData
         }
-        console.log(`params: ${JSON.stringify(params)}`);
-
         return Api.RequestApi.getRequestImageSwipe(params)
     }
 
