@@ -1,30 +1,58 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Settings from './settings'
-import { removeKeyStorage } from '/src/configs/AsyncStorage'
+import { removeKeyStorage, readStorage } from '/src/configs/AsyncStorage'
 import Const from '/src/const'
 import { resetData as resetDataPre } from '/src/slice/preferenceSlice'
 import { resetData as resetDataLogin } from '/src/slice/loginSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import Api from '/src/api'
+
+let token
 export default function SettingController(props) {
     const { navigation } = props
     const [isShowConfirmModal, setIsShowConfirmModal] = useState(false)
     const dispatch = useDispatch()
-
     const dataStore = useSelector(state => state.login)
-    console.log(`dataStore: ${JSON.stringify(dataStore)}`);
+
+    const getDataStore = () => {
+        if (dataStore.length > 0) {
+            const { jwtToken } = dataStore[0]
+            token = jwtToken
+        }
+        else {
+            return null // empty data
+        }
+    }
+
+    useEffect(() => {
+        getDataStore()
+    }, [])
+
     const onPressLogout = () => {
         setIsShowConfirmModal(true)
     }
 
-    const logoutUser = () => {
-        dispatch(resetDataLogin())
-        dispatch(resetDataPre())
-        const isSuccess = removeKeyStorage(Const.StorageKey.CODE_LOGIN_TOKEN)
-        const isSuccessPre = removeKeyStorage(Const.StorageKey.CODE_PREFERENCES)
-        const isSuccessFcm = removeKeyStorage(Const.StorageKey.CODE_FRM_TOKEN)
-        if (isSuccess && isSuccessPre && isSuccessFcm) {
-            navigation.replace(Const.NameScreens.SingInOrUp)
+    const logoutUser = async () => {
+
+        const tokenFcm = await readStorage(Const.StorageKey.CODE_FRM_TOKEN)
+        const params = {
+            token,
+            fcmToken: tokenFcm
         }
+
+        Promise.all([
+            Api.RequestApi.postDeleteFcmTokenApiRequest(params),
+            dispatch(resetDataLogin()),
+            dispatch(resetDataPre()),
+            removeKeyStorage(Const.StorageKey.CODE_LOGIN_TOKEN),
+            removeKeyStorage(Const.StorageKey.CODE_PREFERENCES),
+            removeKeyStorage(Const.StorageKey.CODE_FRM_TOKEN)
+        ]).then(async ([]) => {
+            navigation.replace(Const.NameScreens.SingInOrUp)
+        })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     const onPressMyProfile = () => {

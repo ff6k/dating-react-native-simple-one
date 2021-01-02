@@ -101,7 +101,7 @@ export default function LoginController(props) {
     }
 
     const switchNavigationScreen = (json) => {
-        const { email, dateOfBirth, gender, photoUrl, location } = json
+        const { email, dateOfBirth, gender, photoUrl, location, latitude, longitude } = json
         if (email === null) {
             navigation.navigate(Const.NameScreens.EmailAddress)
         }
@@ -114,7 +114,7 @@ export default function LoginController(props) {
         else if (photoUrl === null) {
             navigation.navigate(Const.NameScreens.Picture)
         }
-        else if (location === null) {
+        else if (location === null || latitude === 0.0, longitude === 0.0) {
             navigation.replace(Const.NameScreens.EditLocation, { isLogin: true })
         }
         else {

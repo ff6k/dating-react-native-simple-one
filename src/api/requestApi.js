@@ -4,7 +4,7 @@ import {
     URL_GET_USER_LIKED_ME, URL_GET_MESSAGES_CONVERSATION, URL_POST_MESSAGES_CONVERSATION,
     URL_POST_REPORT, URL_GET_TOP_PICK, URL_GET_USER_MATCHED_ME, URL_GET_INTERESTS, URL_GET_LOCATION_DETAIL,
     URL_REMOVE_PHOTOS, URL_POST_FORGOT_PASSWORD, URL_SIGN_UP_EMAIL, URL_PUSH_FIREBASE_MESSAGES,
-    URL_POST_FCM_TOKEN
+    URL_POST_FCM_TOKEN, URL_POST_DELETE_FCM_TOKEN
 } from './url'
 import axios from 'axios';
 import Const from '/src/const'
@@ -345,12 +345,6 @@ export const postFcmTokenApiRequest = async (params) => {
 
 export const postFirebaseMessage = async (params) => {
     const { fcmToken, bodyNotification, titleNotification, bodyData, titleData } = params
-    console.log('------------------------------')
-    console.log(`titleData: ${titleData}`);
-    console.log(`bodyData: ${bodyData}`);
-    console.log(`titleNotification: ${titleNotification}`);
-    console.log(`bodyNotification: ${bodyNotification}`);
-    console.log(`fcmToken: ${fcmToken}`);
     const body = {
         "to": fcmToken,
         "notification": {
@@ -366,12 +360,18 @@ export const postFirebaseMessage = async (params) => {
             "priority": "high"
         }
     }
-    console.log(JSON.stringify(body))
     const Url = URL_PUSH_FIREBASE_MESSAGES
-    console.log(`Url: ${Url}`);
     const client = getAxios('key=' + Const.FcmKey.FCM_KEY)
-    console.log(`FCM_KEY: ${Const.FcmKey.FCM_KEY}`);
     client.post(Url, body)
         .then(res => console.log('res', res))
         .catch(err => console.log(err))
+}
+
+export const postDeleteFcmTokenApiRequest = async (params) => {
+    const { token, fcmToken } = params
+    const Url = URL_POST_DELETE_FCM_TOKEN
+    const client = getAxios('Bearer ' + token)
+    return client.post(Url, {
+        token: fcmToken
+    })
 }

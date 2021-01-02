@@ -24,7 +24,7 @@ export default function SplashController(props) {
             console.log(`token: ${token}`);
             Api.RequestApi.getProfileApiRequest({ token, id })
                 .then(res => {
-                    const { dateOfBirth, gender, photos, location } = res.data
+                    const { dateOfBirth, gender, photos, location, latitude, longitude } = res.data
                     // console.log(`res: ${JSON.stringify(res.data)}`);
                     dispatch(insertDataLoginEmail(res.data))
 
@@ -57,7 +57,7 @@ export default function SplashController(props) {
                     else if (photos === null || photos.length === 0) {
                         navigation.replace(Const.NameScreens.Picture)
                     }
-                    else if (location === null) {
+                    else if (location === null || latitude === 0.0, longitude === 0.0) {
                         navigation.replace(Const.NameScreens.EditLocation, { isLogin: true })
                     }
                     else {

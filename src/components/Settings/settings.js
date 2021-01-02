@@ -12,7 +12,6 @@ function Settings(props) {
     const { t, onPressLogout, isShowConfirmModal, setIsShowConfirmModal,
         onPressMyProfile, onPressMyPreferences,
         onPressButtonLeft, onPressButtonRight, dataInfo } = props
-    console.log(`dataInfo: ${JSON.stringify(dataInfo)}`);
     let nameTemp, emailTemp, dateOfBirthTemp, genderTemp, oldYearTemp, photoTemp
     if (dataInfo !== undefined) {
         const { name, email, dateOfBirth, gender, photos } = dataInfo
@@ -22,7 +21,6 @@ function Settings(props) {
         genderTemp = gender
         oldYearTemp = Utils.Calculator.getOldYear(dateOfBirth)
         photoTemp = photos
-        console.log(`photoTemp: ${photoTemp}`);
     }
     return (
         <ScrollView style={styles.container}
@@ -78,6 +76,7 @@ function Settings(props) {
                 onPressButtonLeft={onPressButtonLeft}
                 onPressButtonRight={onPressButtonRight}
             />
+
         </ScrollView>
     )
 }

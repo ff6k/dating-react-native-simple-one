@@ -10,6 +10,7 @@ export const URL_SIGN_IN_EMAIL = URL_NETWORK + URL_ACCOUNT + "/login"
 export const URL_SIGN_IN_FACEBOOK = URL_NETWORK + URL_ACCOUNT + "/facebook-login"
 export const URL_POST_FORGOT_PASSWORD = URL_NETWORK + URL_ACCOUNT + "/forgot-password"
 export const URL_POST_FCM_TOKEN = URL_NETWORK + URL_ACCOUNT + "/fcm-token"
+export const URL_POST_DELETE_FCM_TOKEN = URL_NETWORK + URL_ACCOUNT + "/revoke-fcm-token"
 
 export const URL_GET_IMAGE_SWIPE = URL_NETWORK + URL_USER + "/pagination"
 export const URL_POST_LIKE_IMAGE_SWIPE = URL_NETWORK + URL_USER
