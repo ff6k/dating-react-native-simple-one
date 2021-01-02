@@ -141,7 +141,7 @@ function SignUpEmail(props) {
             <PassMeter
                 maxStrong={1}
                 height={2}
-                width={270}
+                width={Const.Common.deviceWidth - 135}
                 showLabels
                 password={password}
                 maxLength={Const.Common.MAX_LEN_PASSWORD}

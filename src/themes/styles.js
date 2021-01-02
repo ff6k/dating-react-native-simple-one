@@ -218,7 +218,7 @@ export const HeaderApp = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: 'white',
-    paddingVertical: 10,
+    paddingVertical: 5,
     ...shadowButton
 }
 

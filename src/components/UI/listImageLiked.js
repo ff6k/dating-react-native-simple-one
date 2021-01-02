@@ -25,7 +25,10 @@ const renderItemLiked = (props, item, index) => {
                             : <FontAwesomeIcons name={"symbol-male"} size={SIZE_ICON} color={Themes.Colors.PINK_DARK} />}
                         <Text style={styles.txtName}>{name}</Text>
                     </View>
-                    <TouchableOpacity style={{ backgroundColor: 'white', padding: 6, borderRadius: 20 }}
+                    <TouchableOpacity style={{
+                        backgroundColor: 'white', padding: 6, borderRadius: 20,
+                        marginRight: 20
+                    }}
                         onPress={() => onPressLoveStatus && onPressLoveStatus(item, index)}>
                         <Icon size={20} color={Themes.Colors.GREEN_DARK} name={'heart'} />
                     </TouchableOpacity>
@@ -83,7 +86,9 @@ const styles = StyleSheet.create({
         height: 10
     },
     containBottom: {
-        position: 'absolute', bottom: 5, left: 5, flexDirection: 'row', alignItems: 'center', width: Const.Common.deviceWidth / 2 - 20, justifyContent: 'space-between'
+        position: 'absolute', bottom: 5, left: 5, flexDirection: 'row',
+        alignItems: 'center',
+        width: Const.Common.deviceWidth / 2 - 30, justifyContent: 'space-between'
     },
     txtName: {
         fontFamily: Themes.FontFamily.FontBoldExtra, color: 'white', marginLeft: 5,

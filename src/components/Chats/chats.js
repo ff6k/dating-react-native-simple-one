@@ -137,7 +137,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     containEmpty: {
-        width: '100%', marginTop: 100, alignItems: 'center'
+        width: '100%',
+        // marginTop: 100,
+        //  alignItems: 'center'
     },
     footerEmpty: {
         marginBottom: Themes.Const.MARGIN_AVATAR + 150,

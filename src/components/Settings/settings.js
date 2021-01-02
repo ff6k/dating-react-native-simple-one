@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native'
 import Themes from '/src/themes'
 // import ButtonSettingItem from '/src/components/UI/buttonSettingItem'
 import { withTranslation } from 'react-i18next';
@@ -25,7 +25,9 @@ function Settings(props) {
         console.log(`photoTemp: ${photoTemp}`);
     }
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}
+            showsVerticalScrollIndicator={false}
+        >
             <View style={styles.containHeader}>
                 <View style={styles.containChild}>
                     <Image
@@ -76,7 +78,7 @@ function Settings(props) {
                 onPressButtonLeft={onPressButtonLeft}
                 onPressButtonRight={onPressButtonRight}
             />
-        </View>
+        </ScrollView>
     )
 }
 
@@ -94,10 +96,12 @@ const styles = StyleSheet.create({
     btnLogout: {
         backgroundColor: 'white',
         width: 250, height: 50,
-        position: 'absolute',
+        // position: 'absolute',
         borderRadius: 30,
         alignSelf: 'center',
-        bottom: 15,
+        // bottom: 15,
+        marginTop: '50%',
+        marginBottom: 10,
         alignItems: 'center',
         justifyContent: 'center',
         ...Themes.Styles.shadowButton
@@ -146,11 +150,14 @@ const styles = StyleSheet.create({
         borderBottomStartRadius: 500,
         borderBottomEndRadius: 500,
         overflow: 'hidden',
-        ...Themes.Styles.shadowButton
+        ...Themes.Styles.shadowButton,
+        height: 450
     },
     container: {
         backgroundColor: 'white',
-        flex: 1
+        // height: 1000,
+
+        // flex: 1
     },
     containerInfor: {
         marginLeft: MARGIN

@@ -9,6 +9,9 @@ let idUser
 let minAgeData
 let maxAgeData
 let genderData
+
+let nameUser
+let photoUrlUser
 export default function ProspectsController(props) {
     const { navigation, route } = props
 
@@ -26,9 +29,11 @@ export default function ProspectsController(props) {
 
     const getDataStore = () => {
         if (dataStore.length > 0) {
-            const { jwtToken, id } = dataStore[0]
+            const { jwtToken, id, name, photoUrl } = dataStore[0]
             token = jwtToken
             idUser = id
+            nameUser = name
+            photoUrlUser = photoUrl
             minAgeData = dataPre[0].minAge
             maxAgeData = dataPre[0].maxAge
             genderData = dataPre[0].gender
@@ -77,6 +82,31 @@ export default function ProspectsController(props) {
         navigation.navigate(Const.NameScreens.ImageDetail, { item })
     }
 
+    const notificationMessages = (data) => {
+        const { fcmTokens } = data
+        // console.log(`fcmTokens: ${fcmTokens}`);
+        if (fcmTokens.length > 0) {
+            const dataSend = {
+                id: idUser,
+                name: nameUser,
+                photoUrl: photoUrlUser,
+            }
+            fcmTokens.forEach(element => {
+                // console.log(`element: ${element}`);
+                const params = {
+                    fcmToken: element,
+                    bodyNotification: "Congratulation! You have a new match!",
+                    titleNotification: "Match Success",
+                    bodyData: dataSend,
+                    titleData: 'dataMatch'
+                }
+                Api.RequestApi.postFirebaseMessage(params)
+                // .then(res => console.log(res))
+                // .catch(err => console.log(err))
+            });
+        }
+    }
+
     const onPressLoveStatus = (item, index) => {
         const { id } = item
         const params = {
@@ -86,6 +116,9 @@ export default function ProspectsController(props) {
         }
         Api.RequestApi.postLikeImageSwipe(params)
             .then(res => {
+                if (res.data !== '') {
+                    notificationMessages(res.data)
+                }
                 setIsShowAlertSuccess(true)
                 const dataLikesFilter = dataLikes.filter(e => e.id !== item.id)
                 setDataLikes(dataLikesFilter)

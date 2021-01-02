@@ -7,11 +7,14 @@ import { useSelector } from 'react-redux'
 import { connectServerNotifier, listenerConnect } from '/src/configs/Signalr'
 
 let token
-let idUser
 let minAgeData
 let maxAgeData
 let genderData
 let maxDistanceData
+
+let idUser
+let nameUser
+let photoUrlUser
 export default function DiscoverController(props) {
     const { navigation, route } = props
     const [isModeDetail, setIsModeDetail] = useState(false)
@@ -33,7 +36,7 @@ export default function DiscoverController(props) {
 
     const getDataStore = () => {
         if (dataStore.length > 0) {
-            const { jwtToken, id } = dataStore[0]
+            const { jwtToken, id, name, photoUrl } = dataStore[0]
             if (dataPre.length > 0) {
                 minAgeData = dataPre[0].minAge
                 maxAgeData = dataPre[0].maxAge
@@ -45,6 +48,8 @@ export default function DiscoverController(props) {
             // setGender(genderData)
             token = jwtToken
             idUser = id
+            nameUser = name
+            photoUrlUser = photoUrl
         }
         else {
             return null // empty data
@@ -129,7 +134,11 @@ export default function DiscoverController(props) {
     const handleLikeUser = (res) => {
         const { data } = res
         if (data !== '') {
-            console.log(`data: ${JSON.stringify(data)}`);
+            const dataSend = {
+                id: idUser,
+                name: nameUser,
+                photoUrl: photoUrlUser,
+            }
             const { fcmTokens } = data
             if (fcmTokens.length > 0) {
                 fcmTokens.forEach(element => {
@@ -137,7 +146,7 @@ export default function DiscoverController(props) {
                         fcmToken: element,
                         bodyNotification: "Congratulation! You have a new match!",
                         titleNotification: "Match Success",
-                        bodyData: JSON.stringify(data),
+                        bodyData: dataSend,
                         titleData: 'dataMatch'
                     }
                     Api.RequestApi.postFirebaseMessage(params)

@@ -345,6 +345,12 @@ export const postFcmTokenApiRequest = async (params) => {
 
 export const postFirebaseMessage = async (params) => {
     const { fcmToken, bodyNotification, titleNotification, bodyData, titleData } = params
+    console.log('------------------------------')
+    console.log(`titleData: ${titleData}`);
+    console.log(`bodyData: ${bodyData}`);
+    console.log(`titleNotification: ${titleNotification}`);
+    console.log(`bodyNotification: ${bodyNotification}`);
+    console.log(`fcmToken: ${fcmToken}`);
     const body = {
         "to": fcmToken,
         "notification": {
@@ -360,7 +366,12 @@ export const postFirebaseMessage = async (params) => {
             "priority": "high"
         }
     }
+    console.log(JSON.stringify(body))
     const Url = URL_PUSH_FIREBASE_MESSAGES
+    console.log(`Url: ${Url}`);
     const client = getAxios('key=' + Const.FcmKey.FCM_KEY)
-    return client.post(Url, body)
+    console.log(`FCM_KEY: ${Const.FcmKey.FCM_KEY}`);
+    client.post(Url, body)
+        .then(res => console.log('res', res))
+        .catch(err => console.log(err))
 }

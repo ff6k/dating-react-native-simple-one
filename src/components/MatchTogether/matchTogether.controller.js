@@ -10,6 +10,9 @@ export default function MatchTogetherController(props) {
     const onPressGoBack = () => {
         navigation.goBack()
     }
+    // console.log('asd', route.params)
+    // const [name] = JSON.parse(route.params.data)
+    // console.log(route.params.data.name)
 
     const onPressGoChat = () => {
         navigation.replace(Const.NameScreens.Messages, {

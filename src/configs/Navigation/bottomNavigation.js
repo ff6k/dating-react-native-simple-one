@@ -31,7 +31,7 @@ const theme = {
 
 let token
 function MyTabs(props) {
-    const { t } = props
+    const { t, navigation } = props
     const dataStore = useSelector(state => state.login)
     const getDataStore = () => {
         if (dataStore.length > 0) {
@@ -42,6 +42,24 @@ function MyTabs(props) {
             return null // empty data
         }
     }
+
+    const getDataOpenApp = (data) => {
+        // console.log(`data456: ${data}`);
+        // console.log(data.name)
+        // const [name] = JSON.parse(data.body)
+        // console.log(`name: ${name}`);
+        if (data !== undefined) {
+            // const data = {
+            //     ...data.body
+            // }
+            // console.log(data.body.name)
+            // console.log()
+            navigation.navigate(Const.NameScreens.MatchTogether, { data: JSON.parse(data.body) })
+            // const [name] = JSON.parse(data)
+            // console.log(`name--------------: ${name}`);
+        }
+    }
+
     //TODO: update key + remove key
     const connectFirebaseMessages = (frmToken) => {
         checkPermission()
@@ -65,7 +83,7 @@ function MyTabs(props) {
                             console.log(err)
                         })
                 }
-                messageListener()
+                messageListener(getDataOpenApp)
             })
             .catch(err => console.log(err))
     }

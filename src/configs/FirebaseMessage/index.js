@@ -21,7 +21,7 @@ const requestPermission = async () => {
     }
 }
 
-export const messageListener = async () => {
+export const messageListener = async (getDataOpenApp) => {
     firebase.notifications().onNotification((notification) => {
         const { title, body, data } = notification;
         console.log(`data: ${JSON.stringify(data)}`);
@@ -32,7 +32,8 @@ export const messageListener = async () => {
     const notificationOpen = await firebase.notifications().getInitialNotification();
     if (notificationOpen) {
         const { title, body, data } = notificationOpen.notification;
-        console.log(`data open app------------------: ${JSON.stringify(data)}`);
+        // console.log(`data open app------------------: ${JSON.stringify(data)}`);
+        getDataOpenApp(data)
         // dataMessages = data
     }
 }
