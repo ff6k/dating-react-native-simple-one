@@ -5,7 +5,8 @@ import { withTranslation } from 'react-i18next';
 import Const from '/src/const'
 import Api from '/src/api'
 import Utils from '/src/utils'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { changeNameLoginEmail, changeDateOfBirthLoginEmail } from '/src/slice/loginSlice'
 
 
 async function getApiProfile(params) {
@@ -42,6 +43,8 @@ function MyProfileController(props) {
     const [smokingBegin, setSmokingBegin] = useState()
     const [locationBegin, setLocationBegin] = useState()
     const dataStore = useSelector(state => state.login)
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
         if (route.params !== undefined) {
@@ -260,6 +263,7 @@ function MyProfileController(props) {
             Api.RequestApi.putNameApiRequest(params)
                 .then(response => {
                     nameBegin = response.data.name
+                    dispatch(changeNameLoginEmail({ name: response.data.name }))
                     Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your name successfully', 3000)
                 }).catch(err => {
                     Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your name fail, error: ${err}`, 3000)
@@ -281,6 +285,8 @@ function MyProfileController(props) {
             Api.RequestApi.putProfileBirthdayApiRequest(params)
                 .then(response => {
                     dateOfBirthBegin = response.data.dateOfBirth
+                    console.log(`dateOfBirth: ${response.data.dateOfBirth}`);
+                    dispatch(changeDateOfBirthLoginEmail({ dateOfBirth: response.data.dateOfBirth }))
                     Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your date of birth successfully', 3000)
                 }).catch(err => {
                     Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your date of birth fail, error: ${err}`, 3000)
@@ -423,6 +429,8 @@ function MyProfileController(props) {
             ethnicity={ethnicityBegin}
             smoking={smokingBegin}
             location={locationBegin}
+            name={nameBegin}
+            dateOfBirth={dateOfBirthBegin}
         />
     )
 }

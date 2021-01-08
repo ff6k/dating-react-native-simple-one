@@ -15,6 +15,7 @@ function Settings(props) {
     let nameTemp, emailTemp, dateOfBirthTemp, genderTemp, oldYearTemp, photoTemp
     if (dataInfo !== undefined) {
         const { name, email, dateOfBirth, gender, photos } = dataInfo
+        console.log(`dateOfBirth: ${dateOfBirth}`);
         nameTemp = name
         emailTemp = email
         dateOfBirthTemp = dateOfBirth
@@ -35,8 +36,8 @@ function Settings(props) {
                         }} />
                     <View style={styles.containName}>
                         <Text style={styles.txtName}>{nameTemp}, {oldYearTemp}</Text>
-                        {genderTemp === 'male' ? <FontAwesomeIcons name={"symbol-male"} size={18} color={Themes.Colors.PINK_DARK} /> :
-                            <FontAwesomeIcons name={"symbol-female"} size={18} color={Themes.Colors.PINK_DARK} />}
+                        {genderTemp === 'male' && <FontAwesomeIcons name={"symbol-male"} size={18} color={Themes.Colors.PINK_DARK} />}
+                        {genderTemp === 'female' && <FontAwesomeIcons name={"symbol-female"} size={18} color={Themes.Colors.PINK_DARK} />}
                     </View>
                     <Text style={styles.txtDetail}>{emailTemp}</Text>
                     <View style={styles.containButton}>
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         alignSelf: 'center',
         // bottom: 15,
-        marginTop: '50%',
+        marginTop: '25%',
         marginBottom: 10,
         alignItems: 'center',
         justifyContent: 'center',

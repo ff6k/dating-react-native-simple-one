@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native'
 import ButtonBack from '/src/components/UI/buttonBack'
-import HeaderSave from '/src/components/UI/headerSave'
+// import HeaderSave from '/src/components/UI/headerSave'
 import Themes from '/src/themes'
 import Icon from '/src/components/UI/icon'
 
 export default function editContentList(props) {
-    const { onPressBack, data, title, onPressSave, onPressGetItem, isChange, indexBegin, onChangeDataItemClick } = props
+    const { onPressBack, data, title, onPressGetItem, isChange, indexBegin, onChangeDataItemClick } = props
 
     const [idSelected, setIdSelected] = useState(indexBegin !== -1 ? data[indexBegin].id : null)
 
@@ -30,7 +30,7 @@ export default function editContentList(props) {
         return (
             <TouchableOpacity style={styles.containContent}
                 onPress={() => onPressItem(item)}>
-                <Text style={styles.txtContent}>{label}</Text>
+                <Text style={[styles.txtContent, isCheck && styles.txtLabelCheck]}>{label}</Text>
                 {
                     isCheck && <Icon
                         name={'checkmark'}
@@ -43,10 +43,9 @@ export default function editContentList(props) {
     }
     return (
         <View>
-            <HeaderSave
+            <ButtonBack
                 title={title}
-                onPressBack={onPressBack}
-                onPressSave={onPressSave}
+                onPress={onPressBack}
                 isChange={isChange}
             />
             <FlatList
@@ -60,6 +59,9 @@ export default function editContentList(props) {
 }
 
 const styles = StyleSheet.create({
+    txtLabelCheck: {
+        color: Themes.Colors.PINK_DARK,
+    },
     flatList: {
         marginTop: 20
     },

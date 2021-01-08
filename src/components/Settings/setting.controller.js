@@ -16,7 +16,9 @@ export default function SettingController(props) {
 
     const getDataStore = () => {
         if (dataStore.length > 0) {
-            const { jwtToken } = dataStore[0]
+            console.log('dataStore[0]', dataStore[0])
+            const { jwtToken, dateOfBirth } = dataStore[0]
+            console.log(`dateOfBirth: ${dateOfBirth}`);
             token = jwtToken
         }
         else {
@@ -40,19 +42,23 @@ export default function SettingController(props) {
             fcmToken: tokenFcm
         }
 
-        Promise.all([
-            Api.RequestApi.postDeleteFcmTokenApiRequest(params),
-            dispatch(resetDataLogin()),
-            dispatch(resetDataPre()),
-            removeKeyStorage(Const.StorageKey.CODE_LOGIN_TOKEN),
-            removeKeyStorage(Const.StorageKey.CODE_PREFERENCES),
-            removeKeyStorage(Const.StorageKey.CODE_FRM_TOKEN)
-        ]).then(async ([]) => {
-            navigation.replace(Const.NameScreens.SingInOrUp)
-        })
-            .catch(err => {
-                console.log(err)
+        Api.RequestApi.postDeleteFcmTokenApiRequest(params)
+            .then(res => {
+                Promise.all([
+                    // Api.RequestApi.postDeleteFcmTokenApiRequest(params),
+                    dispatch(resetDataLogin()),
+                    dispatch(resetDataPre()),
+                    removeKeyStorage(Const.StorageKey.CODE_LOGIN_TOKEN),
+                    removeKeyStorage(Const.StorageKey.CODE_PREFERENCES),
+                    removeKeyStorage(Const.StorageKey.CODE_FRM_TOKEN)
+                ]).then(async ([]) => {
+                    navigation.replace(Const.NameScreens.SingInOrUp)
+                })
+                    .catch(err => {
+                        console.log(err)
+                    })
             })
+            .catch(err => console.log(err))
     }
 
     const onPressMyProfile = () => {

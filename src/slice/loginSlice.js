@@ -28,6 +28,7 @@ const loginSlice = createSlice(
             changeDateOfBirthLoginEmail: (state, action) => void (state[0].dateOfBirth = action.payload.dateOfBirth),
             changeGenderLoginEmail: (state, action) => void (state[0].gender = action.payload.gender),
             changePictureLoginEmail: (state, action) => void (state[0].photos.push(action.payload.picture)),
+            changeNameLoginEmail: (state, action) => void (state[0].name = action.payload.name),
             resetData: () => []
         }
     }
@@ -35,5 +36,5 @@ const loginSlice = createSlice(
 
 const { actions, reducer } = loginSlice
 export const { pushDataLoginFB, pushDataLoginEmail, resetData, insertDataLoginEmail, changeDateOfBirthLoginEmail,
-    changeGenderLoginEmail, changePictureLoginEmail } = actions
+    changeGenderLoginEmail, changePictureLoginEmail, changeNameLoginEmail } = actions
 export default reducer

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import EditGender from './editGender'
 import Const from '/src/const'
 import Utils from '/src/utils'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { changeGenderLoginEmail } from '/src/slice/loginSlice'
 import Api from '/src/api'
 
 const data = [
@@ -17,7 +18,7 @@ export default function EditGenderController(props) {
     const { navigation, route } = props
 
     const dataStore = useSelector(state => state.login)
-
+    const dispatch = useDispatch()
     const getDataStore = () => {
         if (dataStore.length > 0) {
             const { jwtToken, id } = dataStore[0]
@@ -59,6 +60,7 @@ export default function EditGenderController(props) {
             }
             Api.RequestApi.putProfileGenderApiRequest(params)
                 .then(response => {
+                    dispatch(changeGenderLoginEmail({ gender: response.data.gender }))
                     Utils.Toast.ToastModal('success', 'top', 'Success', 'You have saved your gender successfully', 3000)
                 }).catch(err => {
                     Utils.Toast.ToastModal('error', 'top', 'Fail', `You have saved your gender fail, error: ${err}`, 3000)
