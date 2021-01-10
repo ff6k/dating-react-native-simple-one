@@ -60,7 +60,7 @@ const Picture = React.forwardRef((props, ref) => {
                 </TouchableOpacity> :
                     <View></View>}
                 <ButtonNext
-                    style={{ position: 'relative', marginTop: -40, marginRight: -20 }}
+                    style={{ position: 'relative', marginTop: 10, marginRight: -20 }}
                     isGradient={uri ? true : false}
                     onPress={() => onPressNext && onPressNext()}
                 />
