@@ -72,7 +72,7 @@ function MyPreferences(props) {
                 maxValue={100}
             />
             <CardSlider
-                content={"Distance"}
+                content={t("Distance")}
                 textSwitchLeft={"km"}
                 // textSwitchRight={"mi"}
                 onSlide={onSlideDistance}

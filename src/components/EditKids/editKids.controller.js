@@ -37,7 +37,8 @@ export default function EditKidsController(props) {
         return data.findIndex(e => e.label == route.params.kids)
     })
     const onPressBack = () => {
-        if (idClick === undefined || data[indexKids].id === idClick) {
+        console.log(indexKids)
+        if (idClick === undefined || (indexKids !== -1 && data[indexKids].id === idClick)) {
             navigation.goBack()
         }
         else {

@@ -18,7 +18,7 @@ export default function SplashController(props) {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        // clearStorage()
+        //clearStorage()
         const setDataStoreReduxProfile = (token, id, preferences, data) => {
             console.log(`id: ${id}`);
             console.log(`token: ${token}`);

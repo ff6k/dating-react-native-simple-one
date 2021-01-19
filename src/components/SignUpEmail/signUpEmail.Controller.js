@@ -28,6 +28,7 @@ export default function SignUpEmailController() {
 
     // network fail
     const requestApiFail = (error) => {
+        console.log(`error: ${error}`);
         setIsShowModalFail(true)
         setMessage("Network connect fail")
     }
@@ -41,7 +42,6 @@ export default function SignUpEmailController() {
             name: name,
         }
         Api.RequestApi.signUpEmail(params)
-            .then((response) => response.json())
             .then((json) => requestApiSuccess(json))
             .catch((error) => requestApiFail(error))
             .finally(() => setIsLoading(false));
