@@ -26,6 +26,8 @@ import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage; 
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
+import com.facebook.react.bridge.JSIModulePackage; // <- add
+import com.swmansion.reanimated.ReanimatedJSIModulePackage; // <- add
 // import co.apptailor.googlesignin.RNGoogleSigninPackage;
 // import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 // import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
@@ -70,6 +72,10 @@ public class MainApplication extends Application implements ReactApplication {
         protected String getJSMainModuleName() {
           return "index";
         }
+        @Override
+      protected JSIModulePackage getJSIModulePackage() {
+        return new ReanimatedJSIModulePackage(); // <- add
+      }
       };
 
   @Override

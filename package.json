@@ -78,7 +78,7 @@
     "react-native-permissions": "^3.0.0",
     "react-native-push-notification": "^6.1.2",
     "react-native-raw-bottom-sheet": "^2.2.0",
-    "react-native-reanimated": "^1.13.0",
+    "react-native-reanimated": "^2.0.0",
     "react-native-safe-area-context": "^3.1.4",
     "react-native-screens": "^2.10.1",
     "react-native-signalr": "^1.0.6",

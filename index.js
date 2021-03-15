@@ -6,7 +6,7 @@ import { AppRegistry, View } from 'react-native';
 import { name as appName } from './app.json';
 import { LogBox } from 'react-native'
 import Toast from 'react-native-toast-message';
-import GoogleLogin from '/test/googleLogin'
+import GoogleLogin from '/test/reanimatedTest'
 // import PushNotification from '/test/pushNotification'
 LogBox.ignoreLogs([
     'Animated: `useNativeDriver` was not specified. This is a required option and must be explicitly set to `true` or `false`',
