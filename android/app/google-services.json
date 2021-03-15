@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "951296790724-af65aouiuqmvigssrrumobrddv3es1dp.apps.googleusercontent.com",
+          "client_id": "951296790724-st5j721ms0i5aces1cd7tglirh10joko.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.datingapprn",
-            "certificate_hash": "248705d1acc7540d27abfd8e439c89a81c40ae0b"
+            "certificate_hash": "ac2b11181556668ac59db99662e464cf5b1895a5"
           }
         },
         {

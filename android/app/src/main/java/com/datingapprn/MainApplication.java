@@ -26,6 +26,7 @@ import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage; 
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
+// import co.apptailor.googlesignin.RNGoogleSigninPackage;
 // import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 // import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 // import com.reactcommunity.rnlocalize.RNLocalizePackage;
@@ -52,6 +53,9 @@ public class MainApplication extends Application implements ReactApplication {
           packages.add(new LinearGradientPackage()); 
           packages.add(new RNFirebaseMessagingPackage()); //add this
            packages.add(new RNFirebaseNotificationsPackage()); //add this
+          //  packages.add(new RNGoogleSigninPackage()); //add this
+
+           
           // packages.add(new ReactNativePushNotificationPackage()); 
           // packages.add(new AsyncStoragePackage());
           // packages.add(new RNLocalizePackage());
